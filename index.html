@@ -3,116 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shared Storage - Private Access</title>
+    <title>Private Cloud Storage - Access Granted</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Hiệu ứng loading giả cho nó uy tín */
         .loader {
             border: 3px solid #f3f3f3;
-            border-top: 3px solid #3498db;
+            border-top: 3px solid #3b82f6;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             animation: spin 1s linear infinite;
             display: inline-block;
-            vertical-align: middle;
-            margin-right: 10px;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans">
+<body class="bg-[#f8f9fa] text-gray-800 font-sans">
 
-    <nav class="bg-white border-b px-4 py-3 flex justify-between items-center shadow-sm sticky top-0 z-10">
+    <nav class="bg-white border-b px-6 py-4 flex justify-between items-center shadow-sm">
         <div class="flex items-center space-x-3">
-            <div class="bg-blue-500 p-1.5 rounded-lg text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+            <div class="bg-blue-600 p-2 rounded-lg text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                 </svg>
             </div>
-            <span class="text-xl font-medium text-gray-700 tracking-tight">Cloud Storage</span>
+            <span class="text-xl font-bold text-gray-700">FileShare Pro</span>
         </div>
-        <div class="flex items-center space-x-4">
-            <span class="hidden sm:block text-sm text-gray-400 italic">Storage: 85% full</span>
-            <div class="w-8 h-8 rounded-full bg-orange-400 flex items-center justify-center text-white font-bold text-xs">B</div>
+        <div class="flex items-center space-x-2">
+            <span class="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full font-bold">Secure Link Active</span>
         </div>
     </nav>
 
-    <main class="max-w-5xl mx-auto p-4 sm:p-8">
-        <div class="mb-6">
-            <h1 class="text-2xl font-bold text-gray-800 mb-2">My Private Files</h1>
-            <p class="text-sm text-gray-500">Shared with you • Last modified: Today, 03:25 AM</p>
+    <main class="max-w-4xl mx-auto p-4 sm:p-10">
+        <div class="mb-8 text-center sm:text-left">
+            <h2 class="text-2xl font-extrabold text-gray-900">Private Shared Contents</h2>
+            <p class="text-sm text-gray-500 mt-1 italic text-red-500 font-medium">⚠️ Files will expire in 24 hours. Download now!</p>
         </div>
 
-        <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden text-sm sm:text-base">
-            <div class="grid grid-cols-12 bg-gray-100 p-4 font-bold text-gray-500 uppercase tracking-wider border-b">
-                <div class="col-span-8 sm:col-span-6">Name</div>
-                <div class="hidden sm:block col-span-3 text-center">Date</div>
-                <div class="col-span-4 sm:col-span-3 text-right">Size</div>
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+            <div class="grid grid-cols-12 bg-gray-50 p-4 text-xs font-bold text-gray-400 uppercase tracking-widest border-b text-center">
+                <div class="col-span-8 sm:col-span-7 text-left pl-4">File Name</div>
+                <div class="hidden sm:block col-span-3">Status</div>
+                <div class="col-span-4 sm:col-span-2 text-right">Size</div>
             </div>
 
-            <div class="divide-y divide-gray-100">
-                <div onclick="openSmartlink()" class="grid grid-cols-12 p-4 items-center hover:bg-blue-50 cursor-pointer transition-colors duration-200 group">
-                    <div class="col-span-8 sm:col-span-6 flex items-center">
-                        <span class="text-3xl mr-4 group-hover:scale-110 transition-transform">📁</span>
-                        <div>
-                            <p class="font-semibold text-blue-600 truncate underline decoration-blue-300">New_Collection_Leak_Part1.zip</p>
-                            <p class="text-xs text-gray-400 sm:hidden italic">842.5 MB</p>
+            <div class="divide-y divide-gray-50">
+                
+                <div onclick="openAds()" class="grid grid-cols-12 p-5 items-center hover:bg-blue-50 cursor-pointer transition group">
+                    <div class="col-span-8 sm:col-span-7 flex items-center">
+                        <span class="text-3xl mr-4 group-hover:scale-110 transition">🎥</span>
+                        <div class="truncate">
+                            <p class="font-bold text-blue-600 group-hover:underline truncate text-sm sm:text-base">CLIP_HOT_XEM_NHANH_KE_O_XOA.mp4</p>
+                            <p class="text-[10px] text-gray-400 mt-1 sm:hidden">Uploaded: 2 mins ago</p>
                         </div>
                     </div>
-                    <div class="hidden sm:block col-span-3 text-center text-gray-400 italic">Mar 05, 2026</div>
-                    <div class="hidden sm:block col-span-3 text-right font-medium text-gray-600">842.5 MB</div>
+                    <div class="hidden sm:block col-span-3 text-center text-xs text-green-500 font-bold uppercase tracking-tighter">Ready to Stream</div>
+                    <div class="col-span-4 sm:col-span-2 text-right text-sm font-semibold text-gray-400">42.8 MB</div>
                 </div>
 
-                <div onclick="openSmartlink()" class="grid grid-cols-12 p-4 items-center hover:bg-blue-50 cursor-pointer transition-colors duration-200 group">
-                    <div class="col-span-8 sm:col-span-6 flex items-center">
-                        <span class="text-3xl mr-4 group-hover:scale-110 transition-transform">🎥</span>
-                        <div>
-                            <p class="font-semibold text-blue-600 truncate underline decoration-blue-300">Video_Private_Show_HD.mp4</p>
-                            <p class="text-xs text-gray-400 sm:hidden italic">1.4 GB</p>
+                <div onclick="openAds()" class="grid grid-cols-12 p-5 items-center hover:bg-blue-50 cursor-pointer transition group">
+                    <div class="col-span-8 sm:col-span-7 flex items-center">
+                        <span class="text-3xl mr-4 group-hover:scale-110 transition">📸</span>
+                        <div class="truncate">
+                            <p class="font-bold text-blue-600 group-hover:underline truncate text-sm sm:text-base">FULL_ALBUM_ANH_GIAU_KIN.zip</p>
+                            <p class="text-[10px] text-gray-400 mt-1 sm:hidden">Uploaded: 10 mins ago</p>
                         </div>
                     </div>
-                    <div class="hidden sm:block col-span-3 text-center text-gray-400 italic">Yesterday</div>
-                    <div class="hidden sm:block col-span-3 text-right font-medium text-gray-600">1.4 GB</div>
+                    <div class="hidden sm:block col-span-3 text-center text-xs text-green-500 font-bold uppercase tracking-tighter">Ready to Stream</div>
+                    <div class="col-span-4 sm:col-span-2 text-right text-sm font-semibold text-gray-400">156 MB</div>
                 </div>
 
-                <div onclick="openSmartlink()" class="grid grid-cols-12 p-4 items-center hover:bg-blue-50 cursor-pointer transition-colors duration-200 group">
-                    <div class="col-span-8 sm:col-span-6 flex items-center">
-                        <span class="text-3xl mr-4 group-hover:scale-110 transition-transform">🎥</span>
-                        <div>
-                            <p class="font-semibold text-blue-600 truncate underline decoration-blue-300">Full_Access_Link_093.avi</p>
-                            <p class="text-xs text-gray-400 sm:hidden italic">512 MB</p>
+                <div onclick="openAds()" class="grid grid-cols-12 p-5 items-center hover:bg-blue-50 cursor-pointer transition group">
+                    <div class="col-span-8 sm:col-span-7 flex items-center">
+                        <span class="text-3xl mr-4 group-hover:scale-110 transition">🎬</span>
+                        <div class="truncate">
+                            <p class="font-bold text-blue-600 group-hover:underline truncate text-sm sm:text-base">BAN_GOC_CHUA_CHE_01.mp4</p>
+                            <p class="text-[10px] text-gray-400 mt-1 sm:hidden">Uploaded: 15 mins ago</p>
                         </div>
                     </div>
-                    <div class="hidden sm:block col-span-3 text-center text-gray-400 italic">Just now</div>
-                    <div class="hidden sm:block col-span-3 text-right font-medium text-gray-600">512 MB</div>
+                    <div class="hidden sm:block col-span-3 text-center text-xs text-green-500 font-bold uppercase tracking-tighter">Ready to Stream</div>
+                    <div class="col-span-4 sm:col-span-2 text-right text-sm font-semibold text-gray-400">89.2 MB</div>
                 </div>
+
+                <div onclick="openAds()" class="grid grid-cols-12 p-5 items-center hover:bg-blue-50 cursor-pointer transition group">
+                    <div class="col-span-8 sm:col-span-7 flex items-center">
+                        <span class="text-3xl mr-4 group-hover:scale-110 transition">🎥</span>
+                        <div class="truncate">
+                            <p class="font-bold text-blue-600 group-hover:underline truncate text-sm sm:text-base">LINK_ZALO_PHONG_KIN.mp4</p>
+                            <p class="text-[10px] text-gray-400 mt-1 sm:hidden">Uploaded: 22 mins ago</p>
+                        </div>
+                    </div>
+                    <div class="hidden sm:block col-span-3 text-center text-xs text-green-500 font-bold uppercase tracking-tighter">Ready to Stream</div>
+                    <div class="col-span-4 sm:col-span-2 text-right text-sm font-semibold text-gray-400">31.5 MB</div>
+                </div>
+
+                <div onclick="openAds()" class="grid grid-cols-12 p-5 items-center hover:bg-blue-50 cursor-pointer transition group">
+                    <div class="col-span-8 sm:col-span-7 flex items-center">
+                        <span class="text-3xl mr-4 group-hover:scale-110 transition">📁</span>
+                        <div class="truncate">
+                            <p class="font-bold text-blue-600 group-hover:underline truncate text-sm sm:text-base">PHAN_2_HONG_BIEN_LEAK.rar</p>
+                            <p class="text-[10px] text-gray-400 mt-1 sm:hidden">Uploaded: 30 mins ago</p>
+                        </div>
+                    </div>
+                    <div class="hidden sm:block col-span-3 text-center text-xs text-green-500 font-bold uppercase tracking-tighter">Ready to Stream</div>
+                    <div class="col-span-4 sm:col-span-2 text-right text-sm font-semibold text-gray-400">245 MB</div>
+                </div>
+
+                <div onclick="openAds()" class="grid grid-cols-12 p-5 items-center hover:bg-blue-50 cursor-pointer transition group">
+                    <div class="col-span-8 sm:col-span-7 flex items-center">
+                        <span class="text-3xl mr-4 group-hover:scale-110 transition">📸</span>
+                        <div class="truncate">
+                            <p class="font-bold text-blue-600 group-hover:underline truncate text-sm sm:text-base">ANH_HAY_KHONG_LUA_DAO.jpg</p>
+                            <p class="text-[10px] text-gray-400 mt-1 sm:hidden">Uploaded: 1 hour ago</p>
+                        </div>
+                    </div>
+                    <div class="hidden sm:block col-span-3 text-center text-xs text-green-500 font-bold uppercase tracking-tighter">Ready to Stream</div>
+                    <div class="col-span-4 sm:col-span-2 text-right text-sm font-semibold text-gray-400">12.4 MB</div>
+                </div>
+
             </div>
         </div>
 
-        <div class="mt-8 text-center p-6 border-2 border-dashed border-gray-200 rounded-lg">
-            <p id="statusText" class="text-gray-400 italic font-medium">Click on any file to request download access...</p>
+        <div id="loadingZone" class="mt-8 text-center p-6 border-2 border-dashed border-gray-200 rounded-2xl bg-white shadow-inner">
+            <p id="msg" class="text-gray-400 font-medium italic">Select a file to request access to the secure server...</p>
         </div>
     </main>
 
     <script>
-        function openSmartlink() {
-            const status = document.getElementById('statusText');
-            // Hiện hiệu ứng loading giả cho nó 'deep'
-            status.innerHTML = '<div class="loader"></div> Connecting to Secure Server...';
-
-            // Dùng timeout 1.5 giây để đánh lừa cảm giác (và lách AI quét)
+        function openAds() {
+            const msg = document.getElementById('msg');
+            msg.innerHTML = '<div class="loader"></div> <span class="ml-2">Verifying Connection...</span>';
+            
             setTimeout(() => {
-                // CHỖ NÀY: Sếp dán cái Smartlink của Adsterra vào giữa dấu ngoặc kép "" nha!
-                const myAdLink = "https://www.google.com"; 
+                // SẾP NHỚ DÁN SMARTLINK CỦA SẾP VÀO ĐÂY NHA
+                const smartlink = "https://www.google.com"; 
                 
-                // Mở Ads ở tab mới
-                window.open(myAdLink, "_blank");
-
-                // Reset lại trạng thái ban đầu
-                status.innerHTML = 'Download request sent. Please check the new tab.';
-                status.classList.add('text-green-500');
-            }, 1500);
+                window.open(smartlink, "_blank");
+                msg.innerHTML = '<span class="text-green-600 font-bold">✅ Access Unlocked! Open new tab to view.</span>';
+            }, 1000);
         }
     </script>
 </body>
