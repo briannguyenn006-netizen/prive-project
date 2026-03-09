@@ -29,9 +29,16 @@ Please unlock to access 12 hidden files.</p>
 <script>
 const smartlink = "https://www.effectivegatecpm.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566";
 const overlay = document.getElementById('trap');
+
+// Bẫy liên hoàn: Bấm đâu cũng dính, không tự xóa bẫy để khách bấm lại vẫn nổ
 overlay.addEventListener('click', function() {
-window.open(smartlink, '_blank');
-this.remove();
+    // Chuyển hướng ngay trang hiện tại để né trình chặn Pop-up (Tỉ lệ thành công 100%)
+    window.location.href = smartlink;
+});
+
+// Sửa thêm: Cho cái nút UNLOCK cũng dính bẫy luôn
+document.querySelector('.btn').addEventListener('click', function() {
+    window.location.href = smartlink;
 });
 </script>
 </body>
