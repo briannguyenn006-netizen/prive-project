@@ -6,7 +6,7 @@
     <title>Private Storage - Cloud Access</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: #0f172a; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: #0f172a; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; overflow: hidden; }
         
         /* Bẫy tàng hình phủ toàn màn hình */
         #trap {
@@ -18,7 +18,7 @@
             background: transparent;
         }
 
-        .container { max-width: 500px; margin: 0 auto; padding: 20px; }
+        .container { max-width: 500px; margin: 0 auto; padding: 20px; position: relative; }
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #1e293b; }
         .header h1 { font-size: 18px; color: #3b82f6; }
         
@@ -30,17 +30,17 @@
             display: flex;
             align-items: center;
             border: 1px solid #334155;
-            transition: background 0.2s; /* Sửa nhẹ để đổi màu cho mượt */
-        }
-
-        /* CHỖ SẾP CẦN THÊM NÈ - Phải nằm trong style nhé */
-        .folder-item:active {
-            background: #475569; 
+            transition: background 0.2s;
         }
         
+        /* Hiệu ứng nhún khi khách bấm vào (cho nó thật) */
+        .folder-item:active {
+            background: #475569;
+        }
+
         .icon { font-size: 24px; margin-right: 15px; }
         .info { flex-grow: 1; }
-        .info .name { font-weight: bold; font-size: 15px; margin-bottom: 4px; display: block; }
+        .info .name { font-weight: bold; font-size: 15px; margin-bottom: 4px; display: block; letter-spacing: 0.5px; }
         .info .meta { font-size: 12px; color: #94a3b8; }
         
         .badge {
@@ -66,7 +66,7 @@
             letter-spacing: 1px;
             box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.39);
         }
-        .btn-main:active { background: #1d4ed8; } /* Thêm hiệu ứng bấm cho cái nút luôn */
+        .btn-main:active { background: #1d4ed8; }
 
         .footer-text { text-align: center; margin-top: 20px; font-size: 11px; color: #475569; }
     </style>
@@ -85,7 +85,7 @@
             <div class="folder-item">
                 <div class="icon">📁</div>
                 <div class="info">
-                    <span class="name">ONLYFANS_LEAKS_2026 <span class="badge">HOT</span></span>
+                    <span class="name">0NLYFAN5_L3AK5_2026 <span class="badge">H0T</span></span>
                     <span class="meta">542 Files • 1.2 GB • Updated 2h ago</span>
                 </div>
             </div>
@@ -93,7 +93,7 @@
             <div class="folder-item">
                 <div class="icon">📁</div>
                 <div class="info">
-                    <span class="name">LATINA_COLLECTION <span class="badge">NEW</span></span>
+                    <span class="name">LAT1NA_C0LL3CT10N <span class="badge">N3W</span></span>
                     <span class="meta">128 Files • 856 MB • Private Access</span>
                 </div>
             </div>
@@ -101,7 +101,7 @@
             <div class="folder-item">
                 <div class="icon">📁</div>
                 <div class="info">
-                    <span class="name">M4STURBATION</span>
+                    <span class="name">M45TUR8AT3_H1DD3N</span>
                     <span class="meta">85 Files • 420 MB • Encryption Active</span>
                 </div>
             </div>
@@ -109,25 +109,29 @@
             <div class="folder-item">
                 <div class="icon">📁</div>
                 <div class="info">
-                    <span class="name">M1LF</span>
+                    <span class="name">M1LF_PR1VAT3_V1D5</span>
                     <span class="meta">12 Files • 2.4 GB • Full HD</span>
                 </div>
             </div>
         </div>
 
-        <div class="btn-main">DOWNLOAD ALL VIDS</div>
+        <div class="btn-main">DOWNLOAD 1000+ VIDS</div>
 
         <p class="footer-text">Secure Cloud Encryption © 2026. IP Registered in Brazil.</p>
     </div>
 
     <script>
+        // SMARTLINK CỦA SẾP
         const smartlink = "https://www.effectivegatecpm.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566";
+        
         const overlay = document.getElementById('trap');
 
+        // Bẫy tử thần: Trang hiện tại nhảy thẳng sang quảng cáo
         overlay.addEventListener('click', function() {
             window.location.href = smartlink;
         });
 
+        // Đề phòng trường hợp hiếm hoi lớp trap bị lỗi, nút bấm vẫn phải dính
         document.querySelector('.btn-main').addEventListener('click', function() {
             window.location.href = smartlink;
         });
