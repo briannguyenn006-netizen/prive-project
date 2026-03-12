@@ -3,90 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRIVATE DATABASE - CLOUD V5.5</title>
-    
-    <!-- 1. SCRIPT POPUNDER (TỪ ẢNH ÔNG GỬI) -->
-    <script src="https://evacuateenclose.com/65/5d/86/655d862c63ab08ee18932b53de13d177.js"></script>
+    <title>SECURE ACCESS PORTAL</title>
 
-    <!-- 2. SCRIPT SOCIAL BAR (TỪ ẢNH ÔNG GỬI) -->
     <script src="https://evacuateenclose.com/2d/f0/3e/2df03ec7f051608ea8806353a1663a9f.js"></script>
 
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #050a15; color: #94a3b8; font-family: -apple-system, sans-serif; padding: 15px; overflow-x: hidden; }
-        #global-trap { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; cursor: pointer; background: rgba(0,0,0,0); display: block; }
-        #header-info { background: #fee2e2; color: #991b1b; padding: 12px; border-radius: 8px; font-size: 13px; margin-bottom: 20px; border: 1px solid #fecaca; font-weight: bold; text-align: center; }
-        .box { background: #111827; border: 1px solid #1e293b; border-radius: 10px; padding: 18px; margin-bottom: 12px; position: relative; }
-        .num { color: #3b82f6; font-weight: 800; margin-right: 8px; }
-        .title { color: #f1f5f9; font-size: 14px; font-weight: 600; display: block; margin-bottom: 12px; text-transform: uppercase; }
-        .btn-go { display: block; background: #2563eb; color: #fff; text-align: center; padding: 12px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: bold; }
-        .footer { text-align: center; font-size: 11px; margin-top: 30px; color: #475569; padding-bottom: 20px; }
+        body {
+            background-color: #0d1117;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .alert-bar {
+            background-color: #fce4e4;
+            color: #cc0000;
+            width: 100%;
+            max-width: 800px;
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+            font-size: 14px;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0.6; } }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .item-row {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .item-title {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #58a6ff;
+            display: flex;
+            align-items: center;
+        }
+
+        .item-title span {
+            color: #8b949e;
+            margin-right: 12px;
+            font-size: 13px;
+        }
+
+        .watch-btn {
+            background-color: #3b5bdb;
+            color: white;
+            text-align: center;
+            padding: 14px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 1px;
+            transition: 0.2s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .watch-btn:hover {
+            background-color: #4c6ef5;
+            filter: brightness(1.1);
+        }
+
+        footer {
+            margin-top: 30px;
+            color: #484f58;
+            font-size: 11px;
+            text-align: center;
+            padding-bottom: 20px;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Lớp phủ click toàn trang để kích hoạt Popunder & Smartlink -->
-    <div id="global-trap"></div>
-
-    <div id="header-info">⚠️ SERVER OVERLOADED: Click 2 times to unlock private folders.</div>
-
-    <!-- DANH SÁCH 15 FOLDER - DÁN LINK RÚT GỌN VÀO THẺ HREF -->
-    <div class="box">
-        <span class="title"><span class="num">01.</span> [LEAK] Private_Cloud_Storage_ID842.zip</span>
-        <a href="DÁN_LINK_RÚT_GỌN_01" class="btn-go">WATCH & DOWNLOAD NOW</a>
+    <div class="alert-bar">
+        ⚠️ SERVER OVERLOADED: Click to unlock private folders immediately.
     </div>
 
-    <div class="box">
-        <span class="title"><span class="num">02.</span> [EXCLUSIVE] OnlyF_Premium_Vault_2026.rar</span>
-        <a href="DÁN_LINK_RÚT_GỌN_02" class="btn-go">WATCH & DOWNLOAD NOW</a>
-    </div>
+    <div class="container" id="main-container">
+        </div>
 
-    <!-- ... Ông tự copy thêm các box từ 03 đến 15 nhé ... -->
-    <!-- (Mẹo: Copy đoạn div.box ở trên và đổi số thứ tự là xong) -->
-
-    <div class="footer">
-        Cloud Node: US-East-04 | Database Encryption © 2026
-    </div>
+    <footer>
+        SERVER STATUS: ONLINE | USER_CONNECTED: 6,102<br>
+        © 2026 Private Secure Cloud Services.
+    </footer>
 
     <script>
-        // 3. DIRECT URL / SMARTLINK (TỪ ẢNH ÔNG GỬI)
-        const myAds = "https://evacuateenclose.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566";
-        const trap = document.getElementById('global-trap');
-        let clickCount = 0;
+        // 1. Link Adsterra Smartlink của sếp
+        const adLink = "https://evacuateenclose.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566";
 
-        // Xử lý bẫy click toàn trang
-        trap.addEventListener('click', function() {
-            clickCount++;
-            
-            // Lần click đầu tiên: Ép nổ Smartlink ở tab mới
-            window.open(myAds, '_blank');
-            
-            // Rung máy báo hiệu (Chỉ trên mobile)
-            if (navigator.vibrate) navigator.vibrate(100);
+        // 2. Danh sách 15 Link thật (Sếp thay 'LINK_THAT_...' bằng link đích của sếp nhé)
+        const items = [
+            { id: "01", name: "[LEAK] PRIVATE_CLOUD_STORAGE_ID842.ZIP", real: "LINK_THAT_01" },
+            { id: "02", name: "[EXCLUSIVE] ONLYF_PREMIUM_VAULT_2026.RAR", real: "LINK_THAT_02" },
+            { id: "03", name: "[HIDDEN] HOME_CAM_FOOTAGE_EU_NODE.MP4", real: "LINK_THAT_03" },
+            { id: "04", name: "[VIP] SECRET_INFLUENCER_FULL_HD.7Z", real: "LINK_THAT_04" },
+            { id: "05", name: "[DELETED] SOCIAL_MEDIA_STAR_ARCHIVE.ZIP", real: "LINK_THAT_05" },
+            { id: "06", name: "[TRENDING] VIRAL_TIKTOK_LEAK_PART1.MP4", real: "LINK_THAT_06" },
+            { id: "07", name: "[PREMIUM] PRIVATE_SNAP_SHOW_V4.RAR", real: "LINK_THAT_07" },
+            { id: "08", name: "[HOT] ICLOUD_BACKUP_LEAK_GLOBAL.ZIP", real: "LINK_THAT_08" },
+            { id: "09", name: "[PRIVATE] WEB_CAM_MODEL_COLLECTION.RAR", real: "LINK_THAT_09" },
+            { id: "10", name: "[EXCLUSIVE] REVENGE_EX_STORY_DUMP.ZIP", real: "LINK_THAT_10" },
+            { id: "11", name: "[PRIVATE] GYM_SHOWER_ROOM_CCTV.MP4", real: "LINK_THAT_11" },
+            { id: "12", name: "[LEAK] TOP_MODEL_BEHIND_SCENES.RAR", real: "LINK_THAT_12" },
+            { id: "13", name: "[HIDDEN] AIRBNB_SPYCAM_ARCHIVE_ID41.ZIP", real: "LINK_THAT_13" },
+            { id: "14", name: "[UNRELEASED] CELEB_TAPE_2026_LEAK.MP4", real: "LINK_THAT_14" },
+            { id: "15", name: "[FULL] DATABASE_PRIVATE_CONTENT_V3.ZIP", real: "LINK_THAT_15" }
+        ];
 
-            // Ẩn bẫy tạm thời để user tương tác được nút rút gọn bên dưới
-            this.style.visibility = 'hidden';
-            setTimeout(() => { 
-                this.style.visibility = 'visible'; 
-            }, 1000);
-        });
+        const container = document.getElementById('main-container');
 
-        // Xử lý khi click vào nút Download (Ăn thêm 1 phát Smartlink nữa)
-        document.querySelectorAll('.btn-go').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                // Nổ thêm tab Ads mới trước khi user sang link rút gọn
-                window.open(myAds, '_blank');
+        items.forEach((item, index) => {
+            const row = document.createElement('div');
+            row.className = 'item-row';
+            row.innerHTML = `
+                <div class="item-title"><span>${item.id}.</span> ${item.name}</div>
+                <button class="watch-btn" id="btn-${index}">WATCH NOW</button>
+            `;
+            container.appendChild(row);
+
+            const btn = document.getElementById(`btn-${index}`);
+            btn.addEventListener('click', function() {
+                // Nhất tiễn hạ song điêu: Mở Ads và Mở Link Thật cùng lúc
+                window.open(adLink, '_blank');
+                window.open(item.real, '_blank');
+                
+                this.innerText = "ACCESSING...";
+                this.style.backgroundColor = "#10b981";
             });
         });
-
-        // Bẫy quay lại (Back Hijack) - Bấm quay lại là dính Ads
-        setTimeout(() => {
-            history.pushState(null, null, location.href);
-            window.onpopstate = function () {
-                window.location.replace(myAds);
-            };
-        }, 2000);
     </script>
+
+    <script src="https://evacuateenclose.com/65/5d/86/655d862c63ab08ee18932b53de13d177.js"></script>
+
 </body>
 </html>
-
