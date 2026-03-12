@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
@@ -8,150 +8,104 @@
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "vuptm5v00p");
     </script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SECURE ACCESS PORTAL</title>
-
     <script src="https://evacuateenclose.com/2d/f0/3e/2df03ec7f051608ea8806353a1663a9f.js"></script>
-
     <style>
         body { background-color: #0d1117; color: #ffffff; font-family: -apple-system, system-ui, sans-serif; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
-        .alert-bar { background-color: #fce4e4; color: #cc0000; width: 100%; max-width: 800px; padding: 12px; text-align: center; font-weight: bold; border-radius: 4px; margin-bottom: 20px; border: 1px solid #f5c6cb; font-size: 14px; animation: blink 1.5s infinite; }
-        @keyframes blink { 50% { opacity: 0.6; } }
-        .container { width: 100%; max-width: 800px; }
-        .item-row { background-color: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 20px; margin-bottom: 15px; display: flex; flex-direction: column; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
-        .item-title { font-size: 15px; font-weight: bold; margin-bottom: 15px; color: #58a6ff; }
-        .item-title span { color: #8b949e; margin-right: 12px; font-size: 13px; }
-        .watch-btn { background-color: #3b5bdb; color: white; text-align: center; padding: 14px; border-radius: 6px; font-weight: bold; text-transform: uppercase; font-size: 13px; cursor: pointer; border: none; width: 100%; display: block; text-decoration: none; }
-        .watch-btn:hover { background-color: #4c6ef5; }
+        .alert-bar { background-color: #ff0000; color: #fff; width: 100%; max-width: 800px; padding: 10px; text-align: center; font-weight: bold; border-radius: 4px; margin-bottom: 15px; font-size: 13px; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0.5; } }
         
-        .ad-slot { width: 300px; height: 250px; margin: 10px auto 25px auto; background: #161b22; border: 1px solid #30363d; border-radius: 8px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
-        .ad-slot::before { content: "ADVERTISEMENT"; font-size: 10px; color: #484f58; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .container { width: 100%; max-width: 800px; }
+        
+        /* Bẫy Click Ma Thuật: Bấm trượt nút vẫn dính Ads */
+        .item-row { background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 18px; margin-bottom: 15px; display: flex; flex-direction: column; position: relative; cursor: pointer; transition: 0.2s; }
+        .item-row:hover { border-color: #58a6ff; }
+        
+        .item-title { font-size: 15px; font-weight: bold; margin-bottom: 12px; color: #58a6ff; }
+        .item-title span { color: #8b949e; margin-right: 10px; }
 
-        /* Native Ads Box - Màu tiêu đề 58a6ff theo ý sếp */
-        .native-ad-container { width: 100%; max-width: 500px; min-height: 200px; margin: 20px auto; background: #161b22; border: 1px dotted #30363d; border-radius: 8px; padding: 10px; box-sizing: border-box; }
-        .native-label { font-size: 11px; color: #58a6ff; margin-bottom: 10px; text-align: center; font-weight: bold; text-transform: uppercase; }
+        /* Thumbnail giả có nút Play */
+        .video-thumb { width: 100%; height: 180px; background: #000 url('https://via.placeholder.com/600x300/000000/58a6ff?text=PREVIEW+CONTENT') no-repeat center; background-size: cover; border-radius: 6px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; position: relative; border: 1px solid #30363d; }
+        .play-icon { width: 55px; height: 55px; background: rgba(59, 91, 219, 0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(0,0,0,0.5); }
+        .play-icon::after { content: ''; border-style: solid; border-width: 10px 0 10px 18px; border-color: transparent transparent transparent white; margin-left: 4px; }
 
-        /* Loader tối ưu 1.5s */
-        #loader-overlay { width: 100%; max-width: 800px; background: #161b22; padding: 20px; border-radius: 8px; margin-bottom: 20px; text-align: center; border: 1px solid #30363d; box-sizing: border-box; }
-        .progress-bg { width: 100%; background: #30363d; height: 8px; border-radius: 10px; margin-top: 10px; overflow: hidden; }
-        .progress-bar { width: 0%; height: 100%; background: #238636; transition: width 1.5s linear; }
+        .watch-btn { background-color: #238636; color: white; text-align: center; padding: 14px; border-radius: 6px; font-weight: bold; text-transform: uppercase; font-size: 13px; border: none; width: 100%; position: relative; z-index: 5; text-decoration: none; }
 
-        .comments-section { width: 100%; max-width: 800px; margin-top: 40px; border-top: 1px solid #30363d; padding-top: 20px; }
-        .comment-item { margin-bottom: 15px; font-size: 13px; border-bottom: 1px solid #161b22; padding-bottom: 10px; }
-        .user-name { color: #58a6ff; font-weight: bold; }
+        /* Native Ads Box VIP */
+        .native-ad-container { width: 100%; max-width: 500px; margin: 25px auto; background: #0d1117; border: 2px solid #58a6ff; border-radius: 12px; padding: 15px; position: relative; }
+        .native-label { position: absolute; top: -12px; left: 20px; background: #58a6ff; color: #0d1117; font-size: 10px; padding: 2px 10px; border-radius: 10px; font-weight: bold; }
+
+        #loader-overlay { width: 100%; max-width: 800px; background: #161b22; padding: 20px; border-radius: 8px; margin-bottom: 20px; text-align: center; border: 1px solid #30363d; }
+        .progress-bg { width: 100%; background: #30363d; height: 6px; border-radius: 10px; margin-top: 10px; overflow: hidden; }
+        .progress-bar { width: 0%; height: 100%; background: #58a6ff; transition: width 1.2s linear; }
+
         footer { margin-top: 30px; color: #484f58; font-size: 11px; text-align: center; padding-bottom: 20px; }
     </style>
 </head>
 <body>
 
     <div id="loader-overlay">
-        <div style="font-size: 13px; font-weight: bold; color: #2ea043;">📡 CONNECTING TO PRIVATE CZECH SERVER...</div>
+        <div style="font-size: 12px; font-weight: bold; color: #58a6ff;">SOUKROMÝ SERVER: PŘIPOJOVÁNÍ...</div>
         <div class="progress-bg"><div class="progress-bar" id="p-bar"></div></div>
     </div>
 
-    <div class="alert-bar">⚠️ STATUS: SECURE SERVER. Click to watch.</div>
+    <div class="alert-bar">⚠ PŘÍSTUP OMEZEN: KLIKNĚTE PRO PŘEHRÁVÁNÍ (04:59)</div>
 
-    <div class="container" id="main-content">
-        <div class="item-row">
-            <div class="item-title"><span>01.</span> M.4.S.T.U.R.B.A.T.I.O.N</div>
-            <a href="https://www.eporner.com/video-60kjgY09b7E/" class="watch-btn" onclick="nổAds(event, this.href)">WATCH NOW</a>
+    <div class="container">
+        
+        <div class="item-row" onclick="nổAds(event, 'https://www.eporner.com/video-60kjgY09b7E/')">
+            <div class="item-title"><span>01.</span> CZECH GIRL HOME MADE (PRIVATE)</div>
+            <div class="video-thumb">
+                <div class="play-icon"></div>
+            </div>
+            <a href="https://www.eporner.com/video-60kjgY09b7E/" class="watch-btn">PŘEHRÁT NYNÍ</a>
         </div>
 
-        <div class="item-row">
-            <div class="item-title"><span>02.</span> BIG B.0.0.B.S</div>
-            <a href="https://www.pornhub.com/view_video.php?viewkey=676241804c239" class="watch-btn" onclick="nổAds(event, this.href)">WATCH NOW</a>
-        </div>
-
-        <div class="ad-slot">
-            <script type="text/javascript">
-                atOptions = { 'key' : 'bafaa3b44a2008cceab6661c7d5b8629', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
-            </script>
-            <script type="text/javascript" src="https://evacuateenclose.com/bafaa3b44a2008cceab6661c7d5b8629/invoke.js"></script>
-        </div>
-
-        <div class="item-row">
-            <div class="item-title"><span>03.</span> 0.N.L.Y.F.A.N LEAKED</div>
-            <a href="https://fr.porn4fans.com/video/7325/" class="watch-btn" onclick="nổAds(event, this.href)">WATCH NOW</a>
-        </div>
-
-        <div class="item-row">
-            <div class="item-title"><span>04.</span> PRETTY GIRL</div>
-            <a href="https://www.eporner.com/hd-porn/wfu8JeeGn3h/" class="watch-btn" onclick="nổAds(event, this.href)">WATCH NOW</a>
-        </div>
-
-        <div class="item-row">
-            <div class="item-title"><span>05.</span> L.4.T.I.N.A</div>
-            <a href="https://fr.redtube.com/103623261" class="watch-btn" onclick="nổAds(event, this.href)">WATCH NOW</a>
-        </div>
-
-        <div class="item-row">
-            <div class="item-title"><span>06.</span> M.1.L.F</div>
-            <a href="https://fr.redtube.com/194184411" class="watch-btn" onclick="nổAds(event, this.href)">WATCH NOW</a>
-        </div>
-
-        <div class="item-row">
-            <div class="item-title"><span>07.</span> S.P.Y WC</div>
-            <a href="https://thisvid.com/videos/asian-girl-pooping-in-night-club-toilet-44/" class="watch-btn" onclick="nổAds(event, this.href)">WATCH NOW</a>
+        <div class="item-row" onclick="nổAds(event, 'https://www.pornhub.com/view_video.php?viewkey=676241804c239')">
+            <div class="item-title"><span>02.</span> UNIKLÉ VIDEO Z PRAHY</div>
+            <div class="video-thumb">
+                <div class="play-icon"></div>
+            </div>
+            <a href="https://www.pornhub.com/view_video.php?viewkey=676241804c239" class="watch-btn">PŘEHRÁT NYNÍ</a>
         </div>
 
         <div class="native-ad-container">
-            <div class="native-label">MOHLO BY VÁS ZAJÍMAT (PROMO)</div>
+            <div class="native-label">SOUKROMÝ OBSAH (PREMIUM)</div>
             <div id="container-b6430a9b1fd639d746e11c0c55383a09"></div>
             <script async="async" data-cfasync="false" src="https://evacuateenclose.com/b6430a9b1fd639d746e11c0c55383a09/invoke.js"></script>
         </div>
 
-        <div class="item-row">
-            <div class="item-title"><span>08.</span> 0.M.E.G.L.E</div>
-            <a href="https://www.eporner.com/hd-porn/fIFbRqdRxCK/" class="watch-btn" onclick="nổAds(event, this.href)">WATCH NOW</a>
+        <div class="item-row" onclick="nổAds(event, 'https://fr.redtube.com/103623261')">
+            <div class="item-title"><span>03.</span> L.4.T.I.N.A SPECIAL LEAK</div>
+            <a href="https://fr.redtube.com/103623261" class="watch-btn">PŘEHRÁT NYNÍ</a>
         </div>
 
-        <div class="item-row">
-            <div class="item-title"><span>09.</span> T.E.E.N</div>
-            <a href="https://teenporn24.net/videos/10462/" class="watch-btn" onclick="nổAds(event, this.href)">WATCH NOW</a>
-        </div>
-
-        <div class="item-row">
-            <div class="item-title"><span>10.</span> B.D.S.M</div>
-            <a href="https://www.eporner.com/video-MTTSXQLHKGH/fuck-fetish/" class="watch-btn" onclick="nổAds(event, this.href)">WATCH NOW</a>
-        </div>
-
-        <div class="comments-section">
-            <div style="font-weight: bold; margin-bottom: 15px; color: #8b949e;">Recent Comments (14)</div>
-            <div class="comment-item">
-                <span class="user-name">Jakub_92</span> <span style="color: #238636; font-size: 10px;">✓ Verified</span>
-                <div class="comment-text">Tyto úniky jsou úžasné.</div>
-            </div>
-            <div class="comment-item">
-                <span class="user-name">Lukas.K</span> <span style="color: #238636; font-size: 10px;">✓ Verified</span>
-                <div class="comment-text">Bacha, musíte se vrátit (tlačítko zpět) để xem thêm!</div>
-            </div>
-        </div>
     </div>
 
-    <footer>SERVER STATUS: ONLINE | © 2026 Private Secure Cloud Services.</footer>
+    <footer>© 2026 Private Secure Cloud Services.</footer>
 
     <script>
-        // Loading nhanh 1.5s để giữ khách
+        // Tối ưu Loading nhanh
         window.onload = function() {
             document.getElementById('p-bar').style.width = '100%';
             setTimeout(function() {
                 document.getElementById('loader-overlay').style.display = 'none';
-            }, 1600);
+            }, 1300);
         };
 
         const adLink = "https://evacuateenclose.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566";
 
         function nổAds(event, movieUrl) {
-            // Chặn chuyển hướng mặc định để xử lý nổ Pop trước
+            // Chặn chuyển hướng để xử lý
             event.preventDefault();
+            event.stopPropagation();
             
-            // 1. Mở Popunder ở tab mới (Hốt bạc)
+            // 1. Nổ Popunder tab mới
             window.open(adLink, '_blank');
             
-            // 2. Chuyển tab hiện tại sang trang phim (Hốt lòng tin)
-            // Độ trễ 100ms để đảm bảo trình duyệt không chặn popup
+            // 2. Tab hiện tại bay thẳng vào trang phim (Lấy lòng tin)
             setTimeout(function() {
                 window.location.href = movieUrl;
             }, 100);
@@ -159,6 +113,5 @@
     </script>
 
     <script src="https://evacuateenclose.com/65/5d/86/655d862c63ab08ee18932b53de13d177.js"></script>
-
 </body>
 </html>
