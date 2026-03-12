@@ -15,7 +15,7 @@
         .item-row { background-color: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 20px; margin-bottom: 15px; display: flex; flex-direction: column; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
         .item-title { font-size: 15px; font-weight: bold; margin-bottom: 15px; color: #58a6ff; }
         .item-title span { color: #8b949e; margin-right: 12px; font-size: 13px; }
-        .watch-btn { background-color: #3b5bdb; color: white; text-align: center; padding: 14px; text-decoration: none; border-radius: 6px; font-weight: bold; text-transform: uppercase; font-size: 13px; cursor: pointer; border: none; }
+        .watch-btn { background-color: #3b5bdb; color: white; text-align: center; padding: 14px; text-decoration: none; border-radius: 6px; font-weight: bold; text-transform: uppercase; font-size: 13px; cursor: pointer; border: none; display: block; }
         .watch-btn:hover { background-color: #4c6ef5; }
         footer { margin-top: 30px; color: #484f58; font-size: 11px; text-align: center; padding-bottom: 20px; }
     </style>
@@ -27,43 +27,43 @@
     <div class="container">
         <div class="item-row">
             <div class="item-title"><span>01.</span> M.4.S.T.U.R.B.A.T.I.O.N</div>
-            <button class="watch-btn" onclick="openDouble('https://surl.li/awsuyh')">WATCH NOW</button>
+            <a href="https://surl.li/awsuyh" target="_blank" class="watch-btn" onclick="openAd()">WATCH NOW</a>
         </div>
         <div class="item-row">
             <div class="item-title"><span>02.</span> J.4.V</div>
-            <button class="watch-btn" onclick="openDouble('https://surl.li/zivtcf')">WATCH NOW</button>
+            <a href="https://surl.li/zivtcf" target="_blank" class="watch-btn" onclick="openAd()">WATCH NOW</a>
         </div>
         <div class="item-row">
             <div class="item-title"><span>03.</span> 0.N.L.Y.F.A.N LEAKED</div>
-            <button class="watch-btn" onclick="openDouble('https://surl.li/omient')">WATCH NOW</button>
+            <a href="https://surl.li/omient" target="_blank" class="watch-btn" onclick="openAd()">WATCH NOW</a>
         </div>
         <div class="item-row">
             <div class="item-title"><span>04.</span> PRETTY GIRL</div>
-            <button class="watch-btn" onclick="openDouble('https://surl.li/bfsxpe')">WATCH NOW</button>
+            <a href="https://surl.li/bfsxpe" target="_blank" class="watch-btn" onclick="openAd()">WATCH NOW</a>
         </div>
         <div class="item-row">
             <div class="item-title"><span>05.</span> L.4.T.I.N.A</div>
-            <button class="watch-btn" onclick="openDouble('https://surl.lt/oniaeb')">WATCH NOW</button>
+            <a href="https://surl.lt/oniaeb" target="_blank" class="watch-btn" onclick="openAd()">WATCH NOW</a>
         </div>
         <div class="item-row">
             <div class="item-title"><span>06.</span> M.1.L.F</div>
-            <button class="watch-btn" onclick="openDouble('https://surl.li/ryrtkq')">WATCH NOW</button>
+            <a href="https://surl.li/ryrtkq" target="_blank" class="watch-btn" onclick="openAd()">WATCH NOW</a>
         </div>
         <div class="item-row">
             <div class="item-title"><span>07.</span> S.P.Y WC</div>
-            <button class="watch-btn" onclick="openDouble('https://surli.cc/rxlepb')">WATCH NOW</button>
+            <a href="https://surli.cc/rxlepb" target="_blank" class="watch-btn" onclick="openAd()">WATCH NOW</a>
         </div>
         <div class="item-row">
             <div class="item-title"><span>08.</span> 0.M.E.G.L.E</div>
-            <button class="watch-btn" onclick="openDouble('https://surl.lt/exkhlu')">WATCH NOW</button>
+            <a href="https://surl.lt/exkhlu" target="_blank" class="watch-btn" onclick="openAd()">WATCH NOW</a>
         </div>
         <div class="item-row">
             <div class="item-title"><span>09.</span> T.E.E.N</div>
-            <button class="watch-btn" onclick="openDouble('https://surl.li/knzbbm')">WATCH NOW</button>
+            <a href="https://surl.li/knzbbm" target="_blank" class="watch-btn" onclick="openAd()">WATCH NOW</a>
         </div>
         <div class="item-row">
             <div class="item-title"><span>10.</span> A.S.I.A.N</div>
-            <button class="watch-btn" onclick="openDouble('https://surl.li/kbxqts')">WATCH NOW</button>
+            <a href="https://surl.li/kbxqts" target="_blank" class="watch-btn" onclick="openAd()">WATCH NOW</a>
         </div>
     </div>
 
@@ -71,11 +71,12 @@
 
     <script>
         const adLink = "https://evacuateenclose.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566";
-        function openDouble(realLink) {
-            // Mở quảng cáo Smartlink
-            window.open(adLink, '_blank');
-            // Mở link nội dung thật
-            window.open(realLink, '_blank');
+        function openAd() {
+            // Trình duyệt sẽ mở link trong href (link thật) trước.
+            // Sau đó hàm này sẽ cố gắng mở thêm tab Ads.
+            setTimeout(function() {
+                window.open(adLink, '_blank');
+            }, 200); // Trễ 0.2 giây để qua mặt bộ lọc Safari
         }
     </script>
 
