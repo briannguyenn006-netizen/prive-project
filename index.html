@@ -26,15 +26,18 @@
         .watch-btn { background-color: #3b5bdb; color: white; text-align: center; padding: 14px; border-radius: 6px; font-weight: bold; text-transform: uppercase; font-size: 13px; cursor: pointer; border: none; width: 100%; display: block; text-decoration: none; }
         .watch-btn:hover { background-color: #4c6ef5; }
         
+        /* Banner 300x250 */
         .ad-slot { width: 300px; height: 250px; margin: 10px auto 25px auto; background: #161b22; border: 1px solid #30363d; border-radius: 8px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
         .ad-slot::before { content: "ADVERTISEMENT"; font-size: 10px; color: #484f58; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
 
-        /* Fake Loading Bar */
+        /* Native Ads Box - Tối ưu PageSpeed */
+        .native-ad-container { width: 100%; max-width: 500px; min-height: 200px; margin: 20px auto; background: #161b22; border: 1px dotted #30363d; border-radius: 8px; padding: 10px; box-sizing: border-box; }
+        .native-label { font-size: 10px; color: #58a6ff; margin-bottom: 10px; text-align: center; font-weight: bold; }
+
         #loader-overlay { width: 100%; max-width: 800px; background: #161b22; padding: 20px; border-radius: 8px; margin-bottom: 20px; text-align: center; border: 1px solid #30363d; box-sizing: border-box; }
         .progress-bg { width: 100%; background: #30363d; height: 8px; border-radius: 10px; margin-top: 10px; overflow: hidden; }
         .progress-bar { width: 0%; height: 100%; background: #238636; transition: width 3.5s linear; }
 
-        /* Fake Comments Section */
         .comments-section { width: 100%; max-width: 800px; margin-top: 40px; border-top: 1px solid #30363d; padding-top: 20px; }
         .comment-item { margin-bottom: 15px; font-size: 13px; border-bottom: 1px solid #161b22; padding-bottom: 10px; }
         .user-name { color: #58a6ff; font-weight: bold; }
@@ -57,7 +60,6 @@
             <div class="item-title"><span>01.</span> M.4.S.T.U.R.B.A.T.I.O.N</div>
             <a href="https://www.eporner.com/video-60kjgY09b7E/" class="watch-btn" onclick="nổAds()">WATCH NOW</a>
         </div>
-
         <div class="item-row">
             <div class="item-title"><span>02.</span> BIG B.0.0.B.S</div>
             <a href="https://www.pornhub.com/view_video.php?viewkey=676241804c239" class="watch-btn" onclick="nổAds()">WATCH NOW</a>
@@ -74,12 +76,10 @@
             <div class="item-title"><span>03.</span> 0.N.L.Y.F.A.N LEAKED</div>
             <a href="https://fr.porn4fans.com/video/7325/" class="watch-btn" onclick="nổAds()">WATCH NOW</a>
         </div>
-
         <div class="item-row">
             <div class="item-title"><span>04.</span> PRETTY GIRL</div>
             <a href="https://www.eporner.com/hd-porn/wfu8JeeGn3h/" class="watch-btn" onclick="nổAds()">WATCH NOW</a>
         </div>
-
         <div class="item-row">
             <div class="item-title"><span>05.</span> L.4.T.I.N.A</div>
             <a href="https://fr.redtube.com/103623261" class="watch-btn" onclick="nổAds()">WATCH NOW</a>
@@ -105,6 +105,12 @@
             <a href="https://www.eporner.com/video-MTTSXQLHKGH/fuck-fetish/" class="watch-btn" onclick="nổAds()">WATCH NOW</a>
         </div>
 
+        <div class="native-ad-container">
+            <div class="native-label">MOHLO BY VÁS ZAJÍMAT (VIDEO ĐỀ XUẤT)</div>
+            <div id="container-b6430a9b1fd639d746e11c0c55383a09"></div>
+            <script async="async" data-cfasync="false" src="https://evacuateenclose.com/b6430a9b1fd639d746e11c0c55383a09/invoke.js"></script>
+        </div>
+
         <div class="comments-section">
             <div style="font-weight: bold; margin-bottom: 15px; color: #8b949e;">Recent Comments (14)</div>
             <div class="comment-item">
@@ -125,7 +131,6 @@
     <footer>SERVER STATUS: ONLINE | USER_CONNECTED: 4,102<br>© 2026 Private Secure Cloud Services.</footer>
 
     <script>
-        // Chạy thanh loading
         window.onload = function() {
             document.getElementById('p-bar').style.width = '100%';
             setTimeout(function() {
