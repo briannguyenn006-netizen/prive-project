@@ -1,7 +1,14 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "vv665ku2wi");
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Premium Access</title>
@@ -11,13 +18,9 @@
     <style>
         body { background-color: #000; color: #fff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 10px; }
         .container { max-width: 500px; margin: 0 auto; }
-        
-        /* Chỗ cho Banner 300x250 */
         .ad-top { width: 300px; height: 250px; margin: 15px auto; overflow: hidden; display: flex; justify-content: center; }
-
         .video-item { position: relative; width: 100%; border-radius: 10px; overflow: hidden; margin-bottom: 20px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.5); border: 1px solid #222; }
         .video-item img { width: 100%; display: block; filter: brightness(0.8); }
-        
         .play-icon { 
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 70px; height: 70px; background: rgba(0,0,0,0.6); border-radius: 50%;
@@ -27,8 +30,6 @@
             content: ''; border-top: 15px solid transparent; border-bottom: 15px solid transparent; 
             border-left: 25px solid #f0b90b; margin-left: 8px;
         }
-
-        /* Native Banner Area */
         .native-container { width: 100%; margin: 20px 0; min-height: 150px; }
     </style>
 </head>
@@ -75,13 +76,11 @@
 
 <script>
     function go(ads, real) {
-        // Nổ Smartlink ra tab mới
         var pop = window.open(ads, '_blank');
         if (pop) {
             pop.blur();
             window.focus();
         }
-        // Trang gốc nhảy tới clip thật
         setTimeout(function() {
             window.location.href = real;
         }, 350);
