@@ -4,15 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Premium Access</title>
-
-    <script src="https://evacuateenclose.com/2d/f0/3e/2df03ec7f051608ea8806353a1663a9f.js"></script>
-
     <style>
         body { background-color: #000; color: #fff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 10px; }
         .container { max-width: 500px; margin: 0 auto; }
-        .ad-top { width: 300px; height: 250px; margin: 15px auto; overflow: hidden; display: flex; justify-content: center; }
+        .ad-top { width: 300px; height: 250px; margin: 15px auto; overflow: hidden; display: flex; justify-content: center; background: #111; border-radius: 8px; }
         .video-item { position: relative; width: 100%; border-radius: 10px; overflow: hidden; margin-bottom: 20px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.5); border: 1px solid #222; }
-        .video-item img { width: 100%; display: block; filter: brightness(0.8); }
+        .video-item img { width: 100%; display: block; filter: brightness(0.8); transition: 0.3s; }
         .play-icon { 
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 70px; height: 70px; background: rgba(0,0,0,0.6); border-radius: 50%;
@@ -22,61 +19,82 @@
             content: ''; border-top: 15px solid transparent; border-bottom: 15px solid transparent; 
             border-left: 25px solid #f0b90b; margin-left: 8px;
         }
-        .native-container { width: 100%; margin: 20px 0; min-height: 150px; }
+        .native-container { width: 100%; margin: 20px 0; min-height: 150px; background: #111; border-radius: 8px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    
-    <div class="ad-top">
-        <script type="text/javascript">
-            atOptions = {
-                'key' : 'bafaa3b44a2008cceab6661c7d5b8629',
-                'format' : 'iframe',
-                'height' : 250,
-                'width' : 300,
-                'params' : {}
-            };
-        </script>
-        <script type="text/javascript" src="//evacuateenclose.com/bafaa3b44a2008cceab6661c7d5b8629/invoke.js"></script>
-    </div>
+    <div id="lazy-banner" class="ad-top"></div>
 
     <div class="video-item" onclick="go('https://evacuateenclose.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566', 'https://ouo.io/NyrT8po')">
-        <img src="https://i.postimg.cc/Wb5KssTv/Screenshot-2026-03-13-at-20-57-57.webp">
+        <img src="https://i.postimg.cc/Wb5KssTv/Screenshot-2026-03-13-at-20-57-57.webp" loading="lazy">
         <div class="play-icon"></div>
     </div>
 
-    <div class="native-container">
-        <script async="async" data-cfasync="false" src="https://evacuateenclose.com/b6430a9b1fd639d746e11c0c55383a09/invoke.js"></script>
-        <div id="container-b6430a9b1fd639d746e11c0c55383a09"></div>
-    </div>
+    <div id="lazy-native" class="native-container"></div>
 
     <div class="video-item" onclick="go('https://evacuateenclose.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566', 'https://ouo.io/bJ3lIJ')">
-        <img src="https://i.postimg.cc/Hk7tFmL8/Screenshot-2026-03-13-at-21-25-49.webp">
+        <img src="https://i.postimg.cc/Hk7tFmL8/Screenshot-2026-03-13-at-21-25-49.webp" loading="lazy">
         <div class="play-icon"></div>
     </div>
 
     <div class="video-item" onclick="go('https://evacuateenclose.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566', 'https://ouo.io/f5DGMy')">
-        <img src="https://i.postimg.cc/1XfF60np/Screenshot-2026-03-13-at-21-48-05.webp">
+        <img src="https://i.postimg.cc/1XfF60np/Screenshot-2026-03-13-at-21-48-05.webp" loading="lazy">
         <div class="play-icon"></div>
     </div>
-
 </div>
 
-<script src="https://evacuateenclose.com/65/5d/86/655d862c63ab08ee18932b53de13d177.js"></script>
-
 <script>
+    // Hàm điều hướng
     function go(ads, real) {
         var pop = window.open(ads, '_blank');
-        if (pop) {
-            pop.blur();
-            window.focus();
-        }
-        setTimeout(function() {
-            window.location.href = real;
-        }, 350);
+        if (pop) { pop.blur(); window.focus(); }
+        setTimeout(function() { window.location.href = real; }, 350);
     }
+
+    // Lazy Load Scripts sau 1.5 giây
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            // 1. Load Social Bar
+            let socialBar = document.createElement('script');
+            socialBar.src = "https://evacuateenclose.com/2d/f0/3e/2df03ec7f051608ea8806353a1663a9f.js";
+            document.head.appendChild(socialBar);
+
+            // 2. Load Popunder
+            let popUnder = document.createElement('script');
+            popUnder.src = "https://evacuateenclose.com/65/5d/86/655d862c63ab08ee18932b53de13d177.js";
+            document.body.appendChild(popUnder);
+
+            // 3. Load Banner 300x250
+            let bannerBox = document.getElementById('lazy-banner');
+            bannerBox.innerHTML = `
+                <script type="text/javascript">
+                    atOptions = { 'key' : 'bafaa3b44a2008cceab6661c7d5b8629', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+                <\/script>
+                <script type="text/javascript" src="//evacuateenclose.com/bafaa3b44a2008cceab6661c7d5b8629/invoke.js"><\/script>
+            `;
+            // Chạy lại script trong innerHTML
+            Array.from(bannerBox.querySelectorAll("script")).forEach( oldScript => {
+                const newScript = document.createElement("script");
+                Array.from(oldScript.attributes).forEach( attr => newScript.setAttribute(attr.name, attr.value) );
+                newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+                oldScript.parentNode.replaceChild(newScript, oldScript);
+            });
+
+            // 4. Load Native Banner
+            let nativeBox = document.getElementById('lazy-native');
+            let nScript = document.createElement('script');
+            nScript.async = true;
+            nScript.dataset.cfasync = "false";
+            nScript.src = "https://evacuateenclose.com/b6430a9b1fd639d746e11c0c55383a09/invoke.js";
+            nativeBox.appendChild(nScript);
+            let nDiv = document.createElement('div');
+            nDiv.id = "container-b6430a9b1fd639d746e11c0c55383a09";
+            nativeBox.appendChild(nDiv);
+
+        }, 1500); // Trễ 1.5 giây
+    });
 </script>
 
 </body>
