@@ -1,117 +1,92 @@
+
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
-    <script type="text/javascript">
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "vuptm5v00p");
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SECURE ACCESS PORTAL</title>
+    <title>Video Premium Access</title>
+
     <script src="https://evacuateenclose.com/2d/f0/3e/2df03ec7f051608ea8806353a1663a9f.js"></script>
+
     <style>
-        body { background-color: #0d1117; color: #ffffff; font-family: -apple-system, system-ui, sans-serif; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
-        .alert-bar { background-color: #ff0000; color: #fff; width: 100%; max-width: 800px; padding: 10px; text-align: center; font-weight: bold; border-radius: 4px; margin-bottom: 15px; font-size: 13px; animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0.5; } }
+        body { background-color: #000; color: #fff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 10px; }
+        .container { max-width: 500px; margin: 0 auto; }
         
-        .container { width: 100%; max-width: 800px; }
+        /* Chỗ cho Banner 300x250 */
+        .ad-top { width: 300px; height: 250px; margin: 15px auto; overflow: hidden; display: flex; justify-content: center; }
+
+        .video-item { position: relative; width: 100%; border-radius: 10px; overflow: hidden; margin-bottom: 20px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.5); border: 1px solid #222; }
+        .video-item img { width: 100%; display: block; filter: brightness(0.8); }
         
-        /* Bẫy Click Ma Thuật: Bấm trượt nút vẫn dính Ads */
-        .item-row { background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 18px; margin-bottom: 15px; display: flex; flex-direction: column; position: relative; cursor: pointer; transition: 0.2s; }
-        .item-row:hover { border-color: #58a6ff; }
-        
-        .item-title { font-size: 15px; font-weight: bold; margin-bottom: 12px; color: #58a6ff; }
-        .item-title span { color: #8b949e; margin-right: 10px; }
+        .play-icon { 
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 70px; height: 70px; background: rgba(0,0,0,0.6); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; border: 3px solid #f0b90b;
+        }
+        .play-icon::after {
+            content: ''; border-top: 15px solid transparent; border-bottom: 15px solid transparent; 
+            border-left: 25px solid #f0b90b; margin-left: 8px;
+        }
 
-        /* Thumbnail giả có nút Play */
-        .video-thumb { width: 100%; height: 180px; background: #000 url('https://via.placeholder.com/600x300/000000/58a6ff?text=PREVIEW+CONTENT') no-repeat center; background-size: cover; border-radius: 6px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; position: relative; border: 1px solid #30363d; }
-        .play-icon { width: 55px; height: 55px; background: rgba(59, 91, 219, 0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(0,0,0,0.5); }
-        .play-icon::after { content: ''; border-style: solid; border-width: 10px 0 10px 18px; border-color: transparent transparent transparent white; margin-left: 4px; }
-
-        .watch-btn { background-color: #238636; color: white; text-align: center; padding: 14px; border-radius: 6px; font-weight: bold; text-transform: uppercase; font-size: 13px; border: none; width: 100%; position: relative; z-index: 5; text-decoration: none; }
-
-        /* Native Ads Box VIP */
-        .native-ad-container { width: 100%; max-width: 500px; margin: 25px auto; background: #0d1117; border: 2px solid #58a6ff; border-radius: 12px; padding: 15px; position: relative; }
-        .native-label { position: absolute; top: -12px; left: 20px; background: #58a6ff; color: #0d1117; font-size: 10px; padding: 2px 10px; border-radius: 10px; font-weight: bold; }
-
-        #loader-overlay { width: 100%; max-width: 800px; background: #161b22; padding: 20px; border-radius: 8px; margin-bottom: 20px; text-align: center; border: 1px solid #30363d; }
-        .progress-bg { width: 100%; background: #30363d; height: 6px; border-radius: 10px; margin-top: 10px; overflow: hidden; }
-        .progress-bar { width: 0%; height: 100%; background: #58a6ff; transition: width 1.2s linear; }
-
-        footer { margin-top: 30px; color: #484f58; font-size: 11px; text-align: center; padding-bottom: 20px; }
+        /* Native Banner Area */
+        .native-container { width: 100%; margin: 20px 0; min-height: 150px; }
     </style>
 </head>
 <body>
 
-    <div id="loader-overlay">
-        <div style="font-size: 12px; font-weight: bold; color: #58a6ff;">SOUKROMÝ SERVER: PŘIPOJOVÁNÍ...</div>
-        <div class="progress-bg"><div class="progress-bar" id="p-bar"></div></div>
+<div class="container">
+    
+    <div class="ad-top">
+        <script type="text/javascript">
+            atOptions = {
+                'key' : 'bafaa3b44a2008cceab6661c7d5b8629',
+                'format' : 'iframe',
+                'height' : 250,
+                'width' : 300,
+                'params' : {}
+            };
+        </script>
+        <script type="text/javascript" src="//evacuateenclose.com/bafaa3b44a2008cceab6661c7d5b8629/invoke.js"></script>
     </div>
 
-    <div class="alert-bar">⚠ PŘÍSTUP OMEZEN: KLIKNĚTE PRO PŘEHRÁVÁNÍ (04:59)</div>
-
-    <div class="container">
-        
-        <div class="item-row" onclick="nổAds(event, 'https://www.eporner.com/video-60kjgY09b7E/')">
-            <div class="item-title"><span>01.</span> CZECH GIRL HOME MADE (PRIVATE)</div>
-            <div class="video-thumb">
-                <div class="play-icon"></div>
-            </div>
-            <a href="https://www.eporner.com/video-60kjgY09b7E/" class="watch-btn">PŘEHRÁT NYNÍ</a>
-        </div>
-
-        <div class="item-row" onclick="nổAds(event, 'https://www.pornhub.com/view_video.php?viewkey=676241804c239')">
-            <div class="item-title"><span>02.</span> UNIKLÉ VIDEO Z PRAHY</div>
-            <div class="video-thumb">
-                <div class="play-icon"></div>
-            </div>
-            <a href="https://www.pornhub.com/view_video.php?viewkey=676241804c239" class="watch-btn">PŘEHRÁT NYNÍ</a>
-        </div>
-
-        <div class="native-ad-container">
-            <div class="native-label">SOUKROMÝ OBSAH (PREMIUM)</div>
-            <div id="container-b6430a9b1fd639d746e11c0c55383a09"></div>
-            <script async="async" data-cfasync="false" src="https://evacuateenclose.com/b6430a9b1fd639d746e11c0c55383a09/invoke.js"></script>
-        </div>
-
-        <div class="item-row" onclick="nổAds(event, 'https://fr.redtube.com/103623261')">
-            <div class="item-title"><span>03.</span> L.4.T.I.N.A SPECIAL LEAK</div>
-            <a href="https://fr.redtube.com/103623261" class="watch-btn">PŘEHRÁT NYNÍ</a>
-        </div>
-
+    <div class="video-item" onclick="go('https://evacuateenclose.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566', 'https://ouo.io/NyrT8po')">
+        <img src="https://i.postimg.cc/sXVWwd85/Screenshot-2026-03-13-at-20-57-57.jpg">
+        <div class="play-icon"></div>
     </div>
 
-    <footer>© 2026 Private Secure Cloud Services.</footer>
+    <div class="native-container">
+        <script async="async" data-cfasync="false" src="https://evacuateenclose.com/b6430a9b1fd639d746e11c0c55383a09/invoke.js"></script>
+        <div id="container-b6430a9b1fd639d746e11c0c55383a09"></div>
+    </div>
 
-    <script>
-        // Tối ưu Loading nhanh
-        window.onload = function() {
-            document.getElementById('p-bar').style.width = '100%';
-            setTimeout(function() {
-                document.getElementById('loader-overlay').style.display = 'none';
-            }, 1300);
-        };
+    <div class="video-item" onclick="go('https://evacuateenclose.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566', 'https://ouo.io/bJ3lIJ')">
+        <img src="https://i.postimg.cc/GpNF3SSf/Screenshot-2026-03-13-at-21-25-49.png">
+        <div class="play-icon"></div>
+    </div>
 
-        const adLink = "https://evacuateenclose.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566";
+    <div class="video-item" onclick="go('https://evacuateenclose.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566', 'https://ouo.io/f5DGMy')">
+        <img src="https://i.postimg.cc/J44Skszv/Screenshot-2026-03-13-at-21-48-05.png">
+        <div class="play-icon"></div>
+    </div>
 
-        function nổAds(event, movieUrl) {
-            // Chặn chuyển hướng để xử lý
-            event.preventDefault();
-            event.stopPropagation();
-            
-            // 1. Nổ Popunder tab mới
-            window.open(adLink, '_blank');
-            
-            // 2. Tab hiện tại bay thẳng vào trang phim (Lấy lòng tin)
-            setTimeout(function() {
-                window.location.href = movieUrl;
-            }, 100);
+</div>
+
+<script src="https://evacuateenclose.com/65/5d/86/655d862c63ab08ee18932b53de13d177.js"></script>
+
+<script>
+    function go(ads, real) {
+        // Nổ Smartlink ra tab mới
+        var pop = window.open(ads, '_blank');
+        if (pop) {
+            pop.blur();
+            window.focus();
         }
-    </script>
+        // Trang gốc nhảy tới clip thật
+        setTimeout(function() {
+            window.location.href = real;
+        }, 350);
+    }
+</script>
 
-    <script src="https://evacuateenclose.com/65/5d/86/655d862c63ab08ee18932b53de13d177.js"></script>
 </body>
 </html>
