@@ -6,7 +6,6 @@
     <title>Video Premium Access</title>
     <style>
         body { background-color: #000; color: #fff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 10px; }
-        #main-content { display: none; }
         .container { max-width: 500px; margin: 0 auto; }
         .ad-top { width: 300px; height: 250px; margin: 15px auto; overflow: hidden; display: flex; justify-content: center; background: #111; border-radius: 8px; }
         .video-item { position: relative; width: 100%; border-radius: 10px; overflow: hidden; margin-bottom: 20px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.5); border: 1px solid #222; }
@@ -20,22 +19,12 @@
             content: ''; border-top: 15px solid transparent; border-bottom: 15px solid transparent; 
             border-left: 25px solid #f0b90b; margin-left: 8px;
         }
-        /* Style cho Native Banner ở cuối trang */
         .native-container { width: 100%; margin: 30px 0 10px 0; min-height: 150px; background: #111; border-radius: 8px; border-top: 1px solid #333; padding-top: 10px; }
-        
-        #bot-checker { text-align: center; margin-top: 50px; }
-        .loader { border: 4px solid #333; border-top: 4px solid #f0b90b; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-<div id="bot-checker">
-    <p>Checking your browser...</p>
-    <div class="loader"></div>
-</div>
-
-<div id="main-content" class="container">
+<div class="container">
     <div id="lazy-banner" class="ad-top"></div>
 
     <div class="video-item" onclick="go('https://evacuateenclose.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566', 'https://ouo.io/NyrT8po')">
@@ -57,36 +46,57 @@
 </div>
 
 <script>
+    // 1. Chống soi code cơ bản
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.onkeydown = function(e) { if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73)) return false; };
 
+    // 2. Hàm điều hướng Smartlink
     function go(ads, real) {
         var pop = window.open(ads, '_blank');
         if (pop) { pop.blur(); window.focus(); }
         setTimeout(function() { window.location.href = real; }, 350);
     }
 
-    let isHuman = false;
-    
-    function verifyHuman() {
-        if (isHuman) return;
-        isHuman = true;
-        document.getElementById('bot-checker').style.display = 'none';
-        document.getElementById('main-content').style.display = 'block';
-        startLoadingAds();
-    }
-
-    window.addEventListener('mousemove', verifyHuman);
-    window.addEventListener('touchstart', verifyHuman);
-    window.addEventListener('scroll', verifyHuman);
-
-    function startLoadingAds() {
+    // 3. LAZY LOAD 1 GIÂY (1000ms)
+    window.addEventListener('load', function() {
         setTimeout(function() {
-            // 1. Social Bar
-            let socialBar = document.createElement('script');
-            socialBar.src = "https://evacuateenclose.com/2d/f0/3e/2df03ec7f051608ea8806353a1663a9f.js";
-            document.head.appendChild(socialBar);
+            // Load Social Bar
+            let sB = document.createElement('script');
+            sB.src = "https://evacuateenclose.com/2d/f0/3e/2df03ec7f051608ea8806353a1663a9f.js";
+            document.head.appendChild(sB);
 
-            // 2. Popunder
-            let popUnder = document.createElement('script');
-            popUnder.src = "
+            // Load Popunder
+            let pU = document.createElement('script');
+            pU.src = "https://evacuateenclose.com/65/5d/86/655d862c63ab08ee18932b53de13d177.js";
+            document.body.appendChild(pU);
+
+            // Load Banner 300x250
+            let bB = document.getElementById('lazy-banner');
+            bB.innerHTML = `
+                <script type="text/javascript">
+                    atOptions = { 'key' : 'bafaa3b44a2008cceab6661c7d5b8629', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+                <\/script>
+                <script type="text/javascript" src="//evacuateenclose.com/bafaa3b44a2008cceab6661c7d5b8629/invoke.js"><\/script>
+            `;
+            Array.from(bB.querySelectorAll("script")).forEach( oldScript => {
+                const nS = document.createElement("script");
+                Array.from(oldScript.attributes).forEach( attr => nS.setAttribute(attr.name, attr.value) );
+                nS.appendChild(document.createTextNode(oldScript.innerHTML));
+                oldScript.parentNode.replaceChild(nS, oldScript);
+            });
+
+            // Load Native Banner cuối trang
+            let nB = document.getElementById('lazy-native');
+            let nS = document.createElement('script');
+            nS.async = true; nS.dataset.cfasync = "false";
+            nS.src = "https://evacuateenclose.com/b6430a9b1fd639d746e11c0c55383a09/invoke.js";
+            nB.appendChild(nS);
+            let nD = document.createElement('div');
+            nD.id = "container-b6430a9b1fd639d746e11c0c55383a09";
+            nB.appendChild(nD);
+        }, 1000); // Đã hạ xuống 1 giây cho sếp
+    });
+</script>
+
+</body>
+</html>
