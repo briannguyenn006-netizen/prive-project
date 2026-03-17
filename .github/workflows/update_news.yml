@@ -26,10 +26,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install feedparser beautifulsoup4 requests
 
-      - name: Clean Workspace
-        # Bước này cực quan trọng: Xóa sạch dấu vết cũ để không bao giờ bị 404
+      - name: Purge and Prepare
+        # Bước này sẽ quét sạch đống file news rác sếp vừa phải xóa tay
         run: |
-          find . -name "news-*.html" -type f -delete || true
+          # 1. Xóa sạch đống news-*.html cũ ở thư mục gốc (nếu còn)
+          find . -maxdepth 1 -name "news-*.html" -type f -delete || true
+          
+          # 2. Xóa và tạo mới folder posts để đảm bảo không có file cũ
+          rm -rf posts || true
+          mkdir -p posts
+          
+          # 3. Xóa index cũ để build lại từ đầu
           rm -f index.html || true
 
       - name: Run Script
@@ -42,9 +49,11 @@ jobs:
           git config --global user.name "BrokeNoMore Bot"
           git config --global user.email "bot@brokenomore.com"
           
-          # Pull trước để tránh lỗi xung đột
+          # Tránh lỗi xung đột lịch sử
           git pull origin main --rebase
           
           git add .
-          git commit -m "Terminal Refreshed [skip ci]" || echo "No changes"
+          # Thêm [skip ci] để không bị lặp workflow
+          git commit -m "BrokeNoMore Terminal: Data Refreshed [skip ci]" || echo "No changes"
+          
           git push origin main
