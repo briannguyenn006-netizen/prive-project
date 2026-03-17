@@ -2,40 +2,45 @@
     <!DOCTYPE html>
     <html>
     <head>
-        <meta charset="UTF-8"><title>BNM Terminal</title>
-        <link rel="icon" type="image/png" href="favicon.png?v=1773767265">
+        <meta charset="UTF-8"><title>BrokeNoMore | Terminal</title>
+        <link rel="icon" type="image/png" href="favicon.png?v=1773767491">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
         <style>
             body { font-family: 'Inter', sans-serif; margin: 0; background: #fff; }
-            header { padding: 30px 5%; border-bottom: 5px solid #000; }
-            .logo { font-size: 36px; font-weight: 900; text-transform: uppercase; color: #000; text-decoration: none; letter-spacing: -2px; }
-            .container { max-width: 1400px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: 2.5fr 1fr; gap: 50px; }
-            .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 50px; border-top: 3px solid #000; padding-top: 30px; }
-            @media (max-width: 900px) { .container, .grid-container { grid-template-columns: 1fr; } }
+            header { padding: 25px 5%; border-bottom: 5px solid #000; }
+            .logo { font-size: 42px; font-weight: 900; text-transform: uppercase; color: #000; text-decoration: none; letter-spacing: -3px; }
+            .main-grid { max-width: 1450px; margin: 40px auto; padding: 0 25px; display: grid; grid-template-columns: 2.5fr 1fr; gap: 60px; }
+            .news-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; margin-top: 60px; border-top: 4px solid #000; padding-top: 40px; }
+            @media (max-width: 1000px) { .main-grid, .news-grid { grid-template-columns: 1fr; } }
         </style>
     </head>
     <body>
         <header><a href="/" class="logo">BrokeNoMore</a></header>
-        <div style="background:#000; padding:10px 0;">
+        <div style="background:#000; padding:12px 0;">
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-            { "symbols": [{"proName": "OANDA:XAUUSD", "title": "GOLD"}, {"proName": "BITSTAMP:BTCUSD", "title": "BTC"}, {"proName": "FX_IDC:USDVND", "title": "USDVND"}], "colorTheme": "dark", "locale": "en" }
+            { "symbols": [{"proName": "OANDA:XAUUSD", "title": "GOLD"}, {"proName": "BITSTAMP:BTCUSD", "title": "BTC"}, {"proName": "FX_IDC:USDVND", "title": "USDVND"}, {"proName": "NASDAQ:TSLA", "title": "TSLA"}], "colorTheme": "dark", "locale": "en" }
             </script>
         </div>
-        <div class="container">
+        <div class="main-grid">
             <div>
-                <img src="https://images.unsplash.com/photo-1633156191771-700947264a2c?w=800&auto=format&fit=crop" style="width:100%; height:550px; object-fit:cover; border-radius:4px;">
-                <h2 style="font-size:48px; font-weight:900; letter-spacing:-2.5px; line-height:1; margin:25px 0;"><a href="posts/170746-Ford releases n.html?v=1773767265" style="color:#000;text-decoration:none;">Ford releases new Territory mid-size SUV in China to boost sales</a></h2>
-                <p style="font-size:20px; line-height:1.6; color:#333;">Institutional analysis for Ford releases new Territory mid-size SUV in China to boost sales is pending internal review....</p>
-                <div class="grid-container">
-        <div style="margin-bottom:30px;">
-            <img src="https://images.wsj.net/im-94101926/medium" style="width:100%;height:180px;object-fit:cover;border-radius:4px;">
-            <h4 style="margin:10px 0 5px;"><a href="posts/170747-Target Drops DE.html?v=1773767265" style="color:#000;text-decoration:none;">Target Drops DEI Goals and Ends Program to Boost Black Suppliers</a></h4>
-            <p style="font-size:13px;color:#666;">Institutional analysis for Target Drops DEI Goals and Ends Program to Boost Black Suppliers is pending internal review....</p>
+                <img src="https://images.unsplash.com/photo-1640343830005-ee0505d307bb?w=800&q=80" style="width:100%; height:550px; object-fit:cover; border-radius:4px;">
+                <h2 style="font-size:52px; font-weight:900; letter-spacing:-3px; line-height:1; margin:30px 0;"><a href="posts/171132-Ford releases n.html?v=1773767491" style="color:#000;text-decoration:none;">Ford releases new Territory mid-size SUV in China to boost sales</a></h2>
+                <p style="font-size:22px; color:#333; line-height:1.7;">Analysis expansion in progress. Contact BNM Terminal for full data....</p>
+                <div class="news-grid">
+        <div style="margin-bottom:40px;">
+            <img src="https://images.wsj.net/im-94101926/medium" style="width:100%;height:200px;object-fit:cover;border-radius:3px;">
+            <h3 style="font-size:20px;margin:15px 0 10px;line-height:1.2;"><a href="posts/171133-Target Drops DE.html?v=1773767491" style="color:#000;text-decoration:none;">Target Drops DEI Goals and Ends Program to Boost Black Suppliers</a></h3>
+            <p style="font-size:14px;color:#444;line-height:1.5;">Analysis expansion in progress. Contact BNM Terminal for full data....</p>
+        </div>
+        <div style="margin-bottom:40px;">
+            <img src="https://images.wsj.net/im-76145215/medium" style="width:100%;height:200px;object-fit:cover;border-radius:3px;">
+            <h3 style="font-size:20px;margin:15px 0 10px;line-height:1.2;"><a href="posts/171133-Energy  Utiliti.html?v=1773767491" style="color:#000;text-decoration:none;">Energy & Utilities Roundup: Market Talk</a></h3>
+            <p style="font-size:14px;color:#444;line-height:1.5;">Analysis expansion in progress. Contact BNM Terminal for full data....</p>
         </div></div>
             </div>
-            <div style="border-left: 1px solid #eee; padding-left: 30px;">
-                <h3 style="font-size:12px; text-transform:uppercase; border-bottom:3px solid #000; padding-bottom:5px; margin-bottom:25px; font-weight:900;">Latest Intelligence</h3>
-                <div style='margin-bottom:20px;border-bottom:1px solid #eee;padding-bottom:10px;'><span style='color:red;font-size:11px;font-weight:900'>17:07</span><br><a href='posts/170746-Alibaba ties wi.html?v=1773767265' style='color:#000;text-decoration:none;font-weight:700;font-size:16px'>Alibaba ties with Russian firms on e-commerce platform that will use Moscow's own payment system</a></div><div style='margin-bottom:20px;border-bottom:1px solid #eee;padding-bottom:10px;'><span style='color:red;font-size:11px;font-weight:900'>17:07</span><br><a href='posts/170746-Tesla could ben.html?v=1773767265' style='color:#000;text-decoration:none;font-weight:700;font-size:16px'>Tesla could benefit from looser restrictions in China, says auto analyst</a></div><div style='margin-bottom:20px;border-bottom:1px solid #eee;padding-bottom:10px;'><span style='color:red;font-size:11px;font-weight:900'>17:07</span><br><a href='posts/170746-Chinese automak.html?v=1773767265' style='color:#000;text-decoration:none;font-weight:700;font-size:16px'>Chinese automakers' shares take hits after Beijing said it will open its car market</a></div><div style='margin-bottom:20px;border-bottom:1px solid #eee;padding-bottom:10px;'><span style='color:red;font-size:11px;font-weight:900'>17:07</span><br><a href='posts/170747-Wall Street Ban.html?v=1773767265' style='color:#000;text-decoration:none;font-weight:700;font-size:16px'>Wall Street Banks Prepare to Sell Billions of Dollars of X Loans</a></div><div style='margin-bottom:20px;border-bottom:1px solid #eee;padding-bottom:10px;'><span style='color:red;font-size:11px;font-weight:900'>17:07</span><br><a href='posts/170747-Canada to Provi.html?v=1773767265' style='color:#000;text-decoration:none;font-weight:700;font-size:16px'>Canada to Provide $720 Million to Canada Post to Avoid Insolvency at Mail Service</a></div><div style='margin-bottom:20px;border-bottom:1px solid #eee;padding-bottom:10px;'><span style='color:red;font-size:11px;font-weight:900'>17:07</span><br><a href='posts/170747-Amazon Willing .html?v=1773767265' style='color:#000;text-decoration:none;font-weight:700;font-size:16px'>Amazon Willing to Discuss Quebec Shutdown With Canadian Officials</a></div>
+            <div style="border-left: 1px solid #eee; padding-left: 40px;">
+                <h3 style="font-size:14px; text-transform:uppercase; border-bottom:4px solid #000; padding-bottom:8px; margin-bottom:30px; font-weight:900;">Latest Intelligence</h3>
+                <div style='margin-bottom:20px;border-bottom:1px solid #eee;padding-bottom:15px;'><span style='color:red;font-size:10px;font-weight:900'>17:11</span><br><a href='posts/171132-Alibaba ties wi.html?v=1773767491' style='color:#000;text-decoration:none;font-weight:700;font-size:16px;line-height:1.2;display:block;margin-top:5px;'>Alibaba ties with Russian firms on e-commerce platform that will use Moscow's own payment system</a></div><div style='margin-bottom:20px;border-bottom:1px solid #eee;padding-bottom:15px;'><span style='color:red;font-size:10px;font-weight:900'>17:11</span><br><a href='posts/171132-Tesla could ben.html?v=1773767491' style='color:#000;text-decoration:none;font-weight:700;font-size:16px;line-height:1.2;display:block;margin-top:5px;'>Tesla could benefit from looser restrictions in China, says auto analyst</a></div><div style='margin-bottom:20px;border-bottom:1px solid #eee;padding-bottom:15px;'><span style='color:red;font-size:10px;font-weight:900'>17:11</span><br><a href='posts/171132-Chinese automak.html?v=1773767491' style='color:#000;text-decoration:none;font-weight:700;font-size:16px;line-height:1.2;display:block;margin-top:5px;'>Chinese automakers' shares take hits after Beijing said it will open its car market</a></div><div style='margin-bottom:20px;border-bottom:1px solid #eee;padding-bottom:15px;'><span style='color:red;font-size:10px;font-weight:900'>17:11</span><br><a href='posts/171132-Kraft Heinz Opr.html?v=1773767491' style='color:#000;text-decoration:none;font-weight:700;font-size:16px;line-height:1.2;display:block;margin-top:5px;'>Kraft Heinz, Oprah form joint venture to develop new line of food products</a></div><div style='margin-bottom:20px;border-bottom:1px solid #eee;padding-bottom:15px;'><span style='color:red;font-size:10px;font-weight:900'>17:11</span><br><a href='posts/171133-Wall Street Ban.html?v=1773767491' style='color:#000;text-decoration:none;font-weight:700;font-size:16px;line-height:1.2;display:block;margin-top:5px;'>Wall Street Banks Prepare to Sell Billions of Dollars of X Loans</a></div><div style='margin-bottom:20px;border-bottom:1px solid #eee;padding-bottom:15px;'><span style='color:red;font-size:10px;font-weight:900'>17:11</span><br><a href='posts/171133-Canada to Provi.html?v=1773767491' style='color:#000;text-decoration:none;font-weight:700;font-size:16px;line-height:1.2;display:block;margin-top:5px;'>Canada to Provide $720 Million to Canada Post to Avoid Insolvency at Mail Service</a></div><div style='margin-bottom:20px;border-bottom:1px solid #eee;padding-bottom:15px;'><span style='color:red;font-size:10px;font-weight:900'>17:11</span><br><a href='posts/171133-Amazon Willing .html?v=1773767491' style='color:#000;text-decoration:none;font-weight:700;font-size:16px;line-height:1.2;display:block;margin-top:5px;'>Amazon Willing to Discuss Quebec Shutdown With Canadian Officials</a></div>
             </div>
         </div>
     </body>
