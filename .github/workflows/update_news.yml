@@ -31,16 +31,17 @@ jobs:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: python bot_rss.py
 
-      - name: Force Push Changes
+      - name: Force Update Repo
         run: |
           git config --global user.name "BrokeNoMore Bot"
           git config --global user.email "bot@brokenomore.com"
           
-          # Add sạch sẽ mọi thứ vừa tạo ra
+          # Đưa Repo về trạng thái khớp hoàn toàn với GitHub để tránh lỗi Pull
+          git fetch origin main
+          git reset --soft origin main
+          
           git add -A
+          git commit -m "BNM Terminal: System Override [skip ci]" || echo "No changes"
           
-          # Commit cưỡng chế
-          git commit -m "BrokeNoMore Terminal: Nuclear Update [skip ci]" --allow-empty
-          
-          # ÉP BUỘC GITHUB NHẬN HÀNG - CHẤP CẢ XUNG ĐỘT
+          # ÉP BUỘC đẩy hàng lên, bỏ qua mọi xung đột sếp vừa xóa tay
           git push origin main --force
