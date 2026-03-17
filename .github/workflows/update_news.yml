@@ -1,9 +1,9 @@
 name: Auto Update News
 
 on:
-  workflow_dispatch: # Bấm nút chạy tay
+  workflow_dispatch: # Bấm nút chạy tay cho sướng
   schedule:
-    - cron: '0 * * * *' # Chạy tự động mỗi tiếng
+    - cron: '*/30 * * * *' # Chạy tự động mỗi 30 phút để bào tiền cho đều
 
 jobs:
   build:
@@ -24,12 +24,16 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          # Cài requests để gọi Groq, bỏ cái google-generativeai cũ cho nhẹ
           pip install feedparser beautifulsoup4 requests
+
+      - name: Clean Old Posts # Bước này để dọn rác cho web sạch sẽ
+        run: |
+          rm -rf posts/*.html
+          rm -f index.html
+          mkdir -p posts
 
       - name: Run Script
         env:
-          # ĐỔI TÊN BIẾN Ở ĐÂY CHO KHỚP VỚI SECRET SẾP VỪA TẠO
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: python bot_rss.py
 
@@ -38,11 +42,10 @@ jobs:
           git config --global user.name "BrokeNoMore Bot"
           git config --global user.email "bot@brokenomore.com"
           
-          # Tránh lỗi xung đột lịch sử
+          # Thủ thuật tránh lỗi xung đột khi chạy tần suất cao
           git pull origin main --rebase
           
           git add .
-          git commit -m "Update Terminal with Groq Engine [skip ci]" || echo "No changes to commit"
+          git commit -m "Bào sàn - Cập nhật dữ liệu mới [skip ci]" || echo "No changes to commit"
           
-          # Đẩy lên bản sạch nhất
           git push origin main
