@@ -15,6 +15,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          # Quan trọng: Lấy sạch lịch sử để force push không bị chửi
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -31,17 +33,15 @@ jobs:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: python bot_rss.py
 
-      - name: Force Update Repo
+      - name: Force Push Nuclear
         run: |
           git config --global user.name "BrokeNoMore Bot"
           git config --global user.email "bot@brokenomore.com"
           
-          # Đưa Repo về trạng thái khớp hoàn toàn với GitHub để tránh lỗi Pull
-          git fetch origin main
-          git reset --soft origin main
-          
+          # Không pull, không rebase gì hết. 
+          # Cứ hốt hết những gì vừa chạy xong rồi đè lên server.
           git add -A
-          git commit -m "BNM Terminal: System Override [skip ci]" || echo "No changes"
+          git commit -m "BNM Terminal: Forced Update [skip ci]" || echo "No changes"
           
-          # ÉP BUỘC đẩy hàng lên, bỏ qua mọi xung đột sếp vừa xóa tay
+          # Dùng --force để đè bẹp mọi xung đột sếp vừa xóa tay
           git push origin main --force
