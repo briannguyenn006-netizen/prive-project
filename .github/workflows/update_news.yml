@@ -1,9 +1,9 @@
 name: Auto Update News
 
 on:
-  workflow_dispatch: # Bấm nút chạy tay cho sướng
+  workflow_dispatch:
   schedule:
-    - cron: '*/30 * * * *' # Chạy tự động mỗi 30 phút để bào tiền cho đều
+    - cron: '*/30 * * * *'
 
 jobs:
   build:
@@ -26,11 +26,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install feedparser beautifulsoup4 requests
 
-      - name: Clean Old Posts # Bước này để dọn rác cho web sạch sẽ
+      - name: Prepare Workspace
         run: |
-          rm -rf posts/*.html
-          rm -f index.html
           mkdir -p posts
+          # Xóa file cũ nhưng không để lại lỗi nếu folder trống
+          find posts -name "*.html" -type f -delete || true
+          rm -f index.html || true
 
       - name: Run Script
         env:
@@ -41,11 +42,7 @@ jobs:
         run: |
           git config --global user.name "BrokeNoMore Bot"
           git config --global user.email "bot@brokenomore.com"
-          
-          # Thủ thuật tránh lỗi xung đột khi chạy tần suất cao
-          git pull origin main --rebase
-          
           git add .
-          git commit -m "Bào sàn - Cập nhật dữ liệu mới [skip ci]" || echo "No changes to commit"
-          
+          git commit -m "Bào sàn update [skip ci]" || echo "No changes"
+          git pull origin main --rebase
           git push origin main
