@@ -7,13 +7,13 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 def build_pro_article(title, summary):
     expert_segments = [
         "The quantitative easing measures continue to distort the traditional yield curve.",
-        "Institutional order flow shows a marked increase in dark pool activity.",
-        "Our proprietary sentiment index suggests that the retail long-short ratio is reaching an extreme.",
-        "Technical indicators are showing a hidden bullish divergence."
+        "Institutional order flow shows heavy accumulation in defensive positions.",
+        "Our proprietary sentiment index suggests retail long-short ratio extremes.",
+        "Technical indicators show hidden bullish divergence in key equity sectors."
     ]
     analysis = summary
     if GROQ_API_KEY:
-        prompt = f"Write 500 words of financial analysis on: {title}. Context: {summary}. Wall Street style."
+        prompt = f"Write 500 words of financial analysis on: {title}. Context: {summary}. Wall Street tone."
         try:
             headers = {"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"}
             payload = {"model": "llama3-70b-8192", "messages": [{"role": "user", "content": prompt}], "temperature": 0.6}
@@ -24,7 +24,10 @@ def build_pro_article(title, summary):
     return f"{analysis}\n\n{extra}"
 
 def run():
-    # Tống hết vào thư mục gốc, KHÔNG DÙNG folder 'posts' nữa để tránh 404
+    # TẠO LẠI FOLDER POSTS CHO GỌN
+    posts_dir = 'posts'
+    if not os.path.exists(posts_dir): os.makedirs(posts_dir)
+    
     articles = []
     v = int(time.time())
     sources = ['https://www.cnbc.com/id/10000667/device/rss/rss.html', 'https://www.cnbc.com/id/100003114/device/rss/rss.html']
@@ -32,21 +35,21 @@ def run():
     for url in sources:
         feed = feedparser.parse(url)
         for e in feed.entries[:8]:
-            img = f"https://placehold.co/800x450/000/fff?text=MARKET+INTEL+{random.randint(10,99)}"
+            img = f"https://placehold.co/800x450/111/fff?text=MARKET+DATA+{random.randint(10,99)}"
             summary_raw = BeautifulSoup(e.summary, 'html.parser').get_text()
             content = build_pro_article(e.title, summary_raw)
-            # Tên file phẳng ngay thư mục gốc
             fname = f"news-{random.randint(1000,9999)}.html"
+            path = os.path.join(posts_dir, fname)
             
-            with open(fname, 'w', encoding='utf-8') as f:
-                f.write(f"""<html><head><meta charset='UTF-8'><link rel='icon' type='image/x-icon' href='./favicon.ico'><title>{e.title}</title><style>
+            with open(path, 'w', encoding='utf-8') as f:
+                f.write(f"""<html><head><meta charset='UTF-8'><link rel='icon' type='image/x-icon' href='../favicon.ico'><title>{e.title}</title><style>
                 body{{font-family:serif;max-width:850px;margin:0 auto;padding:60px 20px;line-height:2;background:#fff;color:#111}}
-                h1{{font-size:50px;font-weight:900;letter-spacing:-3px;line-height:0.95;margin-bottom:30px}}
+                h1{{font-size:50px;font-weight:900;letter-spacing:-3px;line-height:0.95}}
                 img{{width:100%;margin:30px 0;filter:grayscale(100%)}}
                 p{{font-size:20px;text-align:justify;white-space:pre-wrap}}
                 .back{{font-weight:900;text-decoration:none;color:#000;border-bottom:4px solid #000}}
-                </style></head><body><a href='./index.html?v={v}' class='back'>← TERMINAL</a><h1>{e.title}</h1><img src='{img}'><p>{content}</p></body></html>""")
-            articles.append({'t': e.title, 'p': fname, 'img': img, 's': content[:200], 'time': datetime.now().strftime('%H:%M')})
+                </style></head><body><a href='../index.html?v={v}' class='back'>← TERMINAL</a><h1>{e.title}</h1><img src='{img}'><p>{content}</p></body></html>""")
+            articles.append({'t': e.title, 'p': path, 'img': img, 's': content[:200], 'time': datetime.now().strftime('%H:%M')})
 
     hero = articles[0]
     grid_html = "".join([f"<div style='border-top:2px solid #000;padding-top:15px;'><a href='./{a['p']}?v={v}' style='color:#000;text-decoration:none;'><img src='{a['img']}' style='width:100%;height:160px;object-fit:cover;filter:grayscale(100%);'><h3 style='font-size:18px;margin:10px 0;'>{a['t']}</h3></a></div>" for a in articles[1:7]])
@@ -56,10 +59,11 @@ def run():
         f.write(f"""<!DOCTYPE html><html><head><meta charset='UTF-8'><link rel='icon' type='image/x-icon' href='./favicon.ico'><title>BROKENOMORE TERMINAL</title><style>
         body{{font-family:'Times New Roman',serif;margin:0;background:#fff;color:#000}}
         header{{padding:30px 5%;border-bottom:10px solid #000;display:flex;justify-content:space-between;align-items:flex-end}}
+        .logo{{font-size:70px;font-weight:900;letter-spacing:-6px;text-decoration:none;color:#000}}
         .container{{max-width:1400px;margin:30px auto;padding:0 20px;display:grid;grid-template-columns:3fr 1fr;gap:50px}}
         </style></head><body>
         <div style='background:#000;height:40px;'><script type='text/javascript' src='https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js' async>{{ "symbols": [{{ "proName": "FX_IDC:XAUUSD", "title": "Gold" }}, {{ "proName": "BITSTAMP:BTCUSD", "title": "Bitcoin" }}], "colorTheme": "dark" }}</script></div>
-        <header><div style='font-size:70px;font-weight:900;letter-spacing:-6px;'>BROKENOMORE</div><div>{datetime.now().strftime('%B %d, %Y')}</div></header>
+        <header><a href='./index.html' class='logo'>BROKENOMORE</a><div>{datetime.now().strftime('%B %d, %Y')}</div></header>
         <div class="container">
             <div>
                 <div style='display:grid;grid-template-columns:1.6fr 1fr;gap:40px;border-bottom:5px solid #000;padding-bottom:40px;'>
