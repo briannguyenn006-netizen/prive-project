@@ -5,75 +5,44 @@ from bs4 import BeautifulSoup
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 def build_pro_article(title, summary):
-    # Filler tăng độ dài bài viết cho uy tín
-    expert_segments = [
-        "The quantitative easing measures continue to distort the traditional yield curve.",
-        "Institutional order flow shows heavy accumulation in defensive positions.",
-        "Technical indicators show hidden bullish divergence in key equity sectors."
-    ]
     analysis = summary
     if GROQ_API_KEY:
-        prompt = f"Write 500 words of financial analysis on: {title}. Context: {summary}. Wall Street tone."
+        prompt = f"Financial analysis: {title}. Context: {summary}. Professional tone."
         try:
             headers = {"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"}
             payload = {"model": "llama3-70b-8192", "messages": [{"role": "user", "content": prompt}], "temperature": 0.6}
             res = requests.post("https://api.groq.com/openai/v1/chat/completions", json=payload, headers=headers, timeout=15).json()
             analysis = res['choices'][0]['message']['content'].replace('**', '').strip()
         except: pass
-    extra = "\n\n".join(random.sample(expert_segments, 2))
-    return f"{analysis}\n\n{extra}"
+    return f"{analysis}\n\n[TERMINAL]: Strategic update confirmed."
 
 def run():
+    # Gom hết vào posts cho sạch nhà
     posts_dir = 'posts'
     if not os.path.exists(posts_dir): os.makedirs(posts_dir)
+    
+    # Xóa bớt file cũ trong folder posts trước khi tạo mới (để tránh đầy dung lượng)
+    for f in os.listdir(posts_dir): os.remove(os.path.join(posts_dir, f))
+
     articles = []
     v = int(time.time())
-    sources = ['https://www.cnbc.com/id/10000667/device/rss/rss.html', 'https://www.cnbc.com/id/100003114/device/rss/rss.html']
-    
-    # Favicon uy tín - Icon đồng tiền vàng
+    sources = ['https://www.cnbc.com/id/10000667/device/rss/rss.html']
     fav_url = "https://cdn-icons-png.flaticon.com/512/2533/2533512.png"
 
     for url in sources:
         feed = feedparser.parse(url)
         for e in feed.entries[:8]:
-            # Ảnh xịn từ Unsplash, auto grayscale cho chất
-            img = f"https://images.unsplash.com/photo-1611974714658-058e132215bd?auto=format&fit=crop&w=800&q=80&sig={random.randint(1,999)}"
-            summary_raw = BeautifulSoup(e.summary, 'html.parser').get_text()
-            content = build_pro_article(e.title, summary_raw)
+            img = f"https://images.unsplash.com/photo-1611974714658-058e132215bd?w=800&sig={random.randint(1,999)}"
+            content = build_pro_article(e.title, e.summary)
             fname = f"news-{random.randint(1000,9999)}.html"
             path = os.path.join(posts_dir, fname)
-            
             with open(path, 'w', encoding='utf-8') as f:
-                f.write(f"""<html><head><meta charset='UTF-8'><link rel='icon' href='{fav_url}'><title>{e.title}</title><style>
-                body{{font-family:serif;max-width:850px;margin:0 auto;padding:60px 20px;line-height:2;background:#fff;color:#111}}
-                h1{{font-size:50px;font-weight:900;letter-spacing:-3px;line-height:0.95}}
-                img{{width:100%;margin:30px 0;border:1px solid #000}}
-                p{{font-size:20px;text-align:justify;white-space:pre-wrap}}
-                .back{{font-weight:900;text-decoration:none;color:#000;border-bottom:4px solid #000}}
-                </style></head><body><a href='../index.html?v={v}' class='back'>← TERMINAL</a><h1>{e.title}</h1><img src='{img}'><p>{content}</p></body></html>""")
-            articles.append({'t': e.title, 'p': path, 'img': img, 's': content[:200], 'time': datetime.now().strftime('%H:%M')})
+                f.write(f"<html><head><meta charset='UTF-8'><link rel='icon' href='{fav_url}'><title>{e.title}</title><style>body{{font-family:serif;max-width:800px;margin:0 auto;padding:50px;line-height:2}}img{{width:100%;filter:grayscale(100%)}}</style></head><body><a href='../index.html?v={v}'>← BACK</a><h1>{e.title}</h1><img src='{img}'><p>{content}</p></body></html>")
+            articles.append({'t': e.title, 'p': path, 'img': img})
 
-    hero = articles[0]
-    grid_html = "".join([f"<div style='border-top:2px solid #000;padding-top:15px;'><a href='./{a['p']}?v={v}' style='color:#000;text-decoration:none;'><img src='{a['img']}' style='width:100%;height:160px;object-fit:cover;filter:grayscale(100%);'><h3 style='font-size:18px;margin:10px 0;'>{a['t']}</h3></a></div>" for a in articles[1:7]])
-    sidebar_html = "".join([f"<li style='margin-bottom:15px;list-style:none;border-bottom:1px solid #eee;padding-bottom:10px;'><span style='font-size:10px;color:red;font-weight:900;'>{a['time']}</span><br><a href='./{a['p']}?v={v}' style='color:#000;text-decoration:none;font-weight:700;font-size:14px;'>{a['t']}</a></li>" for a in articles[7:14]])
-
+    # Render index.html
+    items = "".join([f"<div style='border-bottom:2px solid #000;padding:20px;'><a href='./{a['p']}?v={v}' style='color:#000;text-decoration:none;'><img src='{a['img']}' style='width:100px;float:left;margin-right:20px;filter:grayscale(100%)'><h3>{a['t']}</h3></a><div style='clear:both'></div></div>" for a in articles])
     with open('index.html', 'w', encoding='utf-8') as f:
-        f.write(f"""<!DOCTYPE html><html><head><meta charset='UTF-8'><link rel='icon' href='{fav_url}'><title>BROKENOMORE TERMINAL</title><style>
-        body{{font-family:'Times New Roman',serif;margin:0;background:#fff;color:#000}}
-        header{{padding:30px 5%;border-bottom:10px solid #000;display:flex;justify-content:space-between;align-items:flex-end}}
-        .logo{{font-size:70px;font-weight:900;letter-spacing:-6px;text-decoration:none;color:#000}}
-        .container{{max-width:1400px;margin:30px auto;padding:0 20px;display:grid;grid-template-columns:3fr 1fr;gap:50px}}
-        </style></head><body>
-        <header><a href='./index.html' class='logo'>BROKENOMORE</a><div>{datetime.now().strftime('%B %d, %Y')}</div></header>
-        <div class="container">
-            <div>
-                <div style='display:grid;grid-template-columns:1.6fr 1fr;gap:40px;border-bottom:5px solid #000;padding-bottom:40px;'>
-                    <a href='./{hero['p']}'><img src='{hero['img']}' style='width:100%;filter:grayscale(100%);'></a>
-                    <div><h1 style='font-size:60px;font-weight:900;letter-spacing:-4px;line-height:0.9;'><a href='./{hero['p']}' style='color:#000;text-decoration:none;'>{hero['t']}</a></h1><p style='font-size:20px;'>{hero['s']}...</p></div>
-                </div>
-                <div class='grid' style='display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:40px;'>{grid_html}</div>
-            </div>
-            <div style='border-left:3px solid #000;padding-left:30px;'><h2 style='font-size:14px;text-transform:uppercase;border-bottom:5px solid #000;font-weight:900;'>Latest Intel</h2><ul style='padding:0;'>{sidebar_html}</ul></div>
-        </div></body></html>""")
+        f.write(f"<!DOCTYPE html><html><head><meta charset='UTF-8'><link rel='icon' href='{fav_url}'><title>BROKENOMORE</title></head><body><header style='padding:40px;border-bottom:10px solid #000;'><h1 style='font-size:70px;letter-spacing:-6px;'>BROKENOMORE</h1></header><div style='max-width:1200px;margin:auto;'>{items}</div></body></html>")
 
 if __name__ == "__main__": run()
