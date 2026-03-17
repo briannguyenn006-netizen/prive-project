@@ -155,7 +155,7 @@ def run_auto_news():
                 <div class="grid-section">{grid_html}</div>
             </div>
             <div class="side-news">
-                <h3 style="font-size:14px; text-transform:uppercase; border-bottom:3px solid #000; padding-bottom:8px; margin-bottom:30px; font-weight:900;">Intelligence Feed</h3>
+                <h3 style="font-size:14px; text-transform:uppercase; border-bottom:3px solid #000; padding-bottom:8px; margin-bottom:30px; font-weight:900;">Latest</h3>
                 {side_html}
             </div>
         </div>
