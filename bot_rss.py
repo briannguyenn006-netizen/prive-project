@@ -45,7 +45,7 @@ def run_auto_news():
     if not os.path.exists(posts_dir): os.makedirs(posts_dir)
     
     all_articles = []
-    print("🚀 Re-engineering Terminal Layout...")
+    print("🚀 Re-engineering BrokeNoMore Terminal...")
 
     for provider, url in RSS_SOURCES.items():
         feed = feedparser.parse(url)
@@ -77,7 +77,7 @@ def run_auto_news():
                 <body>
                     <span class='kicker'>{provider}</span>
                     <h1>{entry.title}</h1>
-                    <div class='meta'>Updated {datetime.now().strftime('%B %d, %Y')} • AI Intelligence Service</div>
+                    <div class='meta'>Updated {datetime.now().strftime('%B %d, %Y')} • BrokeNoMore Intelligence</div>
                     <img src='{thumb}'>
                     <div class='content'>{ai_content}</div>
                     <a href='../index.html' class='back'>← Return to Terminal</a>
@@ -93,7 +93,7 @@ def run_auto_news():
                 'time': datetime.now().strftime('%H:%M')
             })
 
-    # Phân loại bài viết: 1 bài chính, còn lại là bài phụ
+    # Chia bài viết
     hero = all_articles[0]
     side_news = all_articles[1:6]
     grid_news = all_articles[6:]
@@ -115,7 +115,7 @@ def run_auto_news():
         </div>
     """ for a in grid_news])
 
-    # Giao diện TRANG CHỦ (Bloomberg/Reuters Style)
+    # Giao diện TRANG CHỦ (BrokeNoMore Style)
     index_content = f"""
     <!DOCTYPE html>
     <html lang="vi">
@@ -123,52 +123,33 @@ def run_auto_news():
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/png" href="favicon.png">
-        <title>BrokeNoMore</title>
+        <title>BrokeNoMore | Global Market Terminal</title>
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
         <style>
             :root {{ --bg: #ffffff; --text: #121212; --accent: #cc0000; --border: #e5e5e5; }}
             body {{ font-family: 'Inter', sans-serif; margin: 0; background: var(--bg); color: var(--text); }}
-            
-            header {{ border-bottom: 4px solid var(--text); padding: 20px 0; margin: 0 5%; text-align: center; }}
-            .logo {{ font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 900; letter-spacing: -2px; }}
-            
+            header {{ border-bottom: 4px solid var(--text); padding: 25px 0; margin: 0 5%; text-align: center; }}
+            .logo {{ font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 900; letter-spacing: -2px; color: var(--text); text-decoration: none; }}
             .ticker-wrap {{ background: #000; color: #fff; padding: 10px 0; }}
-            
-            .main-container {{ max-width: 1280px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }}
-            
-            /* Hero Section */
-            .hero-article img {{ width: 100%; height: 450px; object-fit: cover; }}
-            .hero-article h2 {{ font-family: 'Playfair Display', serif; font-size: 38px; margin: 20px 0 10px; line-height: 1.1; }}
+            .main-container {{ max-width: 1300px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: 2.2fr 1fr; gap: 40px; }}
+            .hero-article img {{ width: 100%; height: 480px; object-fit: cover; }}
+            .hero-article h2 {{ font-family: 'Playfair Display', serif; font-size: 42px; margin: 20px 0 10px; line-height: 1.1; }}
             .hero-article h2 a {{ text-decoration: none; color: inherit; }}
-            .hero-article p {{ font-size: 16px; color: #444; line-height: 1.5; }}
-
-            /* Side News */
+            .hero-article p {{ font-size: 17px; color: #333; line-height: 1.6; }}
             .side-news {{ border-left: 1px solid var(--border); padding-left: 40px; }}
-            .section-title {{ font-size: 14px; font-weight: 700; text-transform: uppercase; border-bottom: 2px solid var(--text); padding-bottom: 5px; margin-bottom: 20px; display: block; }}
-            .side-item {{ margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--border); }}
+            .section-title {{ font-size: 13px; font-weight: 800; text-transform: uppercase; border-bottom: 2px solid var(--text); padding-bottom: 5px; margin-bottom: 20px; display: block; }}
+            .side-item {{ margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }}
             .side-item .time {{ font-size: 11px; font-weight: 700; color: var(--accent); display: block; }}
-            .side-item a {{ text-decoration: none; color: var(--text); font-weight: 600; font-size: 16px; line-height: 1.3; display: block; margin-top: 5px; }}
-            
-            /* Market Section */
-            .market-sidebar {{ margin-top: 40px; }}
-            .market-card {{ background: #f9f9f9; padding: 20px; border-top: 3px solid var(--text); }}
-
-            /* Grid Section */
-            .bottom-grid {{ grid-column: 1 / span 2; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; border-top: 1px solid var(--border); padding-top: 40px; }}
-            .grid-item img {{ width: 100%; height: 150px; object-fit: cover; }}
-            .grid-item a {{ text-decoration: none; color: var(--text); font-weight: 700; font-size: 15px; display: block; margin-top: 10px; line-height: 1.3; }}
-            .grid-item .meta {{ font-size: 11px; text-transform: uppercase; color: #666; font-weight: 600; }}
-
-            @media (max-width: 900px) {{
-                .main-container {{ grid-template-columns: 1fr; }}
-                .side-news {{ border-left: none; padding-left: 0; }}
-                .bottom-grid {{ grid-template-columns: 1fr 1fr; }}
-            }}
+            .side-item a {{ text-decoration: none; color: var(--text); font-weight: 700; font-size: 17px; line-height: 1.3; display: block; margin-top: 5px; }}
+            .bottom-grid {{ grid-column: 1 / span 2; display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; border-top: 1px solid var(--border); padding-top: 40px; }}
+            .grid-item img {{ width: 100%; height: 160px; object-fit: cover; border-radius: 2px; }}
+            .grid-item a {{ text-decoration: none; color: var(--text); font-weight: 700; font-size: 16px; display: block; margin-top: 10px; line-height: 1.3; }}
+            .grid-item .meta {{ font-size: 11px; text-transform: uppercase; color: #666; font-weight: 700; }}
+            @media (max-width: 950px) {{ .main-container {{ grid-template-columns: 1fr; }} .side-news {{ border-left: none; padding-left: 0; }} .bottom-grid {{ grid-template-columns: 1fr 1fr; }} }}
         </style>
     </head>
     <body>
-        <header><div class="logo">BrokeNoMore</div></header>
-
+        <header><a href="/" class="logo">BrokeNoMore</a></header>
         <div class="ticker-wrap">
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
             {{ "symbols": [
@@ -179,7 +160,6 @@ def run_auto_news():
             ], "colorTheme": "dark", "isTransparent": false, "displayMode": "adaptive", "locale": "vi_VN" }}
             </script>
         </div>
-
         <div class="main-container">
             <div class="hero-section">
                 <div class="hero-article">
@@ -187,47 +167,36 @@ def run_auto_news():
                     <h2><a href="{hero['path']}">{hero['title']}</a></h2>
                     <p>{hero['summary']}</p>
                 </div>
-                
-                <div class="market-sidebar">
-                    <span class="section-title">Market Analysis</span>
-                    <div style="height: 400px;">
-                        <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-                        <script type="text/javascript">
-                        new TradingView.widget({{ "autosize": true, "symbol": "NASDAQ:NDX", "interval": "D", "theme": "light", "style": "3", "locale": "vi_VN", "container_id": "tv_chart" }});
-                        </script>
-                        <div id="tv_chart" style="height: 100%;"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="side-news">
-                <span class="section-title">Latest Intelligence</span>
-                {side_news_html}
-                
-                <div class="market-card" style="margin-top: 30px;">
-                    <span class="section-title">Quick Look</span>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
-                    {{ "colorTheme": "light", "dateRange": "12M", "showChart": false, "locale": "vi_VN", "largeChartUrl": "", "isTransparent": false, "width": "100%", "height": "400",
-                       "tabs": [ {{ "title": "Indices", "symbols": [ {{ "s": "FOREXCOM:SPX3500" }}, {{ "s": "FOREXCOM:DJI" }}, {{ "s": "INDEX:DXY" }} ] }} ] }}
+                <div style="margin-top: 40px; height: 450px; border-top: 2px solid #000; padding-top: 20px;">
+                    <span class="section-title">Market Terminal</span>
+                    <div id="tv_chart" style="height: 100%;"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                    <script type="text/javascript">
+                    new TradingView.widget({{ "autosize": true, "symbol": "NASDAQ:NDX", "interval": "D", "theme": "light", "style": "3", "locale": "vi_VN", "container_id": "tv_chart" }});
                     </script>
                 </div>
             </div>
-
-            <div class="bottom-grid">
-                {grid_news_html}
+            <div class="side-news">
+                <span class="section-title">Latest Intelligence</span>
+                {side_news_html}
+                <div style="margin-top: 30px; background: #f9f9f9; padding: 15px;">
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+                    {{ "colorTheme": "light", "showChart": false, "locale": "vi_VN", "width": "100%", "height": "400",
+                       "tabs": [ {{ "title": "Indices", "symbols": [ {{ "s": "FOREXCOM:SPX3500" }}, {{ "s": "FOREXCOM:DJI" }} ] }} ] }}
+                    </script>
+                </div>
             </div>
+            <div class="bottom-grid">{grid_news_html}</div>
         </div>
-
-        <footer style="border-top: 1px solid #eee; padding: 40px 5%; text-align: center; font-size: 12px; color: #666; background: #f9f9f9;">
-            <p>&copy; 2026 BrokeNoMore TERMINAL | DATA POWERED BY REUTERS & CNBC</p>
+        <footer style="margin-top: 60px; border-top: 1px solid #eee; padding: 50px 0; text-align: center; font-size: 13px; color: #888;">
+            <p>&copy; 2026 BrokeNoMore Intelligence Terminal</p>
         </footer>
     </body>
     </html>
     """
     with open('index.html', 'w', encoding='utf-8') as f:
         f.write(index_content)
-    
-    print("✅ MISSION ACCOMPLISHED!")
+    print("✅ MISSION ACCOMPLISHED: BrokeNoMore is Live!")
 
 if __name__ == "__main__":
     run_auto_news()
