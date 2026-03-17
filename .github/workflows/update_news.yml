@@ -1,20 +1,20 @@
 name: Auto Update News
 
 on:
-  workflow_dispatch: # Để sếp bấm nút chạy tay khi cần
+  workflow_dispatch: # Để sếp bấm nút chạy tay cho sướng
   schedule:
-    - cron: '0 * * * *' # Tự động chạy vào đầu mỗi tiếng
+    - cron: '0 * * * *' # Tự động mỗi tiếng chạy 1 lần
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Cấp quyền để bot có thể push bài báo mới lên repo
+      contents: write # Cấp quyền ghi trực tiếp để bot đăng bài
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Lấy toàn bộ lịch sử để tránh lỗi khi push
+          fetch-depth: 0 # Lấy full lịch sử để git không bị ngáo
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -35,7 +35,12 @@ jobs:
         run: |
           git config --global user.name "BrokeNoMore Bot"
           git config --global user.email "bot@brokenomore.com"
+          
+          # CỰC KỲ QUAN TRỌNG: Kéo dữ liệu mới nhất về trước khi đẩy lên để tránh lỗi conflict
+          git pull origin main --rebase
+          
           git add .
-          # Nếu không có gì thay đổi thì không báo lỗi
+          # Nếu không có file mới thì bỏ qua, có thì commit với tag [skip ci] để tránh lặp vô tận
           git commit -m "Update Intelligence Terminal [skip ci]" || echo "No changes to commit"
+          
           git push origin main
