@@ -5,10 +5,10 @@ from bs4 import BeautifulSoup
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 def build_pro_article(title, summary):
+    # Filler tăng độ dài bài viết cho uy tín
     expert_segments = [
         "The quantitative easing measures continue to distort the traditional yield curve.",
         "Institutional order flow shows heavy accumulation in defensive positions.",
-        "Our proprietary sentiment index suggests retail long-short ratio extremes.",
         "Technical indicators show hidden bullish divergence in key equity sectors."
     ]
     analysis = summary
@@ -26,20 +26,18 @@ def build_pro_article(title, summary):
 def run():
     posts_dir = 'posts'
     if not os.path.exists(posts_dir): os.makedirs(posts_dir)
-    
     articles = []
     v = int(time.time())
     sources = ['https://www.cnbc.com/id/10000667/device/rss/rss.html', 'https://www.cnbc.com/id/100003114/device/rss/rss.html']
     
-    # Link Favicon mặc định cực xịn (Icon đồng tiền vàng) nếu sếp chưa có file
+    # Favicon uy tín - Icon đồng tiền vàng
     fav_url = "https://cdn-icons-png.flaticon.com/512/2533/2533512.png"
 
     for url in sources:
         feed = feedparser.parse(url)
         for e in feed.entries[:8]:
-            # Mỗi bài một ảnh khác nhau cho nó chuyên nghiệp
-            img_id = random.randint(1, 1000)
-            img = f"https://picsum.photos/seed/{img_id}/800/450?grayscale"
+            # Ảnh xịn từ Unsplash, auto grayscale cho chất
+            img = f"https://images.unsplash.com/photo-1611974714658-058e132215bd?auto=format&fit=crop&w=800&q=80&sig={random.randint(1,999)}"
             summary_raw = BeautifulSoup(e.summary, 'html.parser').get_text()
             content = build_pro_article(e.title, summary_raw)
             fname = f"news-{random.randint(1000,9999)}.html"
@@ -49,7 +47,7 @@ def run():
                 f.write(f"""<html><head><meta charset='UTF-8'><link rel='icon' href='{fav_url}'><title>{e.title}</title><style>
                 body{{font-family:serif;max-width:850px;margin:0 auto;padding:60px 20px;line-height:2;background:#fff;color:#111}}
                 h1{{font-size:50px;font-weight:900;letter-spacing:-3px;line-height:0.95}}
-                img{{width:100%;margin:30px 0;border:1px solid #eee}}
+                img{{width:100%;margin:30px 0;border:1px solid #000}}
                 p{{font-size:20px;text-align:justify;white-space:pre-wrap}}
                 .back{{font-weight:900;text-decoration:none;color:#000;border-bottom:4px solid #000}}
                 </style></head><body><a href='../index.html?v={v}' class='back'>← TERMINAL</a><h1>{e.title}</h1><img src='{img}'><p>{content}</p></body></html>""")
@@ -66,12 +64,11 @@ def run():
         .logo{{font-size:70px;font-weight:900;letter-spacing:-6px;text-decoration:none;color:#000}}
         .container{{max-width:1400px;margin:30px auto;padding:0 20px;display:grid;grid-template-columns:3fr 1fr;gap:50px}}
         </style></head><body>
-        <div style='background:#000;height:40px;'><script type='text/javascript' src='https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js' async>{{ "symbols": [{{ "proName": "FX_IDC:XAUUSD", "title": "Gold" }}, {{ "proName": "BITSTAMP:BTCUSD", "title": "Bitcoin" }}], "colorTheme": "dark" }}</script></div>
         <header><a href='./index.html' class='logo'>BROKENOMORE</a><div>{datetime.now().strftime('%B %d, %Y')}</div></header>
         <div class="container">
             <div>
                 <div style='display:grid;grid-template-columns:1.6fr 1fr;gap:40px;border-bottom:5px solid #000;padding-bottom:40px;'>
-                    <a href='./{hero['p']}'><img src='{hero['img']}' style='width:100%;'></a>
+                    <a href='./{hero['p']}'><img src='{hero['img']}' style='width:100%;filter:grayscale(100%);'></a>
                     <div><h1 style='font-size:60px;font-weight:900;letter-spacing:-4px;line-height:0.9;'><a href='./{hero['p']}' style='color:#000;text-decoration:none;'>{hero['t']}</a></h1><p style='font-size:20px;'>{hero['s']}...</p></div>
                 </div>
                 <div class='grid' style='display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:40px;'>{grid_html}</div>
