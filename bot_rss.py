@@ -123,7 +123,7 @@ def run_auto_news():
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/png" href="favicon.png">
-        <title>BROKENOMORE | Financial Intelligence</title>
+        <title>BrokeNoMore</title>
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
         <style>
             :root {{ --bg: #ffffff; --text: #121212; --accent: #cc0000; --border: #e5e5e5; }}
@@ -167,7 +167,7 @@ def run_auto_news():
         </style>
     </head>
     <body>
-        <header><div class="logo">BROKENOMORE</div></header>
+        <header><div class="logo">BrokeNoMore</div></header>
 
         <div class="ticker-wrap">
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
@@ -219,7 +219,7 @@ def run_auto_news():
         </div>
 
         <footer style="border-top: 1px solid #eee; padding: 40px 5%; text-align: center; font-size: 12px; color: #666; background: #f9f9f9;">
-            <p>&copy; 2026 BROKENOMORE TERMINAL | DATA POWERED BY REUTERS & CNBC</p>
+            <p>&copy; 2026 BrokeNoMore TERMINAL | DATA POWERED BY REUTERS & CNBC</p>
         </footer>
     </body>
     </html>
