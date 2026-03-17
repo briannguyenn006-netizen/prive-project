@@ -68,13 +68,14 @@ def run_auto_news():
             filename = f"{datetime.now().strftime('%H%M%S')}-{clean_title[:20]}.html"
             filepath = os.path.join(posts_dir, filename)
             
-            # Giao diện trang con (Chi tiết bài báo)
+            # Giao diện TRANG CON (Chi tiết bài báo) - ĐÃ CHÈN FAVICON
             with open(filepath, 'w', encoding='utf-8') as f:
                 f.write(f"""
                 <html>
                 <head>
                     <meta charset='UTF-8'>
                     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                    <link rel="icon" type="image/png" href="../favicon.png">
                     <link href='https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400&display=swap' rel='stylesheet'>
                     <style>
                         body {{ font-family: 'Inter', sans-serif; background:#fff; padding:20px; color:#121212; line-height:1.8; max-width:800px; margin:auto; }}
@@ -107,13 +108,14 @@ def run_auto_news():
                 </div>
             """)
 
-    # Giao diện TRANG CHỦ (Bloomberg Style)
+    # Giao diện TRANG CHỦ (Bloomberg Style) - ĐÃ CHÈN FAVICON
     index_content = f"""
     <!DOCTYPE html>
     <html lang="vi">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png" href="favicon.png">
         <title>BROKENOMORE | Professional Market Terminal</title>
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
         <style>
