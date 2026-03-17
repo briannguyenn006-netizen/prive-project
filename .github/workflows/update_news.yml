@@ -1,18 +1,18 @@
-name: Auto Update Global News
+name: Auto Update News
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Để sếp bấm nút chạy tay cho sướng
   schedule:
-    - cron: '0 * * * *' # Chạy mỗi tiếng 1 lần cho nó nóng
+    - cron: '0 * * * *' # Tự động mỗi tiếng chạy 1 lần
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions: # PHẢI CÓ DÒNG NÀY ĐỂ FIX LỖI 128
-      contents: write
+    permissions:
+      contents: write # Cấp quyền ghi trực tiếp ở đây
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4 # Dùng v4 cho mới, fix cảnh báo Node.js 20
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -27,10 +27,10 @@ jobs:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
         run: python bot_rss.py
 
-      - name: Commit and Push Changes
+      - name: Commit and Push
         run: |
           git config --global user.name "BrokeNoMore Bot"
           git config --global user.email "bot@brokenomore.com"
           git add .
-          git commit -m "Update Market Terminal [skip ci]" || exit 0
+          git commit -m "Update Intelligence Terminal [skip ci]" || exit 0
           git push
