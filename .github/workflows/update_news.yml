@@ -27,16 +27,11 @@ jobs:
           pip install feedparser beautifulsoup4 requests
 
       - name: Purge and Prepare
-        # Bước này sẽ quét sạch đống file news rác sếp vừa phải xóa tay
+        # Dọn sạch rác cũ để folder 'posts' luôn mới
         run: |
-          # 1. Xóa sạch đống news-*.html cũ ở thư mục gốc (nếu còn)
           find . -maxdepth 1 -name "news-*.html" -type f -delete || true
-          
-          # 2. Xóa và tạo mới folder posts để đảm bảo không có file cũ
           rm -rf posts || true
           mkdir -p posts
-          
-          # 3. Xóa index cũ để build lại từ đầu
           rm -f index.html || true
 
       - name: Run Script
@@ -49,11 +44,12 @@ jobs:
           git config --global user.name "BrokeNoMore Bot"
           git config --global user.email "bot@brokenomore.com"
           
-          # Tránh lỗi xung đột lịch sử
+          # 1. Add hết file mới vào trước để git không báo "unstaged changes"
+          git add .
+          
+          # 2. Pull rebase để đồng bộ với server
           git pull origin main --rebase
           
-          git add .
-          # Thêm [skip ci] để không bị lặp workflow
+          # 3. Commit và đẩy hàng
           git commit -m "BrokeNoMore Terminal: Data Refreshed [skip ci]" || echo "No changes"
-          
           git push origin main
