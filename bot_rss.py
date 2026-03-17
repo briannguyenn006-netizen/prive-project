@@ -80,7 +80,7 @@ def run():
 
     # TRANG CHỦ (Ticker Gọn + Brand BrokeNoMore)
     with open('index.html', 'w', encoding='utf-8') as f:
-        f.write(f"""<!DOCTYPE html><html><head><meta charset='UTF-8'><link rel='icon' href='{FAVICON_PATH}'><title>BrokeNoMore Terminal</title>
+        f.write(f"""<!DOCTYPE html><html><head><meta charset='UTF-8'><link rel='icon' href='{FAVICON_PATH}'><title>BrokeNoMore</title>
         <style>
             body{{background:#000;color:#fff;font-family:sans-serif;margin:0}}
             header{{padding:25px 5%;border-bottom:6px solid #fff;display:flex;justify-content:space-between;align-items:center}}
