@@ -1,13 +1,9 @@
-import feedparser
-import os
-import random
-import time
+import feedparser, os, random, time, google.generativeai as genai
 from datetime import datetime
 from bs4 import BeautifulSoup
-import google.generativeai as genai
 
 # ==========================================
-# 1. CẤU HÌNH (Sếp check kỹ API Key trong Secret nhé)
+# CẤU HÌNH AN TOÀN & BẢN QUYỀN
 # ==========================================
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 if GOOGLE_API_KEY:
@@ -15,123 +11,112 @@ if GOOGLE_API_KEY:
     model = genai.GenerativeModel('gemini-1.5-flash')
 
 RSS_SOURCES = {
-    'Global': 'http://feeds.reuters.com/reuters/businessNews',
-    'Markets': 'https://www.cnbc.com/id/10000667/device/rss/rss.html',
-    'Institutional': 'https://feeds.a.dj.com/rss/WSJcomUSBusiness.xml'
+    'Global_Markets': 'https://www.cnbc.com/id/10000667/device/rss/rss.html',
+    'Finance_Intelligence': 'https://www.cnbc.com/id/100003114/device/rss/rss.html',
+    'Strategy': 'http://feeds.reuters.com/reuters/businessNews'
 }
 
-def get_thumbnail(entry):
-    # Dùng ảnh Stock theo chủ đề để không bao giờ bị trắng web
-    stock_imgs = [
-        f"https://picsum.photos/seed/{random.randint(1,999)}/800/500",
-        "https://images.unsplash.com/photo-1611974717482-58a252c85aec?auto=format&fit=crop&w=800",
-        "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800",
-        "https://images.unsplash.com/photo-1640343830005-ee0505d307bb?auto=format&fit=crop&w=800"
-    ]
-    img = ""
-    if 'media_content' in entry: img = entry.media_content[0]['url']
-    elif 'enclosures' in entry and len(entry.enclosures) > 0: img = entry.enclosures[0]['url']
+def rewrite_and_transform(title, summary):
+    if not GOOGLE_API_KEY: return "Data stream encrypted. Key required."
     
-    if not img or "doubleclick" in img or "pixel" in img:
-        return random.choice(stock_imgs)
-    return img
-
-def rewrite_with_ai(title, summary):
-    # Nếu không có API Key thì dùng summary gốc luôn cho nhanh
-    if not GOOGLE_API_KEY: return summary
+    # Prompt ép AI viết lại hoàn toàn để tránh bản quyền
+    prompt = f"""
+    REWRITE THIS NEWS COMPLETELY. DO NOT COPY ANY SENTENCE.
+    Source Title: {title}
+    Source Context: {summary}
     
-    prompt = f"Act as BNM Senior Analyst. Write a 400-word financial report on: {title}. Context: {summary}. Use 3 sections: Context, Impact, Outlook. No bold."
-    try:
-        res = model.generate_content(prompt)
-        text = res.text.strip().replace('**', '')
-        if len(text) < 300: return summary + "\n\n" + "--- BNM Technical Note ---\n" + text
-        return text
-    except Exception as e:
-        print(f"AI Error: {e}")
-        return summary # Lỗi thì lấy summary gốc, đéo sợ bị trống nữa!
+    TASK: Write a 450-word deep-dive report in professional financial English.
+    STRUCTURE:
+    - Market Sentiment (2 long paragraphs)
+    - Institutional Impact (2 long paragraphs)
+    - Strategic Outlook for BNM Clients (1 long paragraph)
+    
+    STRICT RULES:
+    1. Tone: Cold, institutional, like a Bloomberg Terminal.
+    2. Words: Minimum 400 words.
+    3. Copyright: Use NO phrases from the source.
+    4. Formatting: NO bold (**). NO bullet points.
+    """
+    
+    max_retries = 3
+    for i in range(max_retries):
+        try:
+            res = model.generate_content(prompt)
+            output = res.text.replace('**', '').strip()
+            # Nếu bài đủ dài (>1500 ký tự) thì mới lấy
+            if len(output) > 1500:
+                return output
+            time.sleep(1) # Chờ xíu để tránh spam API
+        except:
+            continue
+    return "The BNM Intelligence desk is currently processing this high-volatility event. Full report arriving in the next terminal sync."
 
-def run_auto_news():
+def run_terminal():
     posts_dir = 'posts'
     if not os.path.exists(posts_dir): os.makedirs(posts_dir)
-    all_articles = []
+    articles = []
     v_id = int(time.time())
 
+    # Quét tin và xử lý
     for _, url in RSS_SOURCES.items():
         feed = feedparser.parse(url)
-        for entry in feed.entries[:6]: # Lấy 18 tin tổng cộng
-            thumb = get_thumbnail(entry)
-            raw_desc = BeautifulSoup(entry.summary, 'html.parser').get_text() if 'summary' in entry else "Market data incoming..."
-            ai_content = rewrite_with_ai(entry.title, raw_desc)
+        for entry in feed.entries[:5]: # Lấy 15 tin tổng
+            # Lấy ảnh Stock chất lượng cao (Tránh lấy ảnh gốc bị dính bản quyền + lỗi hiển thị)
+            img_id = random.randint(1, 1000)
+            thumb = f"https://picsum.photos/seed/{img_id}/800/500"
             
-            clean_title = "".join(x for x in entry.title if x.isalnum() or x==" ")
-            filename = f"{datetime.now().strftime('%H%M%S')}-{clean_title[:10]}.html"
+            clean_summary = BeautifulSoup(entry.summary, 'html.parser').get_text()
+            # AI thực hiện "xào nấu" tin
+            ai_content = rewrite_and_transform(entry.title, clean_summary)
+            
+            # Tạo file bài viết
+            f_slug = "".join(x for x in entry.title if x.isalnum())[:15]
+            filename = f"{datetime.now().strftime('%H%M%S')}-{f_slug}.html"
             filepath = os.path.join(posts_dir, filename)
             
             with open(filepath, 'w', encoding='utf-8') as f:
                 f.write(f"""
-                <html><head><meta charset='UTF-8'><title>{entry.title}</title>
-                <link rel="icon" type="image/png" href="../favicon.png?v={v_id}">
-                <link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap' rel='stylesheet'>
-                <style>body{{font-family:'Inter';line-height:1.9;max-width:850px;margin:0 auto;padding:60px 20px;color:#111;background:#fff}}
-                h1{{font-size:48px;font-weight:900;letter-spacing:-3px;line-height:1.1;margin-bottom:30px}}
-                img{{width:100%;border-radius:4px;margin:30px 0}} .content{{white-space:pre-wrap;font-size:20px}}</style></head>
-                <body><a href="../index.html?v={v_id}" style="font-weight:900;text-decoration:none;color:#000">← TERMINAL</a>
-                <h1>{entry.title}</h1><img src='{thumb}'><div class='content'>{ai_content}</div></body></html>
+                <html><head><meta charset='UTF-8'><title>{entry.title} | BNM</title>
+                <link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap' rel='stylesheet'>
+                <style>body{{font-family:'Inter';max-width:850px;margin:0 auto;padding:60px 20px;line-height:1.9;color:#111}}h1{{font-size:50px;font-weight:900;letter-spacing:-3px;line-height:1}}img{{width:100%;border-radius:4px;margin:30px 0}}.content{{white-space:pre-wrap;font-size:20px;text-align:justify}}</style></head>
+                <body><a href='../index.html?v={v_id}' style='font-weight:900;text-decoration:none;color:#000'>← TERMINAL</a><h1>{entry.title}</h1><img src='{thumb}'><div class='content'>{ai_content}</div></body></html>
                 """)
-            all_articles.append({'title': entry.title, 'thumb': thumb, 'path': filepath, 'summary': ai_content[:250], 'time': datetime.now().strftime('%H:%M')})
+            articles.append({'t': entry.title, 'p': filepath, 's': ai_content[:250], 'img': thumb})
 
-    # Render Index.html (GIAO DIỆN SIÊU DÀY)
-    hero = all_articles[0]
-    side_html = "".join([f"<div style='margin-bottom:20px;border-bottom:1px solid #eee;padding-bottom:10px;'><span style='color:red;font-size:10px;font-weight:900'>{a['time']}</span><br><a href='{a['path']}?v={v_id}' style='color:#000;text-decoration:none;font-weight:700;font-size:15px'>{a['title']}</a></div>" for a in all_articles[1:7]])
-    
-    grid_html = ""
-    for a in all_articles[7:]:
-        grid_html += f"""
-        <div style="margin-bottom:40px;">
-            <img src="{a['thumb']}" style="width:100%;height:220px;object-fit:cover;border-radius:4px;">
-            <h3 style="font-size:22px;margin:15px 0 10px;line-height:1.2;font-weight:900;"><a href="{a['path']}?v={v_id}" style="color:#000;text-decoration:none;">{a['title']}</a></h3>
-            <p style="font-size:14px;color:#555;line-height:1.5;">{a['summary']}...</p>
-        </div>"""
+    # Render Index.html - LAYOUT GRID TỰ ĐỘNG
+    hero = articles[0]
+    grid_items = "".join([f"""
+    <div style='margin-bottom:50px; border-bottom:1px solid #eee; padding-bottom:30px;'>
+        <img src='{a['img']}' style='width:100%; height:250px; object-fit:cover; border-radius:4px;'>
+        <h3 style='font-size:24px; margin:15px 0;'><a href='{a['p']}?v={v_id}' style='color:#000; text-decoration:none; font-weight:900;'>{a['t']}</a></h3>
+        <p style='color:#555; font-size:16px;'>{a['s']}...</p>
+    </div>""" for a in articles[1:]])
 
-    index_content = f"""
-    <!DOCTYPE html>
-    <html lang="vi">
-    <head>
-        <meta charset="UTF-8"><title>BNM | Terminal</title>
-        <link rel="icon" type="image/png" href="favicon.png?v={v_id}">
+    with open('index.html', 'w', encoding='utf-8') as f:
+        f.write(f"""
+        <!DOCTYPE html><html><head><meta charset='UTF-8'><title>BNM Terminal</title>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
         <style>
             body {{ font-family: 'Inter', sans-serif; margin: 0; background: #fff; }}
-            header {{ padding: 30px 5%; border-bottom: 8px solid #000; display: flex; align-items: center; justify-content: center; }}
+            header {{ padding: 30px; border-bottom: 8px solid #000; text-align: center; }}
             .logo {{ font-size: 50px; font-weight: 900; text-transform: uppercase; color: #000; text-decoration: none; letter-spacing: -4px; }}
-            .container {{ max-width: 1500px; margin: 40px auto; padding: 0 30px; display: grid; grid-template-columns: 2.5fr 1fr; gap: 60px; }}
-            .news-grid {{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; margin-top: 50px; border-top: 6px solid #000; padding-top: 40px; }}
-            @media (max-width: 1000px) {{ .container, .news-grid {{ grid-template-columns: 1fr; }} }}
-        </style>
-    </head>
-    <body>
-        <header><a href="/" class="logo">BrokeNoMore</a></header>
-        <div style="background:#000; padding:12px 0;">
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-            {{ "symbols": [{{"proName": "OANDA:XAUUSD", "title": "GOLD"}}, {{"proName": "BITSTAMP:BTCUSD", "title": "BTC"}}, {{"proName": "FX_IDC:USDVND", "title": "USDVND"}}], "colorTheme": "dark", "locale": "en" }}
-            </script>
-        </div>
-        <div class="container">
+            .container {{ max-width: 1400px; margin: 50px auto; padding: 0 20px; display: grid; grid-template-columns: 2.5fr 1fr; gap: 60px; }}
+            .news-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 50px; border-top: 8px solid #000; padding-top: 40px; }}
+        </style></head>
+        <body><header><a href='/' class='logo'>BrokeNoMore</a></header>
+        <div style='background:#000; padding:12px 0;'><script type='text/javascript' src='https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js' async>{{ "symbols": [{{"proName": "OANDA:XAUUSD", "title": "GOLD"}}, {{"proName": "BITSTAMP:BTCUSD", "title": "BTC"}}]}}</script></div>
+        <div class='container'>
             <div>
-                <img src="{hero['thumb']}" style="width:100%; height:550px; object-fit:cover;">
-                <h2 style="font-size:55px; font-weight:900; letter-spacing:-3px; line-height:1; margin:30px 0;"><a href="{hero['path']}?v={v_id}" style="color:#000;text-decoration:none;">{hero['title']}</a></h2>
-                <p style="font-size:22px; line-height:1.7; color:#333;">{hero['summary']}...</p>
-                <div class="news-grid">{grid_html}</div>
+                <img src='{hero['img']}' style='width:100%; height:600px; object-fit:cover;'>
+                <h1 style='font-size:60px; font-weight:900; letter-spacing:-3px; margin:30px 0; line-height:1;'><a href='{hero['p']}?v={v_id}' style='color:#000; text-decoration:none;'>{hero['t']}</a></h1>
+                <p style='font-size:24px; color:#333;'>{hero['s']}...</p>
+                <div class='news-grid'>{grid_items}</div>
             </div>
-            <div style="border-left: 3px solid #000; padding-left: 40px;">
-                <h3 style="font-size:14px; text-transform:uppercase; border-bottom:6px solid #000; padding-bottom:10px; margin-bottom:30px; font-weight:900;">Latest Intelligence</h3>
-                {side_html}
-            </div>
-        </div>
-    </body>
-    </html>
-    """
-    with open('index.html', 'w', encoding='utf-8') as f: f.write(index_content)
+            <div style='border-left: 2px solid #000; padding-left: 40px;'>
+                <h3 style='font-size:14px; text-transform:uppercase; border-bottom:8px solid #000; padding-bottom:10px; margin-bottom:30px; font-weight:900;'>Intelligence Stream</h3>
+                {grid_items[:2000]} </div>
+        </div></body></html>
+        """)
 
 if __name__ == "__main__":
-    run_auto_news()
+    run_terminal()
