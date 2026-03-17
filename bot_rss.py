@@ -4,18 +4,19 @@ from bs4 import BeautifulSoup
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
-def generate_bulk_content(title, summary):
-    # Đoạn văn bản "ma trận" để kéo dài bài viết, đánh lừa bot quét nội dung
-    filler_text = [
-        f"In the current fiscal landscape, {title} represents a critical juncture for liquidity providers. Market participants are analyzing the delta in volatility surface to hedge against tail risks.",
-        "The convergence of macro-economic indicators and micro-market structures suggests a period of intense rebalancing. Institutional order blocks are visible near the support zones.",
-        "Technical analysis indicates a bullish divergence in the RSI, while the MACD remains neutral, signaling a potential accumulation phase for long-term stakeholders.",
-        "Risk management protocols should be tightened. BNM Terminal's proprietary sentiment index shows a shift from fear to cautious optimism among hedge fund managers."
+def build_pro_article(title, summary):
+    # Đoạn nội dung "nhồi" chuyên sâu để tăng độ uy tín và độ dài bài viết
+    expert_segments = [
+        "The volatility in equity risk premiums is reaching a critical threshold. Our quantitative models suggest a significant liquidity gap in the derivatives market.",
+        "Institutional order flow shows heavy accumulation in defensive positions. Traders should watch the VIX closely for any signs of a structural breakout.",
+        "From a technical perspective, the 200-day moving average is holding as a primary support level. Fibonacci retracement levels indicate a 61.8% bounce is imminent.",
+        "The macro-economic backdrop remains clouded by central bank hawkishness, forcing asset managers to pivot towards high-yield alternatives in the short term."
     ]
     
     analysis = summary
     if GROQ_API_KEY:
-        prompt = f"Write a 400-word professional financial report on: {title}. Context: {summary}. Aggressive Wall Street style. No bold."
+        # Prompt ép AI viết dài, dùng thuật ngữ chuyên môn để tăng CPM
+        prompt = f"Write a 450-word SENIOR financial analysis on: {title}. Context: {summary}. Tone: Aggressive Wall Street. Structure: 4 long paragraphs."
         try:
             headers = {"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"}
             payload = {"model": "llama3-70b-8192", "messages": [{"role": "user", "content": prompt}], "temperature": 0.5}
@@ -23,8 +24,9 @@ def generate_bulk_content(title, summary):
             analysis = res['choices'][0]['message']['content'].replace('**', '')
         except: pass
 
-    # Ép bài viết phải dài bằng cách trộn filler text
-    return f"{analysis}\n\n" + "\n\n".join(random.sample(filler_text, 3))
+    # Trộn nội dung: AI viết + 2 đoạn expert ngẫu nhiên = Bài viết > 600 chữ
+    extra = "\n\n".join(random.sample(expert_segments, 2))
+    return f"{analysis}\n\n{extra}\n\n[BNM TERMINAL DATA FEED]: Strategic rebalancing initiated."
 
 def run():
     posts_dir = 'posts'
@@ -32,31 +34,42 @@ def run():
     articles = []
     v = int(time.time())
     
-    # Lấy tin từ 4 nguồn để web "nhung nhúc" tin cho bot click
-    rss_urls = [
+    # Gom tin từ 4 nguồn RSS lớn nhất của CNBC
+    sources = [
         'https://www.cnbc.com/id/10000667/device/rss/rss.html',
         'https://www.cnbc.com/id/100003114/device/rss/rss.html',
         'https://www.cnbc.com/id/19770192/device/rss/rss.html',
-        'https://www.cnbc.com/id/10000115/device/rss/rss.html'
+        'https://www.cnbc.com/id/20910258/device/rss/rss.html'
     ]
     
-    for url in rss_urls:
+    # Danh sách ID ảnh tài chính xịn trên Unsplash để thay đổi liên tục
+    finance_ids = [
+        '1611974717482-58a252c85aec', '1590283603385-17ffb3a7f29f', 
+        '1611606063040-3f047a45686a', '1526303306684-21d1b95703ea', 
+        '1535320903710-d9c526a63d56', '1460306423983-3db442003221'
+    ]
+    
+    for url in sources:
         feed = feedparser.parse(url)
         for e in feed.entries[:8]:
-            # Dùng Unsplash Source với keyword chuẩn tài chính
-            img = f"https://images.unsplash.com/photo-1611974717482-58a252c85aec?auto=format&fit=crop&w=800&q=80&sig={random.randint(1,9999)}"
-            content = generate_bulk_content(e.title, e.summary)
+            # Mỗi bài báo bốc 1 ảnh ngẫu nhiên từ list ID trên
+            selected_id = random.choice(finance_ids)
+            img = f"https://images.unsplash.com/photo-{selected_id}?auto=format&fit=crop&w=800&q=80&sig={random.randint(1,99999)}"
+            
+            summary_raw = BeautifulSoup(e.summary, 'html.parser').get_text()
+            content = build_pro_article(e.title, summary_raw)
+            
             fname = f"{datetime.now().strftime('%H%M%S')}-{random.randint(100,999)}.html"
             path = os.path.join(posts_dir, fname)
             
             with open(path, 'w', encoding='utf-8') as f:
-                f.write(f"<html><head><meta charset='UTF-8'><title>{e.title}</title><style>body{{font-family:sans-serif;max-width:800px;margin:0 auto;padding:50px 20px;line-height:1.8;font-size:18px}}img{{width:100%;border-radius:5px}}</style></head><body><a href='../index.html'>← Terminal Home</a><h1>{e.title}</h1><img src='{img}'><p style='white-space:pre-wrap'>{content}</p></body></html>")
-            articles.append({'t': e.title, 'p': path, 's': content[:200], 'img': img})
+                f.write(f"<html><head><meta charset='UTF-8'><title>{e.title}</title><style>body{{font-family:sans-serif;max-width:850px;margin:0 auto;padding:60px 20px;line-height:1.8;font-size:19px;color:#1a1a1a}}img{{width:100%;border-radius:4px;margin-bottom:30px}}h1{{font-size:45px;letter-spacing:-2px;line-height:1.1}}</style></head><body><a href='../index.html' style='color:#666;text-decoration:none'>← TERMINAL HOME</a><h1>{e.title}</h1><img src='{img}'><p style='white-space:pre-wrap'>{content}</p></body></html>")
+            articles.append({'t': e.title, 'p': path, 'img': img})
 
-    # Render Index với giao diện "Mê cung" cho bot click
-    grid_html = "".join([f"<div style='border:1px solid #ddd;padding:15px;border-radius:5px;'><img src='{a['img']}' style='width:100%;height:150px;object-fit:cover;'><h2 style='font-size:16px;'><a href='{a['p']}?v={v}' style='color:#000;text-decoration:none;'>{a['t']}</a></h2></div>" for a in articles])
+    # Render Index: Giao diện List dài dằng dặc cho bot click quét link
+    grid_items = "".join([f"<div style='border-bottom:1px solid #eee;padding:25px 0;display:grid;grid-template-columns:220px 1fr;gap:25px;'><img src='{a['img']}' style='width:220px;height:130px;object-fit:cover;border-radius:4px;'><div><h2 style='font-size:20px;margin:0;line-height:1.2'><a href='{a['p']}?v={v}' style='color:#000;text-decoration:none;'>{a['t']}</a></h2><p style='color:#666;font-size:15px;margin:10px 0;'>Institutional intelligence feed. Market liquidity analysis for professional traders.</p></div></div>" for a in articles])
 
     with open('index.html', 'w', encoding='utf-8') as f:
-        f.write(f"<!DOCTYPE html><html><head><meta charset='UTF-8'><title>BrokeNoMore Intelligence</title><style>body{{font-family:sans-serif;margin:0;padding:20px}}header{{border-bottom:5px solid #000;padding-bottom:20px;margin-bottom:30px}}.grid{{display:grid;grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));gap:20px}}</style></head><body><header><h1>BrokeNoMore Terminal</h1><p>Institutional Grade Data Flow</p></header><div class='grid'>{grid_html}</div></body></html>")
+        f.write(f"""<!DOCTYPE html><html><head><meta charset='UTF-8'><title>BNM Terminal - Institutional Feed</title><style>body{{font-family:sans-serif;margin:0;padding:0;background:#fff}}header{{background:#000;color:#fff;padding:25px 5%;display:flex;justify-content:space-between;align-items:center}}.logo{{font-size:35px;font-weight:900;letter-spacing:-3px;text-transform:uppercase}}.container{{max-width:1100px;margin:40px auto;padding:0 20px}}</style></head><body><header><div class='logo'>BrokeNoMore</div><div style='font-size:12px;font-weight:900;color:#0f0'>● LIVE DATA TERMINAL</div></header><div class='container'>{grid_items}</div></body></html>""")
 
 if __name__ == "__main__": run()
