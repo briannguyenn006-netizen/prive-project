@@ -26,30 +26,21 @@ jobs:
           python -m pip install --upgrade pip
           pip install feedparser beautifulsoup4 requests
 
-      - name: Deep Clean Workspace
-        # Dọn sạch rác để không bị trùng lặp file cũ
-        run: |
-          find . -maxdepth 1 -name "news-*.html" -delete || true
-          rm -rf posts || true
-          mkdir -p posts
-          rm -f index.html || true
-
       - name: Run Script
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: python bot_rss.py
 
-      - name: Commit and Push
+      - name: Force Push Changes
         run: |
           git config --global user.name "BrokeNoMore Bot"
           git config --global user.email "bot@brokenomore.com"
           
-          # 1. PHẢI ADD TRƯỚC: Hốt sạch thay đổi để không bị "unstaged changes"
+          # Add sạch sẽ mọi thứ vừa tạo ra
           git add -A
           
-          # 2. PULL SAU: Đồng bộ với server sau khi đã gom hàng
-          git pull origin main --rebase || git rebase --skip
+          # Commit cưỡng chế
+          git commit -m "BrokeNoMore Terminal: Nuclear Update [skip ci]" --allow-empty
           
-          # 3. COMMIT & PUSH
-          git commit -m "BrokeNoMore Terminal: Data Refreshed [skip ci]" --allow-empty
-          git push origin main
+          # ÉP BUỘC GITHUB NHẬN HÀNG - CHẤP CẢ XUNG ĐỘT
+          git push origin main --force
