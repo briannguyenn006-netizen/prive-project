@@ -24,7 +24,6 @@ def build_pro_article(title, summary):
     return f"{analysis}\n\n{extra}"
 
 def run():
-    # TẠO LẠI FOLDER POSTS CHO GỌN
     posts_dir = 'posts'
     if not os.path.exists(posts_dir): os.makedirs(posts_dir)
     
@@ -32,20 +31,25 @@ def run():
     v = int(time.time())
     sources = ['https://www.cnbc.com/id/10000667/device/rss/rss.html', 'https://www.cnbc.com/id/100003114/device/rss/rss.html']
     
+    # Link Favicon mặc định cực xịn (Icon đồng tiền vàng) nếu sếp chưa có file
+    fav_url = "https://cdn-icons-png.flaticon.com/512/2533/2533512.png"
+
     for url in sources:
         feed = feedparser.parse(url)
         for e in feed.entries[:8]:
-            img = f"https://placehold.co/800x450/111/fff?text=MARKET+DATA+{random.randint(10,99)}"
+            # Mỗi bài một ảnh khác nhau cho nó chuyên nghiệp
+            img_id = random.randint(1, 1000)
+            img = f"https://picsum.photos/seed/{img_id}/800/450?grayscale"
             summary_raw = BeautifulSoup(e.summary, 'html.parser').get_text()
             content = build_pro_article(e.title, summary_raw)
             fname = f"news-{random.randint(1000,9999)}.html"
             path = os.path.join(posts_dir, fname)
             
             with open(path, 'w', encoding='utf-8') as f:
-                f.write(f"""<html><head><meta charset='UTF-8'><link rel='icon' type='image/x-icon' href='../favicon.ico'><title>{e.title}</title><style>
+                f.write(f"""<html><head><meta charset='UTF-8'><link rel='icon' href='{fav_url}'><title>{e.title}</title><style>
                 body{{font-family:serif;max-width:850px;margin:0 auto;padding:60px 20px;line-height:2;background:#fff;color:#111}}
                 h1{{font-size:50px;font-weight:900;letter-spacing:-3px;line-height:0.95}}
-                img{{width:100%;margin:30px 0;filter:grayscale(100%)}}
+                img{{width:100%;margin:30px 0;border:1px solid #eee}}
                 p{{font-size:20px;text-align:justify;white-space:pre-wrap}}
                 .back{{font-weight:900;text-decoration:none;color:#000;border-bottom:4px solid #000}}
                 </style></head><body><a href='../index.html?v={v}' class='back'>← TERMINAL</a><h1>{e.title}</h1><img src='{img}'><p>{content}</p></body></html>""")
@@ -56,7 +60,7 @@ def run():
     sidebar_html = "".join([f"<li style='margin-bottom:15px;list-style:none;border-bottom:1px solid #eee;padding-bottom:10px;'><span style='font-size:10px;color:red;font-weight:900;'>{a['time']}</span><br><a href='./{a['p']}?v={v}' style='color:#000;text-decoration:none;font-weight:700;font-size:14px;'>{a['t']}</a></li>" for a in articles[7:14]])
 
     with open('index.html', 'w', encoding='utf-8') as f:
-        f.write(f"""<!DOCTYPE html><html><head><meta charset='UTF-8'><link rel='icon' type='image/x-icon' href='./favicon.ico'><title>BROKENOMORE TERMINAL</title><style>
+        f.write(f"""<!DOCTYPE html><html><head><meta charset='UTF-8'><link rel='icon' href='{fav_url}'><title>BROKENOMORE TERMINAL</title><style>
         body{{font-family:'Times New Roman',serif;margin:0;background:#fff;color:#000}}
         header{{padding:30px 5%;border-bottom:10px solid #000;display:flex;justify-content:space-between;align-items:flex-end}}
         .logo{{font-size:70px;font-weight:900;letter-spacing:-6px;text-decoration:none;color:#000}}
@@ -67,7 +71,7 @@ def run():
         <div class="container">
             <div>
                 <div style='display:grid;grid-template-columns:1.6fr 1fr;gap:40px;border-bottom:5px solid #000;padding-bottom:40px;'>
-                    <a href='./{hero['p']}'><img src='{hero['img']}' style='width:100%;filter:grayscale(100%);'></a>
+                    <a href='./{hero['p']}'><img src='{hero['img']}' style='width:100%;'></a>
                     <div><h1 style='font-size:60px;font-weight:900;letter-spacing:-4px;line-height:0.9;'><a href='./{hero['p']}' style='color:#000;text-decoration:none;'>{hero['t']}</a></h1><p style='font-size:20px;'>{hero['s']}...</p></div>
                 </div>
                 <div class='grid' style='display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:40px;'>{grid_html}</div>
