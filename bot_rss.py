@@ -29,16 +29,17 @@ def run():
     articles = []
     v = int(time.time())
 
-    # TRADINGVIEW (Chỉ dành cho trang chủ)
+    # TRADINGVIEW TICKER: CHỈ HIỆN 5 CHỈ SỐ SẾP CHỌN
     tv_ticker = """
     <div style="background:#000; border-bottom:1px solid #333; height: 40px; overflow: hidden;">
         <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
         {
           "symbols": [
-            {"proName": "BITSTAMP:BTCUSD", "title": "Bitcoin"},
-            {"proName": "FX_IDC:XAUUSD", "title": "Gold"},
-            {"proName": "FOREXCOM:SPX500", "title": "S&P 500"},
-            {"proName": "NASDAQ:TSLA", "title": "Tesla"}
+            {"proName": "FOREXCOM:SPX500", "title": "SPX"},
+            {"proName": "NASDAQ:IXIC", "title": "IXIC"},
+            {"proName": "FOREXCOM:DJI", "title": "DJI"},
+            {"proName": "INDEX:STX50EUR", "title": "STOXX"},
+            {"proName": "INDEX:UKX", "title": "FTSE"}
           ],
           "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "displayMode": "adaptive", "locale": "en"
         }
@@ -52,7 +53,7 @@ def run():
         fname = f"news-{i}.html"
         path = os.path.join(posts_dir, fname)
         
-        # TRANG BÀI VIẾT: BỎ TRADINGVIEW, FIX LOGO VÀ CHỮ
+        # TRANG BÀI VIẾT (Sạch bóng TradingView)
         with open(path, 'w', encoding='utf-8') as f:
             f.write(f"""<html><head><meta charset='UTF-8'><link rel='icon' href='../{FAVICON_PATH}'><title>{e.title}</title>
             <style>
@@ -68,7 +69,7 @@ def run():
             <div class='content-wrap'>
                 <a href='../index.html?v={v}' class='nav'><img src='../{FAVICON_PATH}' class='news-logo'> Back To Terminal</a>
                 <h1>{e.title}</h1>
-                <div style='color:#fbbf24;font-family:sans-serif;font-weight:bold;font-size:12px;letter-spacing:1px'>INTEL REPORT // BrokeNoMore // CLASSIFIED</div>
+                <div style='color:#fbbf24;font-family:sans-serif;font-weight:bold;font-size:11px;letter-spacing:1px'>INTEL REPORT // BrokeNoMore // PRIVATE FEED</div>
                 <img src='{img}'>
                 <p>{content}</p>
             </div></body></html>""")
@@ -77,7 +78,7 @@ def run():
     hero = articles[0]
     grid_html = "".join([f"<div style='margin-bottom:30px;border-bottom:1px solid #222;padding-bottom:20px'><a href='./{a['p']}' style='color:#fff;text-decoration:none'><img src='{a['img']}' style='width:100%;height:180px;object-fit:cover;border:1px solid #333;filter:grayscale(100%)'><h3 style='font-size:17px;margin-top:12px;line-height:1.2;font-weight:900'>{a['t']}</h3></a></div>" for a in articles[1:5]])
 
-    # TRANG CHỦ: CÓ TRADINGVIEW, ĐỔI TÊN THÀNH BrokeNoMore
+    # TRANG CHỦ (Ticker Gọn + Brand BrokeNoMore)
     with open('index.html', 'w', encoding='utf-8') as f:
         f.write(f"""<!DOCTYPE html><html><head><meta charset='UTF-8'><link rel='icon' href='{FAVICON_PATH}'><title>BrokeNoMore Terminal</title>
         <style>
