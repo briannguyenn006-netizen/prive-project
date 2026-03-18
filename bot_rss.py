@@ -4,7 +4,7 @@ from datetime import datetime
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 FAVICON_PATH = "favicon.png"
 
-# KHO VŨ KHÍ ADS - ĐÃ FIX THEO ID THỰC TẾ CỦA SẾP
+# KHO VŨ KHÍ ADS - ĐÃ CẤU HÌNH VỊ TRÍ CHIẾN THUẬT
 ADS_CONFIG = {
     "native": '<script async="async" data-cfasync="false" src="//evacuateenclose.com/b6430a9b1fd639d746e11c0c55383a09/invoke.js"></script><div id="container-b6430a9b1fd639d746e11c0c55383a09"></div>',
     "banner_300x250": '<script type="text/javascript">atOptions = {"key" : "bafaa3b44a2008cceab6661c7d5b8629","format" : "iframe","height" : 250,"width" : 300,"params" : {}}; </script><script type="text/javascript" src="//evacuateenclose.com/bafaa3b44a2008cceab6661c7d5b8629/invoke.js"></script>',
@@ -40,17 +40,13 @@ def run():
 
     tv_ticker = """<div style="background:#000; border-bottom:1px solid #333; height: 40px; overflow: hidden;"><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>{"symbols": [{"proName": "FOREXCOM:SPX500", "title": "SPX"},{"proName": "NASDAQ:IXIC", "title": "IXIC"},{"proName": "FOREXCOM:DJI", "title": "DJI"},{"proName": "INDEX:STX50EUR", "title": "STOXX"},{"proName": "INDEX:UKX", "title": "FTSE"}],"showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "displayMode": "adaptive", "locale": "en"}</script></div>"""
 
-    # CSS DÙNG CHUNG CHO CẢ INDEX VÀ POST (TỐI ƯU MOBILE)
     common_css = """
         body{background:#000;color:#fff;font-family:sans-serif;margin:0;overflow-x:hidden;}
         img{max-width:100%; height:auto;}
         .content-wrap{max-width:1000px;margin:auto;padding:20px;}
         header{padding:20px 5%; border-bottom:4px solid #fff; display:flex; justify-content:space-between; align-items:center;}
         .logo{font-size:32px; font-weight:900; font-family:serif; text-decoration:none; color:#fff; letter-spacing:-2px;}
-        
-        /* GRID SYSTEM TỰ CO GIÃN */
         .main-grid{display: grid; grid-template-columns: 2.2fr 1fr 0.8fr; gap:30px; padding:30px 5%;}
-        
         @media (max-width: 900px) {
             .main-grid { grid-template-columns: 1fr; }
             header { flex-direction: column; text-align: center; gap: 10px; }
@@ -75,6 +71,7 @@ def run():
                 .post-body{{max-width:800px; margin:auto; padding:40px 20px;}}
                 h1{{font-size:48px; color:#fff; letter-spacing:-1px; line-height:1.1; margin:20px 0;}}
                 p{{font-size:18px; text-align:justify; white-space:pre-wrap;}}
+                .ad-slot{{margin: 40px 0; text-align:center; padding:20px 0; border-top:1px solid #222;}}
             </style>
             <script>
                 setTimeout(function(){{
@@ -90,20 +87,27 @@ def run():
                 <div class='post-body'>
                     <a href='../index.html' style='color:#fbbf24; text-decoration:none; font-weight:bold;'>← BACK TO TERMINAL</a>
                     <h1>{e.title}</h1>
-                    <img src='{img}' style='border:1px solid #333; filter:grayscale(100%);'>
+                    <img src='{img}' style='border:1px solid #333; filter:grayscale(100%); width:100%;'>
+                    
                     <p>{content}</p>
-                    <div style='margin-top:40px; text-align:center;'>{ADS_CONFIG['banner_300x250']}</div>
+
+                    <div class='ad-slot'>
+                        {ADS_CONFIG['banner_300x250']}
+                    </div>
+
+                    <div style='margin-top:60px; padding-top:20px; border-top:2px solid #fff;'>
+                        <h3 style='color:#fbbf24; font-size:14px; text-transform:uppercase; letter-spacing:2px; margin-bottom:20px;'>Recommended for you</h3>
+                        {ADS_CONFIG['native']}
+                    </div>
                 </div>
             </body></html>""")
         articles.append({'t': e.title, 'p': path, 'img': img})
 
-    # TRANG CHỦ (INDEX)
+    # TRANG CHỦ (INDEX) - GIỮ LẠI NATIVE Ở SIDEBAR CHO ĐẸP
     hero = articles[0]
     grid_items = []
     for idx, a in enumerate(articles[1:5]):
         grid_items.append(f"<div style='margin-bottom:25px;'><a href='./{a['p']}' style='color:#fff;text-decoration:none'><img src='{a['img']}' style='width:100%;height:150px;object-fit:cover;filter:grayscale(100%)'><h3 style='font-size:16px;margin-top:10px;'>{a['t']}</h3></a></div>")
-        if idx == 0:
-            grid_items.append(f"<div style='margin:20px 0;'>{ADS_CONFIG['native']}</div>")
     
     with open('index.html', 'w', encoding='utf-8') as f:
         f.write(f"""<!DOCTYPE html><html><head>
