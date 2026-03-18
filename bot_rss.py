@@ -38,7 +38,25 @@ def run():
     v = int(time.time())
     all_fnames = [f"news-{i}.html" for i in range(len(feed.entries[:12]))]
 
-    tv_ticker = """<div style="background:#000; border-bottom:1px solid #333; height: 40px; overflow: hidden;"><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>{"symbols": [{"proName": "FOREXCOM:SPX500", "title": "SPX"},{"proName": "NASDAQ:IXIC", "title": "IXIC"},{"proName": "FOREXCOM:DJI", "title": "DJI"},{"proName": "INDEX:STX50EUR", "title": "STOXX"},{"proName": "INDEX:UKX", "title": "FTSE"}],"showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "displayMode": "adaptive", "locale": "en"}</script></div>"""
+    # BẪY SMARTLINK TÀNG HÌNH TRÊN TICKER TAPE
+    tv_ticker = f"""
+    <div style="position: relative; background:#000; border-bottom:1px solid #333; height: 40px; overflow: hidden;">
+        <a href="{ADS_CONFIG['smartlink']}" target="_blank" 
+           style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; cursor: pointer;">
+        </a>
+        
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+        {{
+            "symbols": [
+                {{"proName": "FOREXCOM:SPX500", "title": "SPX"}},
+                {{"proName": "NASDAQ:IXIC", "title": "IXIC"}},
+                {{"proName": "FOREXCOM:DJI", "title": "DJI"}},
+                {{"proName": "INDEX:STX50EUR", "title": "STOXX"}},
+                {{"proName": "INDEX:UKX", "title": "FTSE"}}
+            ],
+            "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "displayMode": "adaptive", "locale": "en"
+        }}</script>
+    </div>"""
 
     common_css = """
         body{background:#000;color:#fff;font-family:sans-serif;margin:0;overflow-x:hidden;}
@@ -84,6 +102,7 @@ def run():
                 }}, 12000);
             </script>
             </head><body>
+                {tv_ticker}
                 <div class='post-body'>
                     <a href='../index.html' style='color:#fbbf24; text-decoration:none; font-weight:bold;'>← BACK TO TERMINAL</a>
                     <h1>{e.title}</h1>
@@ -103,7 +122,7 @@ def run():
             </body></html>""")
         articles.append({'t': e.title, 'p': path, 'img': img})
 
-    # TRANG CHỦ (INDEX) - GIỮ LẠI NATIVE Ở SIDEBAR CHO ĐẸP
+    # TRANG CHỦ (INDEX)
     hero = articles[0]
     grid_items = []
     for idx, a in enumerate(articles[1:5]):
