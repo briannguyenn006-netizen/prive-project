@@ -2,13 +2,12 @@ import feedparser, os, random, time, requests, re
 from datetime import datetime
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-FAVICON_PATH = "https://www.cnbc.com/favicon.ico" # Lấy tạm icon CNBC cho nó uy tín sếp nhé
+FAVICON_PATH = "https://www.cnbc.com/favicon.ico"
 
-# KHO VŨ KHÍ ADS
 ADS_CONFIG = {
     "native": '<script async="async" data-cfasync="false" src="//evacuateenclose.com/b6430a9b1fd639d746e11c0c55383a09/invoke.js"></script><div id="container-b6430a9b1fd639d746e11c0c55383a09"></div>',
     "banner_300x250": '<script type="text/javascript">atOptions = {"key" : "bafaa3b44a2008cceab6661c7d5b8629","format" : "iframe","height" : 250,"width" : 300,"params" : {}}; </script><script type="text/javascript" src="//evacuateenclose.com/bafaa3b44a2008cceab6661c7d5b8629/invoke.js"></script>',
-    "social_bar": "https://evacuateenclose.com/2d/f0/3e/2df03ec7f051608ea8806353a1663a9f.js",
+    "social_bar": "//evacuateenclose.com/2d/f0/3e/2df03ec7f051608ea8806353a1663a9f.js",
     "smartlink": "https://evacuateenclose.com/zv12wf4v?key=7ffa37a8342c5fb3d04743a7015d7566"
 }
 
@@ -16,7 +15,7 @@ def inject_smartlink(text):
     sentences = text.split('. ')
     if len(sentences) > 15:
         idx = random.randint(10, 18)
-        trap = f'<span class="intel-deep-link" style="cursor:default;"><a href="{ADS_CONFIG["smartlink"]}" target="_blank" style="opacity:0.9; color:inherit; text-decoration:none;">.</a></span>'
+        trap = f'<span class="intel-deep-link" style="cursor:default;"><a href="{ADS_CONFIG["smartlink"]}" target="_blank" style="opacity:0.1; color:inherit; text-decoration:none;">.</a></span>'
         sentences[idx] = sentences[idx] + trap
     return '. '.join(sentences)
 
@@ -37,34 +36,22 @@ def run():
     articles = []
     all_fnames = [f"news-{i}.html" for i in range(len(feed.entries[:12]))]
 
-    # BẪY SMARTLINK TÀNG HÌNH TRÊN TICKER TAPE
     tv_ticker = f"""
     <div style="position: relative; background:#000; border-bottom:1px solid #333; height: 40px; overflow: hidden;">
-        <a href="{ADS_CONFIG['smartlink']}" target="_blank" 
-           style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; cursor: pointer;">
-        </a>
+        <a href="{ADS_CONFIG['smartlink']}" target="_blank" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; cursor: pointer;"></a>
         <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-        {{
-            "symbols": [
-                {{"proName": "FOREXCOM:SPX500", "title": "SPX"}},
-                {{"proName": "NASDAQ:IXIC", "title": "IXIC"}},
-                {{"proName": "FOREXCOM:DJI", "title": "DJI"}},
-                {{"proName": "INDEX:STX50EUR", "title": "STOXX"}},
-                {{"proName": "INDEX:UKX", "title": "FTSE"}}
-            ],
-            "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "displayMode": "adaptive", "locale": "en"
-        }}</script>
+        {{ "symbols": [{{"proName": "FOREXCOM:SPX500", "title": "SPX"}}, {{"proName": "NASDAQ:IXIC", "title": "IXIC"}}, {{"proName": "FOREXCOM:DJI", "title": "DJI"}}], "colorTheme": "dark", "isTransparent": true, "displayMode": "adaptive", "locale": "en" }}
+        </script>
     </div>"""
 
+    # CSS GỐC - KHÔNG SAI MỘT LY
     common_css = """
         body{background:#000;color:#fff;font-family:sans-serif;margin:0;overflow-x:hidden;}
         img{max-width:100%; height:auto;}
         header{padding:20px 5%; border-bottom:4px solid #fff; display:flex; justify-content:space-between; align-items:center;}
         .logo{font-size:32px; font-weight:900; font-family:serif; text-decoration:none; color:#fff; letter-spacing:-2px;}
         .main-grid{display: grid; grid-template-columns: 2.2fr 1fr 0.8fr; gap:30px; padding:30px 5%;}
-        @media (max-width: 900px) {
-            .main-grid { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } }
     """
 
     for i, e in enumerate(feed.entries[:12]):
@@ -86,15 +73,8 @@ def run():
                 h1{{font-size:48px; color:#fff; letter-spacing:-1px; line-height:1.1; margin:20px 0;}}
                 p{{font-size:18px; text-align:justify; white-space:pre-wrap;}}
             </style>
+            <script type='text/javascript' src='{ADS_CONFIG['social_bar']}'></script>
             <script>
-                // SOCIAL BAR - HIỆN NGAY LẬP TỨC
-                (function() {{
-                    var s = document.createElement('script'); 
-                    s.src = "{ADS_CONFIG['social_bar']}"; 
-                    document.body.appendChild(s);
-                }})();
-
-                // AUTO REDIRECT SAU 60S
                 setTimeout(function(){{
                     var pages = {all_fnames};
                     var next = pages[Math.floor(Math.random() * pages.length)];
@@ -117,7 +97,7 @@ def run():
             </body></html>""")
         articles.append({'t': e.title, 'p': path, 'img': img})
 
-    # TRANG CHỦ (INDEX)
+    # TRANG CHỦ (INDEX) - GIỮ ĐÚNG GRID 3 CỘT
     hero = articles[0]
     grid_items = "".join([f"<div style='margin-bottom:25px;'><a href='./{a['p']}' style='color:#fff;text-decoration:none'><img src='{a['img']}' style='width:100%;height:150px;object-fit:cover;filter:grayscale(100%)'><h3 style='font-size:16px;margin-top:10px;'>{a['t']}</h3></a></div>" for a in articles[1:5]])
     
@@ -127,25 +107,25 @@ def run():
         <meta charset='UTF-8'><title>BrokeNoMore Terminal</title>
         <link rel="icon" type="image/x-icon" href="{FAVICON_PATH}">
         <style>{common_css}</style>
-        <script>
-            // SOCIAL BAR - HIỆN NGAY LẬP TỨC
-            (function() {{
-                var s = document.createElement('script'); 
-                s.src = "{ADS_CONFIG['social_bar']}"; 
-                document.body.appendChild(s);
-            }})();
-        </script>
+        <script type='text/javascript' src='{ADS_CONFIG['social_bar']}'></script>
         </head><body>
         {tv_ticker}
-        <header><a href='#' class='logo'>BrokeNoMore</a><div style='color:#fbbf24; font-weight:bold;'>LIVE TERMINAL</div></header>
+        <header><a href='#' class='logo'>BrokeNoMore</a><div style='color:#fbbf24; font-weight:bold;'>03:50 AM // LIVE</div></header>
         <div class='main-grid'>
-            <div><a href='./{hero['p']}' style='color:#fff; text-decoration:none;'><img src='{hero['img']}' style='filter:grayscale(100%);'><h1>{hero['t']}</h1></a></div>
-            <div style='border-left:1px solid #222; padding-left:20px;'>{grid_items}</div>
+            <div><a href='./{hero['p']}' style='color:#fff; text-decoration:none;'><img src='{hero['img']}' style='filter:grayscale(100%);'><h1 style='font-size:55px; line-height:0.9; font-weight:900;'>{hero['t']}</h1></a></div>
+            
             <div style='border-left:1px solid #222; padding-left:20px;'>
-                {ADS_CONFIG['banner_300x250']}
-                <ul style='list-style:none; padding:0; margin-top:20px;'>
-                {"".join([f"<li><a href='./{a['p']}' style='color:#999; text-decoration:none; font-size:13px;'>{a['t']}</a></li>" for a in articles[5:]])}
+                <h2 style='color:#fbbf24; font-size:12px; text-transform:uppercase; border-bottom:1px solid #333; padding-bottom:10px; margin-bottom:20px;'>Intelligence</h2>
+                {grid_items}
+            </div>
+            
+            <div style='border-left:1px solid #222; padding-left:20px;'>
+                <h2 style='color:#fbbf24; font-size:12px; text-transform:uppercase; border-bottom:1px solid #333; padding-bottom:10px; margin-bottom:20px;'>Global Feed</h2>
+                <div style='margin-bottom:30px;'>{ADS_CONFIG['banner_300x250']}</div>
+                <ul style='list-style:none; padding:0;'>
+                {"".join([f"<li style='margin-bottom:15px;'><a href='./{a['p']}' style='color:#999; text-decoration:none; font-size:14px;'>{a['t']}</a></li>" for a in articles[5:]])}
                 </ul>
+                <div style='margin-top:30px;'>{ADS_CONFIG['native']}</div>
             </div>
         </div></body></html>""")
 
