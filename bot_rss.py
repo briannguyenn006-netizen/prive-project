@@ -2,9 +2,9 @@ import feedparser, os, random, time, requests, re
 from datetime import datetime
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-FAVICON_PATH = "favicon.png"
+FAVICON_PATH = "https://www.cnbc.com/favicon.ico" # Lấy tạm icon CNBC cho nó uy tín sếp nhé
 
-# KHO VŨ KHÍ ADS - ĐÃ CẤU HÌNH VỊ TRÍ CHIẾN THUẬT
+# KHO VŨ KHÍ ADS
 ADS_CONFIG = {
     "native": '<script async="async" data-cfasync="false" src="//evacuateenclose.com/b6430a9b1fd639d746e11c0c55383a09/invoke.js"></script><div id="container-b6430a9b1fd639d746e11c0c55383a09"></div>',
     "banner_300x250": '<script type="text/javascript">atOptions = {"key" : "bafaa3b44a2008cceab6661c7d5b8629","format" : "iframe","height" : 250,"width" : 300,"params" : {}}; </script><script type="text/javascript" src="//evacuateenclose.com/bafaa3b44a2008cceab6661c7d5b8629/invoke.js"></script>',
@@ -35,7 +35,6 @@ def run():
     if not os.path.exists(posts_dir): os.makedirs(posts_dir)
     feed = feedparser.parse('https://www.cnbc.com/id/10000667/device/rss/rss.html')
     articles = []
-    v = int(time.time())
     all_fnames = [f"news-{i}.html" for i in range(len(feed.entries[:12]))]
 
     # BẪY SMARTLINK TÀNG HÌNH TRÊN TICKER TAPE
@@ -44,7 +43,6 @@ def run():
         <a href="{ADS_CONFIG['smartlink']}" target="_blank" 
            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; cursor: pointer;">
         </a>
-        
         <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
         {{
             "symbols": [
@@ -61,14 +59,11 @@ def run():
     common_css = """
         body{background:#000;color:#fff;font-family:sans-serif;margin:0;overflow-x:hidden;}
         img{max-width:100%; height:auto;}
-        .content-wrap{max-width:1000px;margin:auto;padding:20px;}
         header{padding:20px 5%; border-bottom:4px solid #fff; display:flex; justify-content:space-between; align-items:center;}
         .logo{font-size:32px; font-weight:900; font-family:serif; text-decoration:none; color:#fff; letter-spacing:-2px;}
         .main-grid{display: grid; grid-template-columns: 2.2fr 1fr 0.8fr; gap:30px; padding:30px 5%;}
         @media (max-width: 900px) {
             .main-grid { grid-template-columns: 1fr; }
-            header { flex-direction: column; text-align: center; gap: 10px; }
-            h1 { font-size: 32px !important; }
         }
     """
 
@@ -83,23 +78,28 @@ def run():
             f.write(f"""<html><head>
             <meta name='viewport' content='width=device-width, initial-scale=1.0'>
             <meta charset='UTF-8'><title>{e.title}</title>
+            <link rel="icon" type="image/x-icon" href="{FAVICON_PATH}">
             <style>
                 {common_css}
                 body{{color:#ccc; font-family:serif; line-height:1.8;}}
                 .post-body{{max-width:800px; margin:auto; padding:40px 20px;}}
                 h1{{font-size:48px; color:#fff; letter-spacing:-1px; line-height:1.1; margin:20px 0;}}
                 p{{font-size:18px; text-align:justify; white-space:pre-wrap;}}
-                .ad-slot{{margin: 40px 0; text-align:center; padding:20px 0; border-top:1px solid #222;}}
             </style>
             <script>
+                // SOCIAL BAR - HIỆN NGAY LẬP TỨC
+                (function() {{
+                    var s = document.createElement('script'); 
+                    s.src = "{ADS_CONFIG['social_bar']}"; 
+                    document.body.appendChild(s);
+                }})();
+
+                // AUTO REDIRECT SAU 60S
                 setTimeout(function(){{
                     var pages = {all_fnames};
                     var next = pages[Math.floor(Math.random() * pages.length)];
                     window.location.href = next + "?v=" + Date.now();
                 }}, 60000);
-                setTimeout(function(){{
-                    var s = document.createElement('script'); s.src = "{ADS_CONFIG['social_bar']}"; document.body.appendChild(s);
-                }}, 12000);
             </script>
             </head><body>
                 {tv_ticker}
@@ -107,15 +107,10 @@ def run():
                     <a href='../index.html' style='color:#fbbf24; text-decoration:none; font-weight:bold;'>← BACK TO TERMINAL</a>
                     <h1>{e.title}</h1>
                     <img src='{img}' style='border:1px solid #333; filter:grayscale(100%); width:100%;'>
-                    
                     <p>{content}</p>
-
-                    <div class='ad-slot'>
-                        {ADS_CONFIG['banner_300x250']}
-                    </div>
-
-                    <div style='margin-top:60px; padding-top:20px; border-top:2px solid #fff;'>
-                        <h3 style='color:#fbbf24; font-size:14px; text-transform:uppercase; letter-spacing:2px; margin-bottom:20px;'>Recommended for you</h3>
+                    <div style='text-align:center; margin:40px 0;'>{ADS_CONFIG['banner_300x250']}</div>
+                    <div style='margin-top:60px; border-top:2px solid #fff; padding-top:20px;'>
+                        <h3 style='color:#fbbf24; font-size:14px; text-transform:uppercase;'>Recommended</h3>
                         {ADS_CONFIG['native']}
                     </div>
                 </div>
@@ -124,35 +119,33 @@ def run():
 
     # TRANG CHỦ (INDEX)
     hero = articles[0]
-    grid_items = []
-    for idx, a in enumerate(articles[1:5]):
-        grid_items.append(f"<div style='margin-bottom:25px;'><a href='./{a['p']}' style='color:#fff;text-decoration:none'><img src='{a['img']}' style='width:100%;height:150px;object-fit:cover;filter:grayscale(100%)'><h3 style='font-size:16px;margin-top:10px;'>{a['t']}</h3></a></div>")
+    grid_items = "".join([f"<div style='margin-bottom:25px;'><a href='./{a['p']}' style='color:#fff;text-decoration:none'><img src='{a['img']}' style='width:100%;height:150px;object-fit:cover;filter:grayscale(100%)'><h3 style='font-size:16px;margin-top:10px;'>{a['t']}</h3></a></div>" for a in articles[1:5]])
     
     with open('index.html', 'w', encoding='utf-8') as f:
         f.write(f"""<!DOCTYPE html><html><head>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
         <meta charset='UTF-8'><title>BrokeNoMore Terminal</title>
-        <style>
-            {common_css}
-            h1.hero-title {{font-size:55px; line-height:0.9; margin:20px 0; font-weight:900; letter-spacing:-3px;}}
-            .sidebar-title {{color:#fbbf24; font-size:12px; text-transform:uppercase; border-bottom:1px solid #333; padding-bottom:10px; margin-bottom:20px;}}
-        </style>
+        <link rel="icon" type="image/x-icon" href="{FAVICON_PATH}">
+        <style>{common_css}</style>
         <script>
-            setTimeout(function(){{
-                var s = document.createElement('script'); s.src = "{ADS_CONFIG['social_bar']}"; document.body.appendChild(s);
-            }}, 12000);
+            // SOCIAL BAR - HIỆN NGAY LẬP TỨC
+            (function() {{
+                var s = document.createElement('script'); 
+                s.src = "{ADS_CONFIG['social_bar']}"; 
+                document.body.appendChild(s);
+            }})();
         </script>
         </head><body>
         {tv_ticker}
-        <header><a href='#' class='logo'>BrokeNoMore</a><div style='color:#fbbf24; font-weight:bold;'>03:50 AM // LIVE</div></header>
+        <header><a href='#' class='logo'>BrokeNoMore</a><div style='color:#fbbf24; font-weight:bold;'>LIVE TERMINAL</div></header>
         <div class='main-grid'>
-            <div><a href='./{hero['p']}' style='color:#fff; text-decoration:none;'><img src='{hero['img']}' style='filter:grayscale(100%);'><h1 class='hero-title'>{hero['t']}</h1></a></div>
-            <div style='border-left:1px solid #222; padding-left:20px;'><h2 class='sidebar-title'>Intelligence</h2>{ "".join(grid_items) }</div>
-            <div style='border-left:1px solid #222; padding-left:20px;'><h2 class='sidebar-title'>Global Feed</h2>
-                <ul style='list-style:none; padding:0;'>
-                {"".join([f"<li style='margin-bottom:15px;'><a href='./{a['p']}' style='color:#999; text-decoration:none; font-size:14px;'>{a['t']}</a></li>" for a in articles[5:]])}
+            <div><a href='./{hero['p']}' style='color:#fff; text-decoration:none;'><img src='{hero['img']}' style='filter:grayscale(100%);'><h1>{hero['t']}</h1></a></div>
+            <div style='border-left:1px solid #222; padding-left:20px;'>{grid_items}</div>
+            <div style='border-left:1px solid #222; padding-left:20px;'>
+                {ADS_CONFIG['banner_300x250']}
+                <ul style='list-style:none; padding:0; margin-top:20px;'>
+                {"".join([f"<li><a href='./{a['p']}' style='color:#999; text-decoration:none; font-size:13px;'>{a['t']}</a></li>" for a in articles[5:]])}
                 </ul>
-                <div style='margin-top:30px;'>{ADS_CONFIG['banner_300x250']}</div>
             </div>
         </div></body></html>""")
 
